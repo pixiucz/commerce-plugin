@@ -8,7 +8,6 @@ class CreateAttributeGroupsTable extends Migration
 {
     public function up()
     {
-//        $this->down();
         //Products
         Schema::create('pixiu_commerce_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
@@ -82,18 +81,10 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->primary(['product_id', 'category_id'], 'id');
         });
-
-        //Menu items
-        Schema::create('pixiu_commerce_menu_items', function(Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->timestamps();
-        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('pixiu_commerce_menu_items');
         Schema::dropIfExists('pixiu_commerce_category_products');
         Schema::dropIfExists('pixiu_commerce_categories');
         Schema::dropIfExists('pixiu_commerce_combination_attributes');
