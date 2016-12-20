@@ -7,6 +7,7 @@ use Model;
  */
 class Category extends Model
 {
+    use \October\Rain\Database\Traits\NestedTree;
 
     /**
      * @var string The database table used by the model.

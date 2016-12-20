@@ -62,9 +62,16 @@ class CreateAttributeGroupsTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->integer('category_id')->unsigned()->nullable();
+            $table->string('name', 128);
+
+            #Nested tree
+            $table->integer('parent_id')->unsigned()->nullable();
             #FIXME ONDELETE?
-            $table->foreign('category_id')->references('id')->on('pixiu_commerce_categories');
+            $table->foreign('parent_id')->references('id')->on('pixiu_commerce_categories');
+
+            $table->integer('nest_left')->unsigned()->nullable();
+            $table->integer('nest_right')->unsigned()->nullable();
+            $table->tinyInteger('nest_depth')->unsigned()->default(0);
         });
 
         //Category products
