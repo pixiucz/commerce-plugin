@@ -66,6 +66,7 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('in_stock')->unsigned()->default(0);
             $table->integer('ean')->unsigned()->default(0000000);
+            $table->float('price')->nullable();
         });
 
 
