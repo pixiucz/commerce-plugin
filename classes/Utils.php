@@ -17,7 +17,7 @@ class Utils
      * file and returns it as a string.
      *
      */
-    public static function createAbsolutePathToImages(String $systemFilesPath):String
+    public static function getAbsolutePathToImages(String $systemFilesPath):String
     {
         return url(
             'storage/app/uploads/public/'

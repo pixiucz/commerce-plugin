@@ -49,3 +49,8 @@ secondaryTabs:
             type: partial
             path: field_variants
             tab: Images
+
+        decomposite_on@update:
+            label: Decomposite based on
+            type: checkboxlist
+            tab: Rules

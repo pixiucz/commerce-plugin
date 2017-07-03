@@ -2,6 +2,7 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use October\Rain\Support\Facades\Flash;
 use Pixiu\Commerce\Models\Product;
 use function Stringy\create;
 use System\Models\File;
@@ -59,6 +60,7 @@ class Products extends Controller
                  *  If Product variant already exists,
                  *  we can only update it's EAN number
                  *  (so far only mutable attribute)
+                 *  TODO: add individual price for each variant
                  */
                 if (array_has($variant, 'id')){
                     $this->updateProductVariant($variant['id'], $variant);
@@ -66,7 +68,7 @@ class Products extends Controller
 
                     /*
                      *  Otherwise we have to create new variant and
-                     *  resolve all it's attributes
+                     *  resolve all it's attributes and their groups (?)
                      */
                     $this->createProductVariant(
                         $variant,
@@ -138,6 +140,11 @@ class Products extends Controller
         $productVariant->save();
     }
 
+    /*
+     *      PARTIALS
+     *      HANDLING
+     *
+     */
     public function prepareVariantsForPartials(int $id) : array
     {
         $productVariants = ProductVariant::with('attributes')->with('images')->where('product_id', $id)->get()->toArray();
@@ -147,7 +154,7 @@ class Products extends Controller
             $images = [];
             foreach ($productVariant['images'] as $image) {
                 array_push($images, [
-                    'url' => Utils::createAbsolutePathToImages($image['disk_name']),
+                    'url' => Utils::getAbsolutePathToImages($image['disk_name']),
                     'id' => $image['id']
                 ]);
             }
@@ -155,7 +162,8 @@ class Products extends Controller
             array_push($returnArray, [
                 'id' => $productVariant['id'],
                 'attributes' => $productVariant['attributes'],
-                'images' => $images
+                'images' => $images,
+                'primary_picture_id' => $productVariant['primary_picture_id']
             ]);
         }
         return $returnArray;
@@ -172,7 +180,7 @@ class Products extends Controller
         $returnArray = [];
         foreach ($productImages as $productImage){
             array_push($returnArray, [
-                'url' => Utils::createAbsolutePathToImages($productImage['disk_name']),
+                'url' => Utils::getAbsolutePathToImages($productImage['disk_name']),
                 'id' => $productImage['id']
             ]);
         }
@@ -186,12 +194,8 @@ class Products extends Controller
      * all product images and product variants
      * as variables.
      */
-    public function onLoadCreatePictureSelector($id = null)
+    public function onPicturesToVariantsPartial($id = null)
     {
-        if ($id === null){
-            $this->vars['message'] = "Product must be saved first.";
-            return $this->makePartial('error_dialog');
-        }
         $this->vars['productImages'] = $this->prepareVariantImagesForPartias($id);
         $this->vars['productVariants'] = $this->prepareVariantsForPartials($id);
 
@@ -203,7 +207,18 @@ class Products extends Controller
         return $this->makepartial('picture_selector');
     }
 
-    public function onPicturesPair($id = null)
+    public function onPrimaryPictureForVariantsPartial($id = null)
+    {
+        $this->vars['productImages'] = $this->prepareVariantImagesForPartias($id);
+        $this->vars['productVariants'] = $this->prepareVariantsForPartials($id);
+        return $this->makePartial('primary_picture');
+    }
+
+
+    /*
+     *  Adds images to variants
+     */
+    public function onPicturesMakePairs($id = null)
     {
         $images = post('images');
         $variants = post('variants');
@@ -220,6 +235,29 @@ class Products extends Controller
                 }
             }
         }
+
+        Flash::success('Pictures added!');
+    }
+
+    /*
+     * Expects POST with array formated as: ['variant_id' => 'image_id']
+     */
+    public function onPicturesPrimary($id = null)
+    {
+        $primaryImages = post('primaryImages');
+
+        if ($primaryImages === null){
+            return Flash::warning('No pictures selected');
+        }
+
+        foreach ($primaryImages as $variantId => $imageId) {
+            $variant = ProductVariant::findOrFail($variantId);
+            $image = File::findOrFail($imageId);
+            $variant->primary_picture = $image;
+            $variant->save();
+        }
+
+        Flash::success('Primary pictures attached');
     }
 
     public function onDeletePictureFromVariant()
