@@ -90,9 +90,10 @@ class Products extends Controller
     {
         $attrGroupWithIds = [];
         foreach ($options as $option) {
-            if (!$attrGroup = AttributeGroup::where('name', $option)->first()) {
+            $attrGroup = AttributeGroup::whereRaw('lower(name) = ?', [strtolower($option)])->first();
+            if ($attrGroup === null) {
                 $attrGroup = new AttributeGroup();
-                $attrGroup->name = strtolower($option);
+                $attrGroup->name = $option;
                 $attrGroup->save();
             }
             $attrGroupWithIds = array_add($attrGroupWithIds, $option, $attrGroup);
@@ -115,7 +116,8 @@ class Products extends Controller
         $productVariant->save();
 
         foreach(json_decode($variant['attributes']) as $attribute){
-            if (!$newAttribute = Attribute::where('value', $attribute->value)->where('attribute_group_id', $attributeGroups[$attribute->attributegroup->name]->id)->first()){
+            $newAttribute = Attribute::whereRaw('lower(value) = ?', [strtolower($attribute->value)])->where('attribute_group_id', $attributeGroups[$attribute->attributegroup->name]->id)->first();
+            if ($newAttribute === null){
                 $newAttribute = new Attribute();
                 $newAttribute->attributegroup()->associate($attributeGroups[$attribute->attributegroup->name]);
             }
