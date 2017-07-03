@@ -3,15 +3,14 @@
 use Model;
 
 /**
- * ProductCombination Model
+ * Tax Model
  */
-class ProductCombination extends Model
+class Tax extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_product_combinations';
+    public $table = 'pixiu_commerce_taxes';
 
     /**
      * @var array Guarded fields
@@ -35,5 +34,4 @@ class ProductCombination extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
 }

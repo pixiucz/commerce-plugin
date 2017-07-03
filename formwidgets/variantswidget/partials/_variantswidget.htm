@@ -1,0 +1,21 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+    <input type="hidden" id="updateData" name="updateData" value='<?= $updateData ?>'>
+    <?php if ($updateOptions !== null): ?>
+        <?php foreach($updateOptions as $updateOption): ?>
+            <input type="hidden" id="updateOptions" name="options[][name]" value='<?= $updateOption["name"] ?>'>
+        <?php endforeach ?>
+    <?php endif ?>
+    <div id="variantsWidgetApp">
+    </div>
+
+    <script src="<?= url('plugins/pixiu/commerce/formwidgets/variantswidget/assets/js/build.js') ?>"></script>
+    <!-- MOVE SCRIPT TO STANDALONE FILE -->
+
+<?php endif ?>

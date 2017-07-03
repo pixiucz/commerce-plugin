@@ -1,0 +1,17 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+
+    name:
+        label: Name
+
+    shipping_time:
+        label: Shipping time
+
+    price:
+        label: Price

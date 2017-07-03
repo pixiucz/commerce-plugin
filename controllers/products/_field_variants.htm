@@ -1,0 +1,30 @@
+<?= $test ?>
+<a
+    id="addPhotosToVariants"
+    href="javascript:;"
+    class="btn btn-secondary oc-icon-plus"
+    data-control="popup"
+    data-request-data="<?= $this->id ?>"
+    data-handler="onLoadCreatePictureSelector"
+    data-size="large">
+    Add photos to variants
+</a>
+
+<a
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-control="popup"
+        data-request-data="<?= $this->id ?>"
+        data-handler="onLoadCreatePictureSelector"
+        data-size="large">
+    Select primary photo for variants
+</a>
+
+<script>
+    $(document).ready(function() {
+        $("#addPhotosToVariants").click(function() {
+            $( "#submitButton" ).trigger( "click" );
+        });
+    });
+
+</script>

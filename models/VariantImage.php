@@ -3,15 +3,14 @@
 use Model;
 
 /**
- * AttributeGroups Model
+ * VariantImage Model
  */
-class AttributeGroups extends Model
+class VariantImage extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_attribute_groups';
+    public $table = 'pixiu_commerce_variant_images';
 
     /**
      * @var array Guarded fields
@@ -35,5 +34,4 @@ class AttributeGroups extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
 }

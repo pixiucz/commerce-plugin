@@ -3,6 +3,49 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+secondaryTabs:
+    fields:
+        id:
+            label: ID
+            disabled: true
+            tab: Product
+
+        tax_id:
+            label: Tax
+            type: dropdown
+            tab: Product
+
+        brand:
+            label: Brand
+            type: recordfinder
+            list: $/pixiu/commerce/models/brand/columns.yaml
+            prompt: Stiskni %s
+            nameFrom: name
+            tab: Product
+
+        title:
+            label: Title
+            default: ASDF
+            tab: Product
+
+        retail_price:
+            label: Retail price
+            default: 9999
+            tab: Product
+
+        _form_widget:
+            label: TODO Frontend naseptavace
+            type: \pixiu\commerce\formwidgets\variantswidget
+            tab: Product
+
+        images:
+            label: Images
+            type: fileupload
+            mode: image
+            tab: Images
+
+        _addimagestovariants@update:
+            label:
+            type: partial
+            path: field_variants
+            tab: Images

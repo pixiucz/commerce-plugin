@@ -25,9 +25,10 @@ class CreateAttributeGroupsTable extends Migration
             $table->increments('id');
 
             $table->string('name');
-            $table->string('logo');
-            $table->text('description');
+            $table->string('logo')->nullable();
+            $table->text('description')->nullable();
         });
+
 
         //Products
         Schema::create('pixiu_commerce_products', function(Blueprint $table) {
@@ -59,6 +60,21 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('pixiu_commerce_products')->onDelete('cascade');
+
+            $table->integer('in_stock')->unsigned()->default(0);
+            $table->integer('ean')->unsigned()->default(0000000);
+        });
+
+
+        // Images pivot
+        Schema::create('pixiu_commerce_variant_images', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->timestamps();
+            $table->increments('id');
+            $table->integer('variant_id')->unsigned();
+            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants')->onDelete('cascade');
+            $table->integer('system_file_id')->unsigned();
+            $table->foreign('system_file_id')->references('id')->on('system_files')->onDelete('cascade');
         });
 
         //Attribute groups
@@ -263,6 +279,7 @@ class CreateAttributeGroupsTable extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('pixiu_commerce_variant_images');
         Schema::dropIfExists('pixiu_commerce_order_variants');
         Schema::dropIfExists('pixiu_commerce_order_logs');
         Schema::dropIfExists('pixiu_commerce_orders');
@@ -280,7 +297,5 @@ class CreateAttributeGroupsTable extends Migration
         Schema::dropIfExists('pixiu_commerce_brands');
         Schema::dropIfExists('pixiu_commerce_order_statuses');
         Schema::dropIfExists('pixiu_commerce_addresses');
-
-
     }
 }

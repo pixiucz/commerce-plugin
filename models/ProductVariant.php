@@ -3,15 +3,15 @@
 use Model;
 
 /**
- * Attribute Model
+ * ProductCombination Model
  */
-class Attribute extends Model
+class ProductVariant extends Model
 {
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_attributes';
+    public $table = 'pixiu_commerce_product_variants';
 
     /**
      * @var array Guarded fields
@@ -29,19 +29,22 @@ class Attribute extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [
-        'attributegroup' => [
-            'Pixiu\Commerce\Models\AttributeGroup',
-            'key' => 'attribute_group_id'
-        ]
+        'product' => ['Pixiu\Commerce\Models\Product']
     ];
     public $belongsToMany = [
-        'productvariant' => [
-            'Pixiu\Commerce\Models\ProductVariant',
+        'attributes' => [
+            'Pixiu\Commerce\Models\Attribute',
             'table' => 'pixiu_commerce_variant_attributes',
-            'key' => 'attribute_id',
-            'otherKey' => 'variant_id',
+            'key' => 'variant_id',
+            'otherKey' => 'attribute_id',
             'pivot' => ['group_id']
         ],
+        'images' => [
+            'System\Models\File',
+            'table' => 'pixiu_commerce_variant_images',
+            'key' => 'variant_id',
+            'otherKey' => 'system_file_id'
+        ]
     ];
     public $morphTo = [];
     public $morphOne = [];
