@@ -14,6 +14,20 @@ class Product extends Model
         return Tax::all()->pluck('name', 'id')->toArray();
     }
 
+    public function getDecompositeOnOptions()
+    {
+        $this->load(['productvariants.attributes.attributegroup' => function ($q) use (&$attributeGroups) {
+            $attributeGroups = $q->select('name', 'id')->get()->toArray();
+        }]);
+
+        $options = [];
+        foreach ($attributeGroups as $attributeGroup){
+            $options[$attributeGroup['id']] = $attributeGroup['name'];
+        }
+        return $options;
+
+    }
+
     /**
      * @var string The database table used by the model.
      */
@@ -40,7 +54,14 @@ class Product extends Model
         'brand' => ['Pixiu\Commerce\Models\Brand'],
         'tax' => ['Pixiu\Commerce\Models\Tax']
     ];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'decomposite_on' => [
+            'Pixiu\Commerce\Models\AttributeGroup',
+            'table' => 'pixiu_commerce_products_groups',
+            'key' => 'product_id',
+            'otherKey' => 'attribute_group_id'
+        ]
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];

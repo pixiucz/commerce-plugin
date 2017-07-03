@@ -2,7 +2,7 @@
     <form method="post">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="popup">×</button>
-            <h4 class="modal-title">Select pictures for variants</h4>
+            <h4 class="modal-title">Select pictures... </h4>
             <div class="row">
                 <?php foreach($productImages as $productImage): ?>
                 <div class="col-sm-6 col-md-4">
@@ -18,7 +18,7 @@
         </div>
 
         <div class="modal-body">
-            <h4>Variants</h4>
+            <h4>... and variants these pictures should be added to</h4>
             <div class="list-preview list-flush">
                 <div class="control-list">
                     <table class="table data">
@@ -37,9 +37,9 @@
                                     <div class="image-preview" style="display: inline-block; position: relative; width: auto; height: auto;">
                                         <input class="image-id-value" type="hidden" name="image[][id]" value="<?= $image['id'] ?>"/>
                                         <input class="variant-id-value" type="hidden" name="variant[][id]" value="<?= $productVariant['id'] ?>"/>
-                                        <img id="image-<?= $image['id'] ?>" style="width: auto; height: 100px;" src="<?= $image['url'] ?>">
+                                        <img id="image-<?= $image['id'] ?>" style="width: auto; height: 50px;" src="<?= $image['url'] ?>">
                                         <span style="position: absolute; top: 20%; left: 35%;">
-                                            <i class="icon-4x oc-icon-trash" style="visibility: hidden; color: white;"></i>
+                                            <i class="icon-2x oc-icon-trash" style="visibility: hidden; color: white;"></i>
                                         </span>
                                     </div>
                                 <?php endforeach ?>
@@ -61,7 +61,8 @@
             <button
                     type="button"
                     class="btn btn-success"
-                    data-request="onPicturesPair"
+                    data-request="onPicturesMakePairs"
+                    data-request-flash
                     data-dismiss="popup"
             >
                 Pair these

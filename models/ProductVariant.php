@@ -29,7 +29,8 @@ class ProductVariant extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [
-        'product' => ['Pixiu\Commerce\Models\Product']
+        'product' => ['Pixiu\Commerce\Models\Product'],
+        'primary_picture' => ['System\Models\File']
     ];
     public $belongsToMany = [
         'attributes' => [

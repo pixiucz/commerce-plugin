@@ -61,6 +61,9 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('pixiu_commerce_products')->onDelete('cascade');
 
+            $table->integer('primary_picture_id')->unsigned()->nullable();
+            $table->foreign('primary_picture_id')->references('id')->on('system_files');
+
             $table->integer('in_stock')->unsigned()->default(0);
             $table->integer('ean')->unsigned()->default(0000000);
         });
@@ -272,6 +275,18 @@ class CreateAttributeGroupsTable extends Migration
 
         });
 
+        // Pivot to connect Products <--> Attribute Groups
+        Schema::create('pixiu_commerce_products_groups', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->timestamps();
+            $table->increments('id');
+
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('pixiu_commerce_products');
+
+            $table->integer('attribute_group_id')->unsigned();
+            $table->foreign('attribute_group_id')->references('id')->on('pixiu_commerce_attribute_groups');
+        });
 
 
 
@@ -279,6 +294,7 @@ class CreateAttributeGroupsTable extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('pixiu_commerce_products_groups');
         Schema::dropIfExists('pixiu_commerce_variant_images');
         Schema::dropIfExists('pixiu_commerce_order_variants');
         Schema::dropIfExists('pixiu_commerce_order_logs');
