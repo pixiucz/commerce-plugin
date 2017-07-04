@@ -28,6 +28,11 @@ secondaryTabs:
             default: ASDF
             tab: Product
 
+        categories:
+            label: Categories
+            type: partial
+            path: relation_categories
+
         retail_price:
             label: Retail price
             default: 9999

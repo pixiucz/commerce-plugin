@@ -3,6 +3,9 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: Name
+
+    parent:
+        label: Parent
+        type: relation

@@ -29,7 +29,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->text('description')->nullable();
         });
 
-
         //Products
         Schema::create('pixiu_commerce_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
@@ -68,7 +67,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('ean')->unsigned()->default(0000000);
             $table->float('price')->nullable();
         });
-
 
         // Images pivot
         Schema::create('pixiu_commerce_variant_images', function(Blueprint $table) {
@@ -288,8 +286,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('attribute_group_id')->unsigned();
             $table->foreign('attribute_group_id')->references('id')->on('pixiu_commerce_attribute_groups');
         });
-
-
 
     }
 

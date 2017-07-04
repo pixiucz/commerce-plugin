@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Category
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/category/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\Category
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/categories
+
+# Create page
+create:
+    title: Create Category
+    redirect: pixiu/commerce/categories/update/:id
+    redirectClose: pixiu/commerce/categories
+
+# Update page
+update:
+    title: Edit Category
+    redirect: pixiu/commerce/categories
+    redirectClose: pixiu/commerce/categories
+
+# Preview page
+preview:
+    title: Preview Category

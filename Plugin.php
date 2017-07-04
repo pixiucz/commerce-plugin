@@ -96,6 +96,12 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
+                    'categories' => [
+                        'label' => 'Categories',
+                        'url'         => Backend::url('pixiu/commerce/Categories'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
                     'taxes' => [
                         'label' => 'Taxes',
                         'url'         => Backend::url('pixiu/commerce/Taxes'),

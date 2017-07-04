@@ -1,0 +1,61 @@
+<div id="pictureSelectorModal">
+    <form method="post">
+        <div class="modal-header">
+            <h2> Select primary picture for variants </h2>
+        </div>
+        <div class="modal-body">
+            <div class="list-preview list-flush">
+                <div class="control-list">
+                    <table class="table data">
+                        <tbody>
+                        <?php foreach ($productVariants as $productVariant): ?>
+                        <tr>
+                            <td>
+                                <?php foreach($productVariant['images'] as $image): ?>
+                                <div class="image-preview" style="display: inline-block; position: relative; width: auto; height: auto;">
+                                    <input type="radio" name="primaryImages[<?= $productVariant['id'] ?>]" value="<?= $image['id'] ?>"
+                                    <?php if ($image['id'] === $productVariant['primary_picture_id']){ echo "checked"; } ?>
+                                    />
+                                    <img id="image-<?= $image['id'] ?>" style="width: auto; height: 50px;" src="<?= $image['url'] ?>">
+                                    <span style="position: absolute; top: 20%; left: 35%;">
+                                            <i class="icon-4x oc-icon-trash" style="visibility: hidden; color: white;"></i>
+                                        </span>
+                                </div>
+                                <?php endforeach ?>
+                            </td>
+                            <td>
+                                <?php foreach ($productVariant['attributes'] as $attribute): ?>
+                                <?= $attribute['value'] ?>
+                                <?php endforeach ?>
+                            </td>
+                        </tr>
+                        <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-success"
+                    data-request="onPicturesPrimary"
+                    data-request-flash
+                    data-dismiss="popup"
+            >
+                Confirm
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="popup">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+</script>

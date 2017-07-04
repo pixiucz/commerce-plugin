@@ -8,6 +8,7 @@ use Pixiu\Commerce\Models\{Tax, ProductVariant, Attribute, AttributeGroup};
  */
 class Product extends Model
 {
+    use \October\Rain\Database\Traits\NestedTree;
 
     public function getTaxIdOptions()
     {
@@ -24,8 +25,8 @@ class Product extends Model
         foreach ($attributeGroups as $attributeGroup){
             $options[$attributeGroup['id']] = $attributeGroup['name'];
         }
-        return $options;
 
+        return $options;
     }
 
     /**
@@ -52,7 +53,8 @@ class Product extends Model
     ];
     public $belongsTo = [
         'brand' => ['Pixiu\Commerce\Models\Brand'],
-        'tax' => ['Pixiu\Commerce\Models\Tax']
+        'tax' => ['Pixiu\Commerce\Models\Tax'],
+        'category' => ['Pixiu\Commerce\Models\Category']
     ];
     public $belongsToMany = [
         'decomposite_on' => [
@@ -60,6 +62,12 @@ class Product extends Model
             'table' => 'pixiu_commerce_products_groups',
             'key' => 'product_id',
             'otherKey' => 'attribute_group_id'
+        ],
+        'categories' => [
+            'Pixiu\Commerce\Models\Category',
+            'table' => 'pixiu_commerce_category_products',
+            'key' => 'product_id',
+            'otherKey' => 'category_id'
         ]
     ];
     public $morphTo = [];
