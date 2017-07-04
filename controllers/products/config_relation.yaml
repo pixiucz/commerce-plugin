@@ -1,0 +1,13 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+categories:
+    label: Categories
+    showTree: true
+    view:
+        list: $/pixiu/commerce/models/category/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        list: $/pixiu/commerce/models/category/columns.yaml
+        form: $/pixiu/commerce/models/category/fields.yaml

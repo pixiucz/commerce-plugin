@@ -82,16 +82,52 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return []; // Remove this line to activate
-
         return [
             'commerce' => [
                 'label'       => 'Commerce',
-                'url'         => Backend::url('pixiu/commerce/mycontroller'),
+                'url'         => Backend::url('pixiu/commerce/Products'),
                 'icon'        => 'icon-leaf',
                 'permissions' => ['pixiu.commerce.*'],
-                'order'       => 500,
-            ],
+                'order' => 500,
+                'sideMenu' => [
+                    'products' => [
+                        'label' => 'Products',
+                        'url'         => Backend::url('pixiu/commerce/Products'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'categories' => [
+                        'label' => 'Categories',
+                        'url'         => Backend::url('pixiu/commerce/Categories'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'taxes' => [
+                        'label' => 'Taxes',
+                        'url'         => Backend::url('pixiu/commerce/Taxes'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'brands' => [
+                        'label' => 'Brands',
+                        'url'         => Backend::url('pixiu/commerce/Brands'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'delivery_options' => [
+                        'label' => 'Delivery options',
+                        'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'payment_methods' => [
+                        'label' => 'Payment methods',
+                        'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ]
+                ]
+            ]
         ];
     }
 

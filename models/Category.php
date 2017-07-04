@@ -30,7 +30,14 @@ class Category extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'products' => [
+            'Pixiu\Commerce\Models\Product',
+            'table' => 'pixiu_commerce_category_products',
+            'key' => 'category_id',
+            'otherKey' => 'product_id'
+        ]
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];

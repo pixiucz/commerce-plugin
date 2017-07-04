@@ -1,0 +1,67 @@
+<?= $test ?>
+<a
+    href="javascript:;"
+    class="btn btn-secondary oc-icon-plus"
+    data-request="onSave"
+    data-request-data="redirect:0"
+    data-request-success="triggerPhotosToVariantsSelector()"
+
+>
+    Add photos to variants
+</a>
+
+<a
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-request="onSave"
+        data-request-data="redirect:0"
+        data-request-success="triggerPrimaryPictureSelector()"
+
+>
+    Select primary photo for variants
+</a>
+
+<a
+        id="addPhotosToVariants"
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-control="popup"
+        data-request-data="<?= $this->id ?>"
+        data-handler="onPicturesToVariantsPartial"
+        data-size="large"
+        style="visibility: hidden;"
+></a>
+
+<a
+        id="addPrimaryPicture"
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-control="popup"
+        data-request-data="<?= $this->id ?>"
+        data-handler="onPrimaryPictureForVariantsPartial"
+        data-size="large"
+        style="visibility: hidden;"
+></a>
+
+
+<script>
+
+    function triggerPhotosToVariantsSelector(){
+        $('#addPhotosToVariants').trigger('click');
+    }
+
+    function triggerPrimaryPictureSelector(){
+        $('#addPrimaryPicture').trigger('click');
+    }
+
+    $(document).ready(function() {
+        $("#addPhotosToVariants").click(function() {
+//            $.request('onSave', {
+//                success: function() {
+//                    console.log('saved');
+//                }
+//            });
+        });
+    });
+
+</script>

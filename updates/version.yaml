@@ -1,3 +1,4 @@
 1.0.1:
   - Initialization of Pixiu Commerce plugin.
   - create_base_tables.php
+  - seed_tables_with_test_data.php

@@ -28,8 +28,21 @@ class Attribute extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
-    public $belongsToMany = [];
+    public $belongsTo = [
+        'attributegroup' => [
+            'Pixiu\Commerce\Models\AttributeGroup',
+            'key' => 'attribute_group_id'
+        ]
+    ];
+    public $belongsToMany = [
+        'productvariant' => [
+            'Pixiu\Commerce\Models\ProductVariant',
+            'table' => 'pixiu_commerce_variant_attributes',
+            'key' => 'attribute_id',
+            'otherKey' => 'variant_id',
+            'pivot' => ['group_id']
+        ],
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];

@@ -1,0 +1,20 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+
+    name:
+        label: Name
+
+    logo:
+        label: Logo
+        type: fileupload
+        mode: image
+
+    description:
+        label: Description
+        type: markdown

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Payment Method
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/paymentmethod/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\PaymentMethod
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/paymentmethods
+
+# Create page
+create:
+    title: Create Payment Method
+    redirect: pixiu/commerce/paymentmethods/update/:id
+    redirectClose: pixiu/commerce/paymentmethods
+
+# Update page
+update:
+    title: Edit Payment Method
+    redirect: pixiu/commerce/paymentmethods
+    redirectClose: pixiu/commerce/paymentmethods
+
+# Preview page
+preview:
+    title: Preview Payment Method
