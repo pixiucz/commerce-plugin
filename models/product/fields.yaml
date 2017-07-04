@@ -32,6 +32,7 @@ secondaryTabs:
             label: Categories
             type: partial
             path: relation_categories
+            tab: Product
 
         retail_price:
             label: Retail price
