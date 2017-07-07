@@ -23,10 +23,7 @@ class Products extends Controller
     ];
 
     public $formConfig = 'config_form.yaml';
-    public $listConfig = [
-        'config_list.yaml',
-        'categories' => 'config_categories_list.yaml'
-    ];
+    public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
 
     public function __construct($id = null)
@@ -147,10 +144,20 @@ class Products extends Controller
         $productVariant->save();
     }
 
+
+
     /*
-     *      PARTIALS
-     *      HANDLING
-     *
+    |--------------------------------------------------------------------------
+    | Partials handling
+    |--------------------------------------------------------------------------
+    |
+    |
+    |
+    |
+    */
+
+    /*
+     *  Returns array with prepared variants
      */
     public function prepareVariantsForPartials(int $id) : array
     {
@@ -176,6 +183,9 @@ class Products extends Controller
         return $returnArray;
     }
 
+    /*
+     *  Returns array with preparet iamges for each variant
+     */
     public function prepareVariantImagesForPartias(int $id) : array
     {
 
@@ -196,10 +206,8 @@ class Products extends Controller
 
 
     /*
-     * On button press returns partial containing
-     * image-variant pairing dialog and sends
-     * all product images and product variants
-     * as variables.
+     *  Partial with dialog allowing user to
+     *  attach any uploaded image to any variant
      */
     public function onPicturesToVariantsPartial($id = null)
     {
@@ -214,6 +222,10 @@ class Products extends Controller
         return $this->makepartial('picture_selector');
     }
 
+    /*
+     *  Partial that allows user to select
+     *  picture from uploaded  as primary picture
+     */
     public function onPrimaryPictureForVariantsPartial($id = null)
     {
         $this->vars['productImages'] = $this->prepareVariantImagesForPartias($id);
@@ -221,11 +233,7 @@ class Products extends Controller
         return $this->makePartial('primary_picture');
     }
 
-
-    /*
-     *  Adds images to variants
-     */
-    public function onPicturesMakePairs($id = null)
+    public function onAttachPicturesToVariants($id = null)
     {
         $images = post('images');
         $variants = post('variants');
@@ -246,10 +254,7 @@ class Products extends Controller
         Flash::success('Pictures added!');
     }
 
-    /*
-     * Expects POST with array formated as: ['variant_id' => 'image_id']
-     */
-    public function onPicturesPrimary($id = null)
+    public function onSavePrimaryPictures($id = null)
     {
         $primaryImages = post('primaryImages');
 
