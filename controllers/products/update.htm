@@ -55,3 +55,14 @@
     <p><a href="<?= Backend::url('pixiu/commerce/products') ?>" class="btn btn-default">Return to products list</a></p>
 
 <?php endif ?>
+
+<script>
+    $(document).ready(function() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>
