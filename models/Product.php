@@ -8,7 +8,7 @@ use Pixiu\Commerce\Models\{Tax, ProductVariant, Attribute, AttributeGroup};
  */
 class Product extends Model
 {
-    use \October\Rain\Database\Traits\NestedTree;
+    //use \October\Rain\Database\Traits\NestedTree;
 
     public function getTaxIdOptions()
     {
@@ -22,10 +22,12 @@ class Product extends Model
         }]);
 
         $options = [];
-        foreach ($attributeGroups as $attributeGroup){
-            $options[$attributeGroup['id']] = $attributeGroup['name'];
-        }
 
+        if (is_array($attributeGroups)){
+            foreach ($attributeGroups as $attributeGroup){
+                $options[$attributeGroup['id']] = $attributeGroup['name'];
+            }
+        }
         return $options;
     }
 
