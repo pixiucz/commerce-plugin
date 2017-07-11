@@ -5,14 +5,14 @@
 columns:
     id:
         label: ID
-        disabled: true
+        searchable: true
 
-    name:
-        label: Name
+    title:
+        label: title
 
-    shipping_time:
-        label: Shipping time
+    created_at:
+        label: Created at
 
-    price:
-        label: Price
+    updated_at:
+        label: Updated at
 

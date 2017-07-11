@@ -6,3 +6,26 @@ columns:
     id:
         label: ID
         searchable: true
+
+    brand_id:
+        label: Brand
+        relation: brand
+        select: name
+        searchable: true
+        sortable: true
+
+    name:
+        label: Name
+        searchable: true
+        sortable: true
+
+    retail_price:
+        label: Retail Price
+
+    visible:
+        label: Visible
+        type: switch
+
+    active:
+        label: Active
+        type: switch

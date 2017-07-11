@@ -1,0 +1,27 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Title
+        span: storm
+        cssClass: col-sm-12
+
+    color:
+        label: Color
+        type: colorpicker
+        span: storm
+        cssClass: col-sm-12
+
+    increases_stock:
+        label: Increases stock
+        type: switch
+        span: storm
+        cssClass: col-sm-4
+
+    decreases_stock:
+        label: Decreases stock
+        type: switch
+        span: storm
+        cssClass: col-sm-4

@@ -1,0 +1,34 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    address:
+        label: Address
+        span: Strom
+        cssClass: col-sm-12
+
+    city:
+        label: City
+        span: Strom
+        cssClass: col-sm-6
+
+    zip:
+        label: ZIP
+        type: number
+        span: Strom
+        cssClass: col-sm-2
+
+    country:
+        label: Country
+        emptyOption: --Select country--
+        type: dropdown
+        span: Strom
+        cssClass: col-sm-4
+
+    user:
+        label: User
+        type: relation
+        emptyOption: --No user, just floating address--
+        span: Strom
+        cssClass: col-sm-12

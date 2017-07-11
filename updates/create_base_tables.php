@@ -40,7 +40,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->foreign('brand_id')->references('id')->on('pixiu_commerce_brands');
 
 
-            $table->string('title');
+            $table->string('name');
             $table->string('ean')->nullable();
             $table->boolean('visible')->default(true);
             $table->boolean('active')->default(true);
@@ -72,11 +72,13 @@ class CreateAttributeGroupsTable extends Migration
         Schema::create('pixiu_commerce_variant_images', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
-            $table->increments('id');
+
             $table->integer('variant_id')->unsigned();
             $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants')->onDelete('cascade');
             $table->integer('system_file_id')->unsigned();
             $table->foreign('system_file_id')->references('id')->on('system_files')->onDelete('cascade');
+
+            $table->primary(['variant_id', 'system_file_id']);
         });
 
         //Attribute groups
@@ -186,6 +188,8 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('name');
             $table->integer('shipping_time');
             $table->float('price');
+
+            // TODO: Rules for pricing, Size rules,...
         });
 
         // Order statuses
@@ -211,13 +215,18 @@ class CreateAttributeGroupsTable extends Migration
             $table->timestamps();
             $table->increments('id');
 
-            $table->string('street');
+            $table->string('address');
             $table->string('city');
-            $table->string('ZIP');
 
-            // TODO 
-            // $table->integer('user_id');
-            // $table->foreign('user_id')->references('id')->on('users');
+//            TODO: Is state necessary
+//            $table->string('state');
+
+            // String because of UK
+            $table->string('zip');
+            $table->string('country');
+
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
 
         });
 
@@ -256,6 +265,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders')->onDelete('cascade');
 
+            $table->text('title');
             $table->text('text');
         });
 
@@ -263,7 +273,6 @@ class CreateAttributeGroupsTable extends Migration
         Schema::create('pixiu_commerce_order_variants', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
-            $table->increments('id');
 
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders');
@@ -271,26 +280,40 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('variant_id')->unsigned();
             $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants');
 
-
+            $table->primary(['order_id', 'variant_id']);
         });
 
         // Pivot to connect Products <--> Attribute Groups
         Schema::create('pixiu_commerce_products_groups', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
-            $table->increments('id');
-
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('pixiu_commerce_products');
 
             $table->integer('attribute_group_id')->unsigned();
             $table->foreign('attribute_group_id')->references('id')->on('pixiu_commerce_attribute_groups');
+
+            $table->primary(['product_id', 'attribute_group_id']);
+        });
+
+        Schema::create('pixiu_commerce_orders_variants', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->integer('variant_id')->unsigned();
+            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants');
+
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders');
+
+            $table->integer('quantity');
+
+            $table->primary(['variant_id', 'order_id']);
         });
 
     }
 
     public function down()
     {
+        Schema::dropIfExists('pixiu_commerce_orders_variants');
         Schema::dropIfExists('pixiu_commerce_products_groups');
         Schema::dropIfExists('pixiu_commerce_variant_images');
         Schema::dropIfExists('pixiu_commerce_order_variants');

@@ -2,13 +2,16 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use Illuminate\Support\Facades\Event;
 
 /**
  * Commerce Plugin Information File
  */
 class Plugin extends PluginBase
 {
-
+    public $require = [
+        'RainLab.User'
+    ];
     /**
      * Returns information about this plugin.
      *
@@ -41,7 +44,9 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        Event::listen('backend.menu.extendItems', function($manager) {
+            $manager->removeMainMenuItem('RainLab.User', 'user');
+        });
     }
 
     /**
@@ -85,11 +90,17 @@ class Plugin extends PluginBase
         return [
             'commerce' => [
                 'label'       => 'Commerce',
-                'url'         => Backend::url('pixiu/commerce/Products'),
+                'url'         => Backend::url('pixiu/commerce/Orders'),
                 'icon'        => 'icon-leaf',
                 'permissions' => ['pixiu.commerce.*'],
                 'order' => 500,
                 'sideMenu' => [
+                    'orders' => [
+                        'label' => 'Orders',
+                        'url'         => Backend::url('pixiu/commerce/Orders'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
                     'products' => [
                         'label' => 'Products',
                         'url'         => Backend::url('pixiu/commerce/Products'),
@@ -123,6 +134,18 @@ class Plugin extends PluginBase
                     'payment_methods' => [
                         'label' => 'Payment methods',
                         'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'address' => [
+                        'label' => 'Address',
+                        'url'         => Backend::url('pixiu/commerce/Addresses'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'users' => [
+                        'label' => 'Users (bad context tho)',
+                        'url'         => Backend::url('rainlab/user/Users'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ]

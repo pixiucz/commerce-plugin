@@ -3,15 +3,19 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
-
     name:
         label: Name
+        span: storm
+        cssClass: col-sm-12
 
     shipping_time:
-        label: Shipping time
+        label: Shipping time (in days)
+        type: number
+        span: storm
+        cssClass: col-sm-4
 
     price:
         label: Price
+        type: number
+        span: storm
+        cssClass: col-sm-4

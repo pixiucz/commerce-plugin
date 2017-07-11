@@ -8,7 +8,21 @@ use Pixiu\Commerce\Models\{Tax, ProductVariant, Attribute, AttributeGroup};
  */
 class Product extends Model
 {
-    //use \October\Rain\Database\Traits\NestedTree;
+    use \October\Rain\Database\Traits\Validation;
+    public $rules = [];
+    public $customMessages = [];
+    public $attributeNames = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->rules = [
+            'name' => 'required',
+            'brand' => 'required',
+            'tax_id' => 'required',
+            'retail_price' => 'required'
+        ];
+    }
 
     public function getTaxIdOptions()
     {

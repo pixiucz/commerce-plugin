@@ -1,0 +1,30 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    address:
+        label: Address
+        searchable: true
+
+    city:
+        label: City
+        searchable: true
+
+    zip:
+        label: ZIP
+        searchable: true
+
+    country:
+        label: Country
+        searchable: true
+
+    user:
+        label: User
+        relation: user
+        select: email
+        searchable: true

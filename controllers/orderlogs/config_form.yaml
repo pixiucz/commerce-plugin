@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Order Log
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/orderlog/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\OrderLog
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/orderlogs
+
+# Create page
+create:
+    title: Create Order Log
+    redirect: pixiu/commerce/orderlogs/update/:id
+    redirectClose: pixiu/commerce/orderlogs
+
+# Update page
+update:
+    title: Edit Order Log
+    redirect: pixiu/commerce/orderlogs
+    redirectClose: pixiu/commerce/orderlogs
+
+# Preview page
+preview:
+    title: Preview Order Log

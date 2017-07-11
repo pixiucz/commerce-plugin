@@ -60,9 +60,7 @@ class Products extends Controller
 
                 /*
                  *  If Product variant already exists,
-                 *  we can only update it's EAN number
-                 *  (so far only mutable attribute)
-                 *  TODO: add individual price for each variant
+                 *  we can only update it's EAN number and Price
                  */
                 if (array_has($variant, 'id')){
                     $this->updateProductVariant($variant['id'], $variant);
@@ -77,7 +75,6 @@ class Products extends Controller
                         $model,
                         $this->resolveAttributeGroups(array_pluck($options, 'name'))
                     );
-
                 }
             }
         }

@@ -1,0 +1,75 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+secondaryTabs:
+    fields:
+        delivery_address_id:
+            label: Delivery address
+            type: dropdown
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-6
+            tab: Info
+
+        billing_address_id:
+            label: Billing address
+            type: dropdown
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-6
+            tab: Info
+            trigger:
+                action: hide
+                field: _same_as_delivery
+                condition: checked
+
+        _same_as_delivery:
+            label: Billing address same as delivery
+            type: checkbox
+            default: true
+            span: storm
+            cssClass: col-sm-12
+            tab: Info
+
+        payment_method:
+            label: Payment method
+            type: relation
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-9
+            tab: Info
+
+        order_status:
+            label: Order status
+            type: relation
+            select: title
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-3
+            tab: Info
+
+        _variants_repeater:
+            label: Products
+            type: repeater
+            form:
+                fields:
+                    variant_repeater_id:
+                        label: Product
+                        type: dropdown
+                        emptyOption: -
+                        span: storm
+                        cssClass: col-sm-10
+
+                    variant_repeater_quantity:
+                        label: Quantity
+                        type: number
+                        span: storm
+                        cssClass: col-sm-2
+            tab: Order
+
+        logs@update:
+            label: Log
+            type: partial
+            tab: Log
