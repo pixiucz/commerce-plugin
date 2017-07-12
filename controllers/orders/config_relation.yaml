@@ -1,0 +1,18 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+logs:
+    label: log
+    view:
+        list: $/pixiu/commerce/models/orderlog/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/pixiu/commerce/models/orderlog/fields.yaml
+        recordsPerPage: 10
+
+invoices:
+    label: invoices
+    readOnly: true
+    view:
+        list: $/pixiu/commerce/models/pdfinvoice/columns.yaml

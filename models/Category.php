@@ -12,7 +12,7 @@ class Category extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_categories';
+    public $table = 'pixiu_com_categories';
 
     /**
      * @var array Guarded fields
@@ -33,7 +33,7 @@ class Category extends Model
     public $belongsToMany = [
         'products' => [
             'Pixiu\Commerce\Models\Product',
-            'table' => 'pixiu_commerce_category_products',
+            'table' => 'pixiu_com_category_products',
             'key' => 'category_id',
             'otherKey' => 'product_id'
         ]

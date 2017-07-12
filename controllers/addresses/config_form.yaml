@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Address
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/address/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\Address
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/addresses
+
+# Create page
+create:
+    title: Create Address
+    redirect: pixiu/commerce/addresses/update/:id
+    redirectClose: pixiu/commerce/addresses
+
+# Update page
+update:
+    title: Edit Address
+    redirect: pixiu/commerce/addresses
+    redirectClose: pixiu/commerce/addresses
+
+# Preview page
+preview:
+    title: Preview Address

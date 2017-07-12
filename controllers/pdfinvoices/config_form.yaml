@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Pdf Invoice
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/pdfinvoice/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\PdfInvoice
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/pdfinvoices
+
+# Create page
+create:
+    title: Create Pdf Invoice
+    redirect: pixiu/commerce/pdfinvoices/update/:id
+    redirectClose: pixiu/commerce/pdfinvoices
+
+# Update page
+update:
+    title: Edit Pdf Invoice
+    redirect: pixiu/commerce/pdfinvoices
+    redirectClose: pixiu/commerce/pdfinvoices
+
+# Preview page
+preview:
+    title: Preview Pdf Invoice

@@ -5,15 +5,12 @@
 fields:
 secondaryTabs:
     fields:
-        id:
-            label: ID
-            disabled: true
-            tab: Product
-
-        tax_id:
-            label: Tax
-            type: dropdown
-            tab: Product
+        name:
+            label: Name
+            default: ASDF
+            span: storm
+            cssClass: col-sm-8
+            tab: Details
 
         brand:
             label: Brand
@@ -21,28 +18,49 @@ secondaryTabs:
             list: $/pixiu/commerce/models/brand/columns.yaml
             prompt: Stiskni %s
             nameFrom: name
-            tab: Product
+            span: storm
+            cssClass: col-sm-4
+            tab: Details
 
-        title:
-            label: Title
-            default: ASDF
-            tab: Product
+        retail_price:
+            label: Retail price
+            default: 9999
+            span: storm
+            cssClass: col-sm-8
+            tab: Details
+
+        tax_id:
+            label: Tax
+            emptyOption: Select tax
+            type: dropdown
+            span: storm
+            cssClass: col-sm-4
+            tab: Details
 
         categories:
             label: Categories
             type: partial
             path: relation_categories
-            tab: Product
-
-        retail_price:
-            label: Retail price
-            default: 9999
-            tab: Product
+            span: storm
+            cssClass: col-sm-12
+            tab: Details
 
         _form_widget:
-            label: TODO Frontend naseptavace
+            label: Variants & Attributes
             type: \pixiu\commerce\formwidgets\variantswidget
-            tab: Product
+            tab: Details
+
+        short_description:
+            label: Short description
+            type: textarea
+            size: small
+            tab: Descriptions
+
+        long_description:
+            label: Long description
+            type: richeditor
+            size: large
+            tab: Descriptions
 
         images:
             label: Images
@@ -59,4 +77,20 @@ secondaryTabs:
         decomposite_on@update:
             label: Decomposite based on
             type: checkboxlist
+            tab: Rules
+
+        visible:
+            label: Visible
+            type: switch
+            default: true
+            span: strom
+            cssClass: col-sm-2
+            tab: Rules
+
+        active:
+            label: Active
+            type: switch
+            default: true
+            span: strom
+            cssClass: col-sm-2
             tab: Rules

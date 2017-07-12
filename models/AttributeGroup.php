@@ -11,7 +11,7 @@ class AttributeGroup extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_attribute_groups';
+    public $table = 'pixiu_com_attribute_groups';
 
     /**
      * @var array Guarded fields

@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    title:
+        label: Title
+
+    decreases_stock:
+        label: Decreases stock
+        type: switch

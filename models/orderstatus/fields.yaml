@@ -1,0 +1,23 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Title
+        span: storm
+        cssClass: col-sm-12
+
+    color:
+        label: Color
+        type: colorpicker
+        span: storm
+        cssClass: col-sm-12
+
+    decreases_stock:
+        label: Decreases stock
+        commentAbove: Turn off if this status means that order will not be shipped or won't affect stocks (canceled, returned,..)
+        type: switch
+        default: true
+        span: storm
+        cssClass: col-sm-4

@@ -1,0 +1,53 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    user:
+        label: User
+        relation: user
+        select: concat(name, ' ', surname, ' | ', email)
+        searchable: true
+        sortable: true
+
+    delivery_address:
+        label: Delivery address
+        relation: delivery_address
+        select: concat(first_name, ' ', last_name, ' ', address, ' ', city, ' ', zip, ' ', country)
+        searchable: true
+        sortable: true
+
+    billing_address:
+        label: Billing address
+        relation: billing_address
+        select: concat(first_name, ' ', last_name, ' ', address, ' ', city, ' ', zip, ' ', country)
+        searchable: true
+        sortable: true
+
+    delivery_option:
+        label: Delivery
+        relation: delivery_option
+        select: name
+        searchable: true
+        sortable: true
+
+    payment_method:
+        label: Payment
+        relation: payment_method
+        select: name
+        searchable: true
+        sortable: true
+
+    order_status:
+        label: Status
+        relation: order_status
+        type: partial
+        path: ~/plugins/pixiu/commerce/controllers/orderstatuses/_status_column.htm
+        searchable: true
+        sortable: true
+
+# TODO: Overall sum

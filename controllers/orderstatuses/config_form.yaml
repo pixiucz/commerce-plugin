@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Order Status
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/orderstatus/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\OrderStatus
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/orderstatuses
+
+# Create page
+create:
+    title: Create Order Status
+    redirect: pixiu/commerce/orderstatuses/update/:id
+    redirectClose: pixiu/commerce/orderstatuses
+
+# Update page
+update:
+    title: Edit Order Status
+    redirect: pixiu/commerce/orderstatuses
+    redirectClose: pixiu/commerce/orderstatuses
+
+# Preview page
+preview:
+    title: Preview Order Status

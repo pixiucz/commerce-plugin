@@ -1,0 +1,85 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+secondaryTabs:
+    fields:
+        user:
+            label: User
+            type: relation
+            select: concat(name, ' ', surname, ' | ', email)
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-12
+            tab: Info
+
+        delivery_address_id:
+            label: Delivery address
+            type: dropdown
+            dependsOn: user
+            span: storm
+            cssClass: col-sm-6
+            tab: Info
+
+        billing_address_id:
+            label: Billing address
+            type: dropdown
+            dependsOn: user
+            span: storm
+            cssClass: col-sm-6
+            tab: Info
+
+        delivery_option:
+            label: Delivery optons
+            type: relation
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-5
+            tab: Info
+
+        payment_method:
+            label: Payment method
+            type: relation
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-4
+            tab: Info
+
+        order_status:
+            label: Order status
+            type: relation
+            select: title
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-3
+            tab: Info
+
+        _variants_repeater:
+            label: Products
+            type: repeater
+            form:
+                fields:
+                    variant_repeater_id:
+                        label: Product
+                        type: dropdown
+                        emptyOption: -
+                        span: storm
+                        cssClass: col-sm-10
+
+                    variant_repeater_quantity:
+                        label: Quantity
+                        type: number
+                        span: storm
+                        cssClass: col-sm-2
+            tab: Order
+
+        logs@update:
+            label: Log
+            type: partial
+            tab: Log
+
+        invoices@update:
+            label: Invoices
+            type: partial
+            tab: Invoices

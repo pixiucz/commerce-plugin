@@ -10,7 +10,7 @@ class PaymentMethod extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_payment_methods';
+    public $table = 'pixiu_com_payment_methods';
 
     /**
      * @var array Guarded fields

@@ -10,7 +10,7 @@ class Brand extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_brands';
+    public $table = 'pixiu_com_brands';
 
     /**
      * @var array Guarded fields
