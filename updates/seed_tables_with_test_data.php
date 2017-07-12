@@ -59,14 +59,12 @@ class SeedUsersTable extends Seeder
         OrderStatus::create([
             'title' => 'Canceled',
             'color' => 'red',
-            'increases_stock' => false,
             'decreases_stock' => false
         ]);
 
         OrderStatus::create([
             'title' => 'Done',
             'color' => 'green',
-            'increases_stock' => false,
             'decreases_stock' => false
         ]);
     }

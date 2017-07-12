@@ -3,6 +3,9 @@
 use Backend;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
+use RainLab\User\Models\User;
+use Barryvdh\DomPDF\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 /**
  * Commerce Plugin Information File
@@ -47,6 +50,13 @@ class Plugin extends PluginBase
         Event::listen('backend.menu.extendItems', function($manager) {
             $manager->removeMainMenuItem('RainLab.User', 'user');
         });
+
+        User::extend(function($model) {
+            $model->hasMany['addresses'] = ['Pixiu\Commerce\Models\Address'];
+        });
+
+        $this->app->register(ServiceProvider::class);
+        AliasLoader::getInstance()->alias('PDF', 'Barryvdh\DomPDF\Facade');
     }
 
     /**
@@ -134,6 +144,12 @@ class Plugin extends PluginBase
                     'payment_methods' => [
                         'label' => 'Payment methods',
                         'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
+                        'icon'        => 'icon-leaf',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
+                    'order_statuses' => [
+                        'label' => 'Order Statuses',
+                        'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
