@@ -8,4 +8,4 @@ columns:
         searchable: true
 
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name

@@ -4,7 +4,7 @@
 
 fields:
     title:
-        label: Title
+        label: pixiu.commerce::lang.fields.title
         type: text
 
     text:

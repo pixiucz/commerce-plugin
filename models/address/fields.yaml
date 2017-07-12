@@ -4,7 +4,7 @@
 
 fields:
     user:
-        label: User
+        label: pixiu.commerce::lang.fields.user
         type: relation
         select: concat(name, ' ', surname, ' | ', email)
         emptyOption: -
@@ -12,33 +12,33 @@ fields:
         cssClass: col-sm-12
 
     first_name:
-        label: First name
+        label: pixiu.commerce::lang.fields.first_name
         span: storm
         cssClass: col-sm-6
 
     last_name:
-        label: Last name
+        label: pixiu.commerce::lang.fields.last_name
         span: storm
         cssClass: col-sm-6
 
     address:
-        label: Address
+        label: pixiu.commerce::lang.fields.address
         span: Strom
         cssClass: col-sm-12
 
     city:
-        label: City
+        label: pixiu.commerce::lang.fields.city
         span: Strom
         cssClass: col-sm-6
 
     zip:
-        label: ZIP
+        label: pixiu.commerce::lang.fields.zip
         type: number
         span: Strom
         cssClass: col-sm-2
 
     country:
-        label: Country
+        label: pixiu.commerce::lang.fields.country
         emptyOption: --Select country--
         type: dropdown
         span: Strom

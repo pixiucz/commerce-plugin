@@ -8,11 +8,11 @@ columns:
         disabled: true
 
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
 
     shipping_time:
-        label: Shipping time
+        label: pixiu.commerce::lang.fields.shipping_time
 
     price:
-        label: Price
+        label: pixiu.commerce::lang.fields.price
 
