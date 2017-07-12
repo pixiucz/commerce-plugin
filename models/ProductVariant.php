@@ -11,7 +11,7 @@ class ProductVariant extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_product_variants';
+    public $table = 'pixiu_com_product_variants';
 
     /**
      * @var array Guarded fields
@@ -35,20 +35,20 @@ class ProductVariant extends Model
     public $belongsToMany = [
         'attributes' => [
             'Pixiu\Commerce\Models\Attribute',
-            'table' => 'pixiu_commerce_variant_attributes',
+            'table' => 'pixiu_com_variant_attributes',
             'key' => 'variant_id',
             'otherKey' => 'attribute_id',
             'pivot' => ['group_id']
         ],
         'images' => [
             'System\Models\File',
-            'table' => 'pixiu_commerce_variant_images',
+            'table' => 'pixiu_com_variant_images',
             'key' => 'variant_id',
             'otherKey' => 'system_file_id'
         ],
         'orders' => [
             'Pixiu\Commerce\Models\Orders',
-            'table' => 'pixiu_commerce_orders_variants',
+            'table' => 'pixiu_com_orders_variants',
             'key' => 'variant_id',
             'otherKey' => 'order_id'
         ]

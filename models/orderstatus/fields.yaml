@@ -14,14 +14,10 @@ fields:
         span: storm
         cssClass: col-sm-12
 
-    increases_stock:
-        label: Increases stock
-        type: switch
-        span: storm
-        cssClass: col-sm-4
-
     decreases_stock:
         label: Decreases stock
+        commentAbove: Turn off if this status means that order will not be shipped or won't affect stocks (canceled, returned,..)
         type: switch
+        default: true
         span: storm
         cssClass: col-sm-4

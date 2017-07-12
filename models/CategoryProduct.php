@@ -11,7 +11,7 @@ class CategoryProduct extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_category_products';
+    public $table = 'pixiu_com_category_products';
 
     /**
      * @var array Guarded fields

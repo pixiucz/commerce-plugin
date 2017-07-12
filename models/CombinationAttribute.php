@@ -11,7 +11,7 @@ class CombinationAttribute extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_combination_attributes';
+    public $table = 'pixiu_com_combination_attributes';
 
     /**
      * @var array Guarded fields

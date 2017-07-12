@@ -2,6 +2,7 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use Pixiu\Commerce\Classes\InvoiceRobot;
 
 /**
  * Orders Back-end Controller
@@ -25,7 +26,14 @@ class Orders extends Controller
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orders');
     }
 
+    public function formBeforeSave($model)
+    {
+        // TODO: Stocks
+    }
+
     public function formAfterSave($model)
     {
+        // TODO: Invoices
+        (new InvoiceRobot($model))->generateInvoice();
     }
 }

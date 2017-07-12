@@ -10,7 +10,7 @@ class VariantImage extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_variant_images';
+    public $table = 'pixiu_com_variant_images';
 
     /**
      * @var array Guarded fields

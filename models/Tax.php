@@ -10,7 +10,7 @@ class Tax extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_taxes';
+    public $table = 'pixiu_com_taxes';
 
     /**
      * @var array Guarded fields

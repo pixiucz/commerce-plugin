@@ -10,7 +10,7 @@ class OrderStatus extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_order_statuses';
+    public $table = 'pixiu_com_order_statuses';
 
     /**
      * @var array Guarded fields

@@ -10,7 +10,7 @@ class DeliveryOption extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_delivery_options';
+    public $table = 'pixiu_com_delivery_options';
 
     /**
      * @var array Guarded fields

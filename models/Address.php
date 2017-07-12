@@ -17,22 +17,25 @@ class Address extends Model
     {
         parent::__construct();
         $this->rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
             'address' => 'required',
             'city' => 'required',
             'zip' => 'required',
-            'country' => 'required'
+            'country' => 'required',
+            'user' => 'required'
         ];
     }
 
     public function getFullAddressAttribute()
     {
-        return $this->address . ', ' . $this->city . ', ' . $this->zip . ' ' . $this->country;
+        return $this->first_name . ' ' . $this->last_name . ' | ' . $this->address . ', ' . $this->city . ', ' . $this->zip . ' ' . $this->country;
     }
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_addresses';
+    public $table = 'pixiu_com_addresses';
 
     /**
      * @var array Guarded fields

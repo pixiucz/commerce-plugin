@@ -5,10 +5,19 @@
 fields:
 secondaryTabs:
     fields:
+        user:
+            label: User
+            type: relation
+            select: concat(name, ' ', surname, ' | ', email)
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-12
+            tab: Info
+
         delivery_address_id:
             label: Delivery address
             type: dropdown
-            emptyOption: -
+            dependsOn: user
             span: storm
             cssClass: col-sm-6
             tab: Info
@@ -16,21 +25,17 @@ secondaryTabs:
         billing_address_id:
             label: Billing address
             type: dropdown
-            emptyOption: -
+            dependsOn: user
             span: storm
             cssClass: col-sm-6
             tab: Info
-            trigger:
-                action: hide
-                field: _same_as_delivery
-                condition: checked
 
-        _same_as_delivery:
-            label: Billing address same as delivery
-            type: checkbox
-            default: true
+        delivery_option:
+            label: Delivery optons
+            type: relation
+            emptyOption: -
             span: storm
-            cssClass: col-sm-12
+            cssClass: col-sm-5
             tab: Info
 
         payment_method:
@@ -38,7 +43,7 @@ secondaryTabs:
             type: relation
             emptyOption: -
             span: storm
-            cssClass: col-sm-9
+            cssClass: col-sm-4
             tab: Info
 
         order_status:
@@ -73,3 +78,8 @@ secondaryTabs:
             label: Log
             type: partial
             tab: Log
+
+        invoices@update:
+            label: Invoices
+            type: partial
+            tab: Invoices

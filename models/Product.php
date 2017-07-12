@@ -48,7 +48,7 @@ class Product extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_products';
+    public $table = 'pixiu_com_products';
 
     /**
      * @var array Guarded fields
@@ -75,13 +75,13 @@ class Product extends Model
     public $belongsToMany = [
         'decomposite_on' => [
             'Pixiu\Commerce\Models\AttributeGroup',
-            'table' => 'pixiu_commerce_products_groups',
+            'table' => 'pixiu_com_products_groups',
             'key' => 'product_id',
             'otherKey' => 'attribute_group_id'
         ],
         'categories' => [
             'Pixiu\Commerce\Models\Category',
-            'table' => 'pixiu_commerce_category_products',
+            'table' => 'pixiu_com_category_products',
             'key' => 'product_id',
             'otherKey' => 'category_id'
         ]

@@ -3,6 +3,24 @@
 # ===================================
 
 fields:
+    user:
+        label: User
+        type: relation
+        select: concat(name, ' ', surname, ' | ', email)
+        emptyOption: -
+        span: Strom
+        cssClass: col-sm-12
+
+    first_name:
+        label: First name
+        span: storm
+        cssClass: col-sm-6
+
+    last_name:
+        label: Last name
+        span: storm
+        cssClass: col-sm-6
+
     address:
         label: Address
         span: Strom
@@ -25,10 +43,3 @@ fields:
         type: dropdown
         span: Strom
         cssClass: col-sm-4
-
-    user:
-        label: User
-        type: relation
-        emptyOption: --No user, just floating address--
-        span: Strom
-        cssClass: col-sm-12

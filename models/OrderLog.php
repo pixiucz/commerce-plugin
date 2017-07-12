@@ -10,7 +10,7 @@ class OrderLog extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_order_logs';
+    public $table = 'pixiu_com_order_logs';
 
     /**
      * @var array Guarded fields

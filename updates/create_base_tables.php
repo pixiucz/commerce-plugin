@@ -9,7 +9,7 @@ class CreateAttributeGroupsTable extends Migration
     public function up()
     {
         //Taxes
-        Schema::create('pixiu_commerce_taxes', function(Blueprint $table) {
+        Schema::create('pixiu_com_taxes', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -19,7 +19,7 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Brands
-        Schema::create('pixiu_commerce_brands', function(Blueprint $table) {
+        Schema::create('pixiu_com_brands', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -30,14 +30,14 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         //Products
-        Schema::create('pixiu_commerce_products', function(Blueprint $table) {
+        Schema::create('pixiu_com_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
 
             $table->integer('tax_id')->unsigned();
-            $table->foreign('tax_id')->references('id')->on('pixiu_commerce_taxes');
+            $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
             $table->integer('brand_id')->unsigned();
-            $table->foreign('brand_id')->references('id')->on('pixiu_commerce_brands');
+            $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');
 
 
             $table->string('name');
@@ -52,13 +52,13 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         //Product variants
-        Schema::create('pixiu_commerce_product_variants', function(Blueprint $table) {
+        Schema::create('pixiu_com_product_variants', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();
 
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('pixiu_commerce_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pixiu_com_products')->onDelete('cascade');
 
             $table->integer('primary_picture_id')->unsigned()->nullable();
             $table->foreign('primary_picture_id')->references('id')->on('system_files');
@@ -69,12 +69,12 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Images pivot
-        Schema::create('pixiu_commerce_variant_images', function(Blueprint $table) {
+        Schema::create('pixiu_com_variant_images', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
 
             $table->integer('variant_id')->unsigned();
-            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants')->onDelete('cascade');
+            $table->foreign('variant_id')->references('id')->on('pixiu_com_product_variants')->onDelete('cascade');
             $table->integer('system_file_id')->unsigned();
             $table->foreign('system_file_id')->references('id')->on('system_files')->onDelete('cascade');
 
@@ -82,7 +82,7 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         //Attribute groups
-        Schema::create('pixiu_commerce_attribute_groups', function(Blueprint $table) {
+        Schema::create('pixiu_com_attribute_groups', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
@@ -90,36 +90,36 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         //Attributes
-        Schema::create('pixiu_commerce_attributes', function(Blueprint $table) {
+        Schema::create('pixiu_com_attributes', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('value');
             $table->timestamps();
 
             $table->integer('attribute_group_id')->unsigned();
-            $table->foreign('attribute_group_id')->references('id')->on('pixiu_commerce_attribute_groups')->onDelete('cascade');
+            $table->foreign('attribute_group_id')->references('id')->on('pixiu_com_attribute_groups')->onDelete('cascade');
         });
 
         //Variant-attributes pivot
-        Schema::create('pixiu_commerce_variant_attributes', function(Blueprint $table) {
+        Schema::create('pixiu_com_variant_attributes', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
 
             $table->integer('variant_id')->unsigned();
-            $table->foreign('variant_id', 'product_variant_foreign')->references('id')->on('pixiu_commerce_product_variants')->onDelete('cascade');
+            $table->foreign('variant_id', 'product_variant_foreign')->references('id')->on('pixiu_com_product_variants')->onDelete('cascade');
 
             $table->integer('attribute_id')->unsigned();
-            $table->foreign('attribute_id')->references('id')->on('pixiu_commerce_attributes');
+            $table->foreign('attribute_id')->references('id')->on('pixiu_com_attributes');
 
             $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('pixiu_commerce_attribute_groups');
+            $table->foreign('group_id')->references('id')->on('pixiu_com_attribute_groups');
 
             $table->unique(['variant_id', 'group_id']);
             $table->primary(['variant_id', 'attribute_id'], 'id');
         });
 
         //Categories
-        Schema::create('pixiu_commerce_categories', function(Blueprint $table) {
+        Schema::create('pixiu_com_categories', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();
@@ -129,7 +129,7 @@ class CreateAttributeGroupsTable extends Migration
             #Nested tree
             $table->integer('parent_id')->unsigned()->nullable();
             #FIXME ONDELETE?
-            $table->foreign('parent_id')->references('id')->on('pixiu_commerce_categories');
+            $table->foreign('parent_id')->references('id')->on('pixiu_com_categories');
 
             $table->integer('nest_left')->unsigned()->nullable();
             $table->integer('nest_right')->unsigned()->nullable();
@@ -137,22 +137,22 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         //Category products
-        Schema::create('pixiu_commerce_category_products', function(Blueprint $table) {
+        Schema::create('pixiu_com_category_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
 
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('pixiu_commerce_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pixiu_com_products')->onDelete('cascade');
 
             $table->integer('category_id')->unsigned();
             #FIXME ONDELETE?
-            $table->foreign('category_id')->references('id')->on('pixiu_commerce_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('pixiu_com_categories')->onDelete('cascade');
 
             $table->primary(['product_id', 'category_id'], 'id');
         });
 
         // Product pictures
-        Schema::create('pixiu_commerce_product_pictures', function(Blueprint $table) {
+        Schema::create('pixiu_com_product_pictures', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -160,16 +160,16 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('url');
 
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('pixiu_commerce_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pixiu_com_products')->onDelete('cascade');
 
             $table->integer('variant_id')->unsigned()->nullable();
-            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants')->onDelete('cascade');
+            $table->foreign('variant_id')->references('id')->on('pixiu_com_product_variants')->onDelete('cascade');
 
             $table->string('name');
         });
 
         // Paymend methods
-        Schema::create('pixiu_commerce_payment_methods', function(Blueprint $table) {
+        Schema::create('pixiu_com_payment_methods', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -180,7 +180,7 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Delivery options
-        Schema::create('pixiu_commerce_delivery_options', function(Blueprint $table) {
+        Schema::create('pixiu_com_delivery_options', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -193,7 +193,7 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Order statuses
-        Schema::create('pixiu_commerce_order_statuses', function(Blueprint $table) {
+        Schema::create('pixiu_com_order_statuses', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -201,7 +201,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('title');
             $table->string('color');
 
-            $table->boolean('increases_stock')->default(false);
             $table->boolean('decreases_stock')->default(false);
 
             // Requires mail-templates implementation
@@ -210,11 +209,13 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Addresses
-        Schema::create('pixiu_commerce_addresses', function(Blueprint $table) {
+        Schema::create('pixiu_com_addresses', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
 
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('address');
             $table->string('city');
 
@@ -225,31 +226,34 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('zip');
             $table->string('country');
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
         });
 
         // Orders
-        Schema::create('pixiu_commerce_orders', function(Blueprint $table) {
+        Schema::create('pixiu_com_orders', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->integer('delivery_address_id')->unsigned();
-            $table->foreign('delivery_address_id')->references('id')->on('pixiu_commerce_addresses');
+            $table->foreign('delivery_address_id')->references('id')->on('pixiu_com_addresses');
 
             $table->integer('billing_address_id')->unsigned()->nullable();
-            $table->foreign('billing_address_id')->references('id')->on('pixiu_commerce_addresses');
+            $table->foreign('billing_address_id')->references('id')->on('pixiu_com_addresses');
 
             $table->integer('payment_method_id')->unsigned()->nullable();
-            $table->foreign('payment_method_id')->references('id')->on('pixiu_commerce_payment_methods');
+            $table->foreign('payment_method_id')->references('id')->on('pixiu_com_payment_methods');
 
             $table->integer('order_status_id')->unsigned()->nullable();
-            $table->foreign('order_status_id')->references('id')->on('pixiu_commerce_order_statuses');
+            $table->foreign('order_status_id')->references('id')->on('pixiu_com_order_statuses');
 
-            $table->integer('delivery_options_id')->unsigned()->nullable();
-            $table->foreign('delivery_options_id')->references('id')->on('pixiu_commerce_delivery_options');
+            $table->integer('delivery_option_id')->unsigned()->nullable();
+            $table->foreign('delivery_option_id')->references('id')->on('pixiu_com_delivery_options');
             
             // TODO
             // $table->integer('user_id')->unsigned();
@@ -257,81 +261,80 @@ class CreateAttributeGroupsTable extends Migration
         });
 
         // Order logs
-        Schema::create('pixiu_commerce_order_logs', function(Blueprint $table) {
+        Schema::create('pixiu_com_order_logs', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
 
             $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('pixiu_com_orders')->onDelete('cascade');
 
             $table->text('title');
             $table->text('text');
         });
 
-        // Order - variants
-        Schema::create('pixiu_commerce_order_variants', function(Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->timestamps();
-
-            $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders');
-
-            $table->integer('variant_id')->unsigned();
-            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants');
-
-            $table->primary(['order_id', 'variant_id']);
-        });
-
         // Pivot to connect Products <--> Attribute Groups
-        Schema::create('pixiu_commerce_products_groups', function(Blueprint $table) {
+        Schema::create('pixiu_com_products_groups', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('pixiu_commerce_products');
+            $table->foreign('product_id')->references('id')->on('pixiu_com_products');
 
             $table->integer('attribute_group_id')->unsigned();
-            $table->foreign('attribute_group_id')->references('id')->on('pixiu_commerce_attribute_groups');
+            $table->foreign('attribute_group_id')->references('id')->on('pixiu_com_attribute_groups');
 
             $table->primary(['product_id', 'attribute_group_id']);
         });
 
-        Schema::create('pixiu_commerce_orders_variants', function(Blueprint $table) {
+        // Pivot to connect Orders <--> Variants
+        Schema::create('pixiu_com_orders_variants', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('variant_id')->unsigned();
-            $table->foreign('variant_id')->references('id')->on('pixiu_commerce_product_variants');
+            $table->foreign('variant_id')->references('id')->on('pixiu_com_product_variants');
 
             $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('pixiu_commerce_orders');
+            $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
 
             $table->integer('quantity');
 
             $table->primary(['variant_id', 'order_id']);
         });
 
+        // Pdf invoices
+        Schema::create('pixiu_com_pdf_invoices', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->timestamps();
+            $table->increments('id');
+            $table->string('path');
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
+
+        });
+
     }
 
     public function down()
     {
-        Schema::dropIfExists('pixiu_commerce_orders_variants');
-        Schema::dropIfExists('pixiu_commerce_products_groups');
-        Schema::dropIfExists('pixiu_commerce_variant_images');
-        Schema::dropIfExists('pixiu_commerce_order_variants');
-        Schema::dropIfExists('pixiu_commerce_order_logs');
-        Schema::dropIfExists('pixiu_commerce_orders');
-        Schema::dropIfExists('pixiu_commerce_payment_methods');
-        Schema::dropIfExists('pixiu_commerce_delivery_options');
-        Schema::dropIfExists('pixiu_commerce_category_products');
-        Schema::dropIfExists('pixiu_commerce_categories');
-        Schema::dropIfExists('pixiu_commerce_variant_attributes');
-        Schema::dropIfExists('pixiu_commerce_attributes');
-        Schema::dropIfExists('pixiu_commerce_attribute_groups');
-        Schema::dropIfExists('pixiu_commerce_product_pictures');
-        Schema::dropIfExists('pixiu_commerce_product_variants');
-        Schema::dropIfExists('pixiu_commerce_products');
-        Schema::dropIfExists('pixiu_commerce_taxes');
-        Schema::dropIfExists('pixiu_commerce_brands');
-        Schema::dropIfExists('pixiu_commerce_order_statuses');
-        Schema::dropIfExists('pixiu_commerce_addresses');
+        Schema::dropIfExists('pixiu_com_pdf_invoices');
+        Schema::dropIfExists('pixiu_com_orders_variants');
+        Schema::dropIfExists('pixiu_com_products_groups');
+        Schema::dropIfExists('pixiu_com_variant_images');
+        Schema::dropIfExists('pixiu_com_order_variants');
+        Schema::dropIfExists('pixiu_com_order_logs');
+        Schema::dropIfExists('pixiu_com_orders');
+        Schema::dropIfExists('pixiu_com_payment_methods');
+        Schema::dropIfExists('pixiu_com_delivery_options');
+        Schema::dropIfExists('pixiu_com_category_products');
+        Schema::dropIfExists('pixiu_com_categories');
+        Schema::dropIfExists('pixiu_com_variant_attributes');
+        Schema::dropIfExists('pixiu_com_attributes');
+        Schema::dropIfExists('pixiu_com_attribute_groups');
+        Schema::dropIfExists('pixiu_com_product_pictures');
+        Schema::dropIfExists('pixiu_com_product_variants');
+        Schema::dropIfExists('pixiu_com_products');
+        Schema::dropIfExists('pixiu_com_taxes');
+        Schema::dropIfExists('pixiu_com_brands');
+        Schema::dropIfExists('pixiu_com_order_statuses');
+        Schema::dropIfExists('pixiu_com_addresses');
     }
 }

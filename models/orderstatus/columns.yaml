@@ -10,10 +10,6 @@ columns:
     title:
         label: Title
 
-    increases_stock:
-        label: Increases stock
-        type: switch
-
     decreases_stock:
         label: Decreases stock
         type: switch
