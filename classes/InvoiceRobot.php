@@ -13,9 +13,11 @@ class InvoiceRobot {
     private $data;
     private $fileName;
     private $twig;
+    private $language;
 
-    public function __construct($model)
+    public function __construct(string $language, $model)
     {
+        $this->language = $language;
         $this->data = $this->generateData($model);
         $this->fileName = $this->generateFilename($model);
         $this->twig = new Twig();
@@ -41,7 +43,9 @@ class InvoiceRobot {
     }
 
     public function generateInvoice() {
-        $html = $this->twig->parse(File::get(plugins_path().'/pixiu/commerce/views/invoice_cz.html'), $this->data);
+        // TODO: Parse data into template
+        $invoiceTemplatePath = '/pixiu/commerce/views/invoice_' . $this->language . '.html';
+        $html = $this->twig->parse(File::get(plugins_path().$invoiceTemplatePath), $this->data);
         $pdf = App::make('dompdf.wrapper');
         $invoicePDF = @$pdf->setOptions(['isFontSubsettingEnabled' => true, 'isRemoteEnabled' => true])->loadHTML($html)->output();
         $filePath = 'invoices/' . $this->fileName;

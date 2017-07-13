@@ -33,7 +33,6 @@ class Orders extends Controller
 
     public function formAfterSave($model)
     {
-        // TODO: Invoices
-        (new InvoiceRobot($model))->generateInvoice();
+        (new InvoiceRobot('cs', $model))->generateInvoice();
     }
 }

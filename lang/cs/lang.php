@@ -18,7 +18,7 @@ return [
         'first_name' => 'Jméno',
         'images' => 'Obrázky',
         'last_name' => 'Příjmení',
-        'name' => 'Jméno',
+        'name' => 'Název',
         'order_status' => 'Stav objednávky',
         'parent' => 'Předchůdce',
         'payment_method' => 'Způsob platby',
