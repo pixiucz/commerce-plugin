@@ -8,42 +8,42 @@ columns:
         searchable: true
 
     user:
-        label: User
+        label: pixiu.commerce::lang.fields.user
         relation: user
         select: concat(name, ' ', surname, ' | ', email)
         searchable: true
         sortable: true
 
     delivery_address:
-        label: Delivery address
+        label: pixiu.commerce::lang.fields.delivery_address
         relation: delivery_address
         select: concat(first_name, ' ', last_name, ' ', address, ' ', city, ' ', zip, ' ', country)
         searchable: true
         sortable: true
 
     billing_address:
-        label: Billing address
+        label: pixiu.commerce::lang.fields.billing_address
         relation: billing_address
         select: concat(first_name, ' ', last_name, ' ', address, ' ', city, ' ', zip, ' ', country)
         searchable: true
         sortable: true
 
     delivery_option:
-        label: Delivery
+        label: pixiu.commerce::lang.fields.delivery_option
         relation: delivery_option
         select: name
         searchable: true
         sortable: true
 
     payment_method:
-        label: Payment
+        label: pixiu.commerce::lang.fields.payment_method
         relation: payment_method
         select: name
         searchable: true
         sortable: true
 
     order_status:
-        label: Status
+        label: pixiu.commerce::lang.fields.order_status
         relation: order_status
         type: partial
         path: ~/plugins/pixiu/commerce/controllers/orderstatuses/_status_column.htm

@@ -8,8 +8,8 @@ columns:
         searchable: true
 
     title:
-        label: Title
+        label: pixiu.commerce::lang.fields.title
 
     decreases_stock:
-        label: Decreases stock
+        label: pixiu.commerce::lang.fields.decreases_stock
         type: switch

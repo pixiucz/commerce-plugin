@@ -8,24 +8,24 @@ columns:
         searchable: true
 
     brand_id:
-        label: Brand
+        label: pixiu.commerce::lang.fields.brand
         relation: brand
         select: name
         searchable: true
         sortable: true
 
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
         searchable: true
         sortable: true
 
     retail_price:
-        label: Retail Price
+        label: pixiu.commerce::lang.fields.retail_price
 
     visible:
-        label: Visible
+        label: pixiu.commerce::lang.fields.visible
         type: switch
 
     active:
-        label: Active
+        label: pixiu.commerce::lang.fields.active
         type: switch

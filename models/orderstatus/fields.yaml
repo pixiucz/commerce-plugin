@@ -4,19 +4,19 @@
 
 fields:
     title:
-        label: Title
+        label: pixiu.commerce::lang.fields.title
         span: storm
         cssClass: col-sm-12
 
     color:
-        label: Color
+        label: pixiu.commerce::lang.fields.color
         type: colorpicker
         span: storm
         cssClass: col-sm-12
 
     decreases_stock:
-        label: Decreases stock
-        commentAbove: Turn off if this status means that order will not be shipped or won't affect stocks (canceled, returned,..)
+        label: pixiu.commerce::lang.fields.decreases_stock
+        commentAbove: pixiu.commerce::lang.comments.orderstatus.decreases_stock
         type: switch
         default: true
         span: storm

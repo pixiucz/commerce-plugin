@@ -8,7 +8,7 @@ columns:
         searchable: true
 
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
 
     rate:
-        label: Rate
+        label: pixiu.commerce::lang.fields.rate

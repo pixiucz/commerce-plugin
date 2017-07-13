@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
+use Pixiu\Commerce\Models\CommerceSettings;
 
 /**
  * ProductCombination Model
@@ -68,6 +69,24 @@ class ProductVariant extends Model
             $productName .= ' - ' . $item->value;
         });
         return $productName;
+    }
+
+    public function getResolvedPriceAttribute()
+    {
+        if (($this->price === null) || ($this->price == 0)){
+            return $this->product->retail_price;
+        }
+        return round($this->price, 2);
+    }
+
+    public function getResolvedPriceWithoutTaxAttribute()
+    {
+        return round($this->resolved_price * (1 - (CommerceSettings::get('tax')/100)), 2);
+    }
+
+    public function getTaxOnlyAttribute()
+    {
+        return round($this->resolved_price * (CommerceSettings::get('tax')/100), 2);
     }
 
 }

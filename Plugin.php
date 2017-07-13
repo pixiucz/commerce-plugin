@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use RainLab\User\Models\User;
 use Barryvdh\DomPDF\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Commerce Plugin Information File
@@ -106,66 +107,76 @@ class Plugin extends PluginBase
                 'order' => 500,
                 'sideMenu' => [
                     'orders' => [
-                        'label' => 'Orders',
+                        'label'       => Lang::get('pixiu.commerce::lang.menu.orders'),
                         'url'         => Backend::url('pixiu/commerce/Orders'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'products' => [
-                        'label' => 'Products',
+                        'label'     => Lang::get('pixiu.commerce::lang.menu.products'),
                         'url'         => Backend::url('pixiu/commerce/Products'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'categories' => [
-                        'label' => 'Categories',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.categories'),
                         'url'         => Backend::url('pixiu/commerce/Categories'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-                    'taxes' => [
-                        'label' => 'Taxes',
-                        'url'         => Backend::url('pixiu/commerce/Taxes'),
-                        'icon'        => 'icon-leaf',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
                     'brands' => [
-                        'label' => 'Brands',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.brands'),
                         'url'         => Backend::url('pixiu/commerce/Brands'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'delivery_options' => [
-                        'label' => 'Delivery options',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
                         'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'payment_methods' => [
-                        'label' => 'Payment methods',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
                         'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'order_statuses' => [
-                        'label' => 'Order Statuses',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
                         'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'address' => [
-                        'label' => 'Address',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
                         'url'         => Backend::url('pixiu/commerce/Addresses'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'users' => [
-                        'label' => 'Users (bad context tho)',
+                        'label' => Lang::get('pixiu.commerce::lang.menu.users'),
                         'url'         => Backend::url('rainlab/user/Users'),
                         'icon'        => 'icon-leaf',
                         'permissions' => ['pixiu.commerce.*']
                     ]
                 ]
+            ]
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'commerce_settings' => [
+                'label' => 'eShop settings',
+                'description' => 'Názov, adresa, IČO,...',
+                'category'    => 'Všeobecné nastavenia',
+                'icon'        => 'icon-cog',
+                'class'       => 'Pixiu\Commerce\Models\CommerceSettings',
+                'order'       => 500,
+                'keywords'    => 'security location',
+                'permissions' => ['pixiu.turistickeznamky.*']
             ]
         ];
     }

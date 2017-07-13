@@ -4,8 +4,8 @@
 
 fields:
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
 
     parent:
-        label: Parent
+        label: pixiu.commerce::lang.fields.parent
         type: relation

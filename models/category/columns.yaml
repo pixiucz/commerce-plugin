@@ -4,5 +4,5 @@
 
 columns:
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
         searchable: true

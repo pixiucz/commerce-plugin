@@ -8,11 +8,11 @@ columns:
         searchable: true
 
     title:
-        label: title
+        label: pixiu.commerce::lang.fields.title
 
     created_at:
-        label: Created at
+        label: pixiu.commerce::lang.fields.created_at
 
     updated_at:
-        label: Updated at
+        label: pixiu.commerce::lang.fields.updated_at
 

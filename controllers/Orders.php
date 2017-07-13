@@ -3,6 +3,8 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Pixiu\Commerce\Classes\InvoiceRobot;
+use Pixiu\Commerce\Models\Order;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Orders Back-end Controller
@@ -33,7 +35,11 @@ class Orders extends Controller
 
     public function formAfterSave($model)
     {
-        // TODO: Invoices
-        (new InvoiceRobot($model))->generateInvoice();
+        //
+    }
+
+    public function createInvoice($id)
+    {
+        return Response::download(storage_path((new InvoiceRobot('cs', Order::find($id)))->generateInvoice()));
     }
 }
