@@ -10,7 +10,7 @@ secondaryTabs:
             default: ASDF
             span: storm
             cssClass: col-sm-8
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         brand:
             label: pixiu.commerce::lang.product.brand
@@ -20,14 +20,14 @@ secondaryTabs:
             nameFrom: name
             span: storm
             cssClass: col-sm-4
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         retail_price:
             label: pixiu.commerce::lang.fields.retail_price
             default: 9999
             span: storm
             cssClass: col-sm-8
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         tax_id:
             label: pixiu.commerce::lang.fields.tax
@@ -35,7 +35,7 @@ secondaryTabs:
             type: dropdown
             span: storm
             cssClass: col-sm-4
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         categories:
             label: pixiu.commerce::lang.fields.categories
@@ -43,41 +43,41 @@ secondaryTabs:
             path: relation_categories
             span: storm
             cssClass: col-sm-12
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         _form_widget:
             label: pixiu.commerce::lang.fields.variants_and_attributes
             type: \pixiu\commerce\formwidgets\variantswidget
-            tab: Details
+            tab: pixiu.commerce::lang.tabs.details
 
         short_description:
             label: pixiu.commerce::lang.fields.short_description
             type: textarea
             size: small
-            tab: Descriptions
+            tab: pixiu.commerce::lang.tabs.descriptions
 
         long_description:
             label: pixiu.commerce::lang.fields.long_description
             type: richeditor
             size: large
-            tab: Descriptions
+            tab: pixiu.commerce::lang.tabs.descriptions
 
         images:
             label: pixiu.commerce::lang.fields.images
             type: fileupload
             mode: image
-            tab: Images
+            tab: pixiu.commerce::lang.tabs.images
 
         _addimagestovariants@update:
             label:
             type: partial
             path: field_variants
-            tab: Images
+            tab: pixiu.commerce::lang.tabs.images
 
         decomposite_on@update:
             label: pixiu.commerce::lang.fields.decomposite_on
             type: checkboxlist
-            tab: Rules
+            tab: pixiu.commerce::lang.tabs.rules
 
         visible:
             label: pixiu.commerce::lang.fields.visible
@@ -85,7 +85,7 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: Rules
+            tab: pixiu.commerce::lang.tabs.rules
 
         active:
             label: pixiu.commerce::lang.fields.active
@@ -93,4 +93,4 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: Rules
+            tab: pixiu.commerce::lang.tabs.rules

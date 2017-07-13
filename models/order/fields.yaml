@@ -6,57 +6,57 @@ fields:
 secondaryTabs:
     fields:
         user:
-            label: User
+            label: pixiu.commerce::lang.fields.user
             type: relation
             select: concat(name, ' ', surname, ' | ', email)
             emptyOption: -
             span: storm
             cssClass: col-sm-12
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
         delivery_address_id:
-            label: Delivery address
+            label: pixiu.commerce::lang.fields.delivery_address
             type: dropdown
             dependsOn: user
             span: storm
             cssClass: col-sm-6
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
         billing_address_id:
-            label: Billing address
+            label: pixiu.commerce::lang.fields.billing_address
             type: dropdown
             dependsOn: user
             span: storm
             cssClass: col-sm-6
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
         delivery_option:
-            label: Delivery optons
+            label: pixiu.commerce::lang.fields.delivery_option
             type: relation
             emptyOption: -
             span: storm
             cssClass: col-sm-5
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
         payment_method:
-            label: Payment method
+            label: pixiu.commerce::lang.fields.payment_method
             type: relation
             emptyOption: -
             span: storm
             cssClass: col-sm-4
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
         order_status:
-            label: Order status
+            label: pixiu.commerce::lang.fields.order_status
             type: relation
             select: title
             emptyOption: -
             span: storm
             cssClass: col-sm-3
-            tab: Info
+            tab: pixiu.commerce::lang.tabs.info
 
-        _variants_repeater:
-            label: Products
+        _variants_repeater@update:
+            label: pixiu.commerce::lang.fields.products
             type: repeater
             form:
                 fields:
@@ -72,14 +72,18 @@ secondaryTabs:
                         type: number
                         span: storm
                         cssClass: col-sm-2
-            tab: Order
+            tab: pixiu.commerce::lang.tabs.order
 
         logs@update:
             label: Log
             type: partial
             tab: Log
 
-        invoices@update:
-            label: Invoices
+        create_invoice@update:
             type: partial
-            tab: Invoices
+            tab: pixiu.commerce::lang.tabs.invoices
+
+        invoices@update:
+            label: pixiu.commerce::lang.fields.invoices_log
+            type: partial
+            tab: pixiu.commerce::lang.tabs.invoices

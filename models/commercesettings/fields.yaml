@@ -1,0 +1,78 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+secondaryTabs:
+    fields:
+        tax:
+            label: Výše DPH (%)
+            type: number
+            span: storm
+            cssClass: col-sm-2
+            tab: Basics
+
+        currency:
+            label: Měna
+            span: storm
+            cssClass: col-sm-1
+            tab: Basics
+
+        company_name:
+            label: Název společnosti
+            span: Storm
+            cssClass: col-sm-12
+            tab: Company
+
+        address:
+            label: Adresa
+            span: Storm
+            cssClass: col-sm-9
+            tab: Company
+
+        zip:
+            label: PSČ
+            span: Storm
+            cssClass: col-sm-3
+            tab: Company
+
+        ico:
+            label: ICO
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company
+
+        dic:
+            label: DIČ
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company
+
+        ic_dph:
+            label: IČ DPH
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company
+
+        bank:
+            label: Banka
+            span: Strom
+            cssClass: col-sm-12
+            tab: Company
+
+        account_number:
+            label: Číslo účtu
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company
+
+        swift:
+            label: SWIFT
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company
+        iban:
+            label: IBAN
+            span: Storm
+            cssClass: col-sm-4
+            tab: Company

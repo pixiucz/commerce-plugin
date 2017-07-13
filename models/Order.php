@@ -1,7 +1,7 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
-use Pixiu\Commerce\Models\{Address, ProductVariant};
+use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings};
 
 /**
  * Order Model
@@ -128,6 +128,20 @@ class Order extends Model
 
     public function getSumAttribute()
     {
-        return 499.99;
+        $sum = 0;
+        $this->variants()->withPivot('quantity')->get()->each(function ($item, $key) use (&$sum) {
+            $sum += $item->resolved_price * $item->pivot->quantity;
+        });
+        return floor($sum);
+    }
+
+    public function getSumWithoutTaxAttribute()
+    {
+        return round($this->sum * (1 - (CommerceSettings::get('tax')/100)), 2);
+    }
+
+    public function getSumTaxOnlyAttribute()
+    {
+        return round($this->sum * (CommerceSettings::get('tax')/100), 2);
     }
 }

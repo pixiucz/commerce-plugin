@@ -69,7 +69,7 @@
 <body style="padding: 5%;">
 
 <div style="width: 50%; display: inline-block;">
-    <h1>Faktura č: {{ invoice_number }} (daňový doklad)</h1>
+    <h1>Faktura - Daňový doklad č.: </h1>
 </div>
 <div style="text-align: right; width: 49.4%; display: inline-block;">
     <h1> {{ year }} </h1>
@@ -78,14 +78,14 @@
 <table style="width: 100%; border-top: 6px solid black;">
     <tr>
         <td rowspan="2" style="width: 50%;">
-            Dodavatel:
+            Prodávající:
             <div style="margin-left: 10px; font-size: larger;">
                 <p>
-                    <span class="bold"> {{ tz.name }} </span><br>
-                    {{ tz.PSC }} {{ tz.address }} <br>
-                    IČ: {{ tz.ICO }} <br>
-                    DIČ: {{ tz.DIC }} <br>
-                    IČ DPH: {{ tz.IC_DPH }}
+                    <span class="bold"> {{ company.name }} </span><br>
+                    {{company.zip}} {{company.address}} <br>
+                    IČ: {{company.ico}} <br>
+                    DIČ: {{company.dic}} <br>
+                    IČ DPH: {{company.ic_dph}}
                 </p>
             </div>
 
@@ -93,14 +93,14 @@
         <td>
             <table class="list">
                 <tr>
-                    <td>Odběratel</td>
+                    <td>Kupující</td>
                     <td>
-                        <span class="bold">{{ contact.name }}</span><br>
-                        {{ contact.address }} <br>
-                        IČ: {{ contact.ICO }} <br>
-                        {% if contact.DPH == 1 %}
-                        DIČ: {{ contact.DIC }}
-                        {% endif %}
+                        <span class="bold">{{ billing_address.first_name }} {{ billing_address['last_name'] }}</span><br>
+                        {{ billing_address['address'] }}<br>
+                        {{ billing_address['zip'] }} {{ billing_address['city'] }}<br>
+                        {{ billing_address['country'] }}<br>
+                        IČ: {{ billing_address['ico'] }} <br>
+                        DIČ: {{ billing_address['dic'] }}}
                     </td>
                 </tr>
             </table>
@@ -110,10 +110,12 @@
         <td style="border: 3px solid black;">
             <table class="list">
                 <tr>
-                    <td>Poštovní adresa:</td>
+                    <td>Doručovací adresa:</td>
                     <td>
-                        <span class="bold"> {{ contact.name }} </span><br>
-                        {{ contact.address }} <br>
+                        <span class="bold">{{delivery_address['first_name']}} {{delivery_address['last_name']}}</span><br>
+                        {{delivery_address['address']}}<br>
+                        {{delivery_address['zip']}} {{delivery_address['city']}} <br>
+                        {{delivery_address['country']}}
                     </td>
                 </tr>
             </table>
@@ -122,37 +124,35 @@
     <tr>
         <td rowspan="2">
             <table class="list">
-                <tr><td>Banka:</td><td>{{ bank }}</td></tr>
-                <tr><td>Bankovní účet:</td><td class="bordered-cell">{{ account_number }}</td></tr>
-                <tr><td>IBAN:</td><td>{{ iban }}</td></tr>
-                <tr><td>SWIFT:</td><td> {{ swift }} </td></tr>
-                <tr><td>Var. sym.:</td><td><b> {{ invoice_number }} </b></td></tr>
-                <tr><td>Konst. sym.:</td><td><b> </b></td></tr>
-                <tr><td>Spec. sym.:</td><td></td></tr>
-            </table>
-        </td>
-        <td>Místo určení:</td>
-    </tr>
-    <tr>
-        <td>
-            <table class="list">
-                <tr><td>Faktura:</td><td>{{ invoice_number }}</td></tr>
-                <tr><td>Číslo objednávky:</td><td>{{ order_number }}</td></tr>
-                <tr><td>Dodací list č.:</td><td>{{ delivery_number }}</td></tr>
+                <tr><td>Banka:</td><td>{{ company.bank }}</td></tr>
+                <tr><td>Bankovní účet:</td><td class="bordered-cell">{{ company.account_number }}</td></tr>
+                <tr><td>IBAN:</td><td>{{ company.iban }}</td></tr>
+                <tr><td>SWIFT:</td><td> {{ company.swift }} </td></tr>
+                <tr><td>Var. sym.:</td><td><b> - </b></td></tr>
+                <tr><td>Konst. sym.:</td><td><b> - </b></td></tr>
+                <tr><td>Spec. sym.:</td><td> - </td></tr>
             </table>
         </td>
     </tr>
     <tr>
         <td>
             <table class="list">
-                <tr><td>Forma úhrady:</td><td>{{ payment_type }}</td></tr>
-                <tr><td>Způsob dopravy:</td><td></td></tr>
+                <tr><td>Daňový doklad: </td><td>Faktura</td></tr>
+                <tr><td>Datum uskut. zdaň. plnění</td><td>{{updated_at}}</td></tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="list">
+                <tr><td>Forma úhrady:</td><td>{{payment_method['name']}}</td></tr>
+                <tr><td>Způsob dopravy: </td><td>{{delivery_option['name']}}</td></tr>
             </table>
         </td>
         <td>
             <table class="list">
-                <tr><td>Vystaveno:</td><td> {{ invoice_date }} </td></tr>
-                <tr><td>Datum splatnosti:</td><td class="bordered-cell"> {{ due }}</td></tr>
+                <tr><td>Vystaveno:</td><td> {{ updated_at }} </td></tr>
+                <tr><td>Datum splatnosti:</td><td class="bordered-cell"> {{updated_at}} </td></tr>
             </table>
         </td>
     </tr>
@@ -161,69 +161,53 @@
 <br>
 <table class="services">
     <tr>
-        <td class="services-head">Číslo</td>
+        <td class="services-head">Kód</td>
         <td class="services-head">Název</td>
-        <td class="services-head">Množství MJ</td>
-        <td class="services-head">Cena za MJ</td>
-        {% if contact.DPH == 1 %}
-            <td class="services-head"> Celkem bez DPH</td>
-            <td class="services-head"> DPH [%] </td>
-            <td class="services-head"> Cena za MJ s DPH</td>
-            <td class="services-head"> Celkem s DPH</td>
-        {% endif %}
-        {% if contact.DPH == 0 %}
-            <td class="services-head" style="text-align: right;">Celkem</td>
-        {% endif %}
+        <td class="services-head">Ks</td>
+        <td class="services-head">Cena ks</td>
+        <td class="services-head">Cena ks bez DPH</td>
+        <td class="services-head"> Celkem bez DPH</td>
+        <td class="services-head"> Celkem DPH</td>
+        <td class="services-head"> DPH [%] </td>
+        <td class="services-head"> Cena</td>
     </tr>
-    {% for item in items %}
+    {% for variant in variants %}
     <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.amount }}</td>
-        {% if contact.DPH == 0 %}
-            <td>{{ item.price }}</td>
-        {% endif %}
-        {% if contact.DPH == 1%}
-            <td>{{ item.price_without_dph }}</td>
-            <td>{{ item.sum_without_dph }}</td>
-            <td> {{ dph }}% </td>
-            <td> {{ item.price }} </td>
-        {% endif %}
-        <td style="text-align: right;"> {{ item.sum }} </td>
+        <td>{{ variant.ean }}</td>
+        <td>{{ variant.name }}</td>
+        <td>{{ variant.quantity }}</td>
+        <td>{{ variant.price }}</td>
+        <td>{{ variant.price_without_tax }}</td>
+        <td>{{ variant.sum_without_tax }}</td>
+        <td>{{ variant.tax }}</td>
+        <td>{{ tax }}% </td>
+        <td style="text-align: right;"> {{ variant.sum }} </td>
     </tr>
     {% endfor %}
 </table>
 
 <br>
-{% if contact.DPH == 0 %}
-<p> Neplátce DPH </p>
-{% endif %}
-{% if contact.DPH == 1 %}
-<p> Plátce DPH </p>
-{% endif %}
+
 
 <div style="width: 99.4%;">
     <table style="margin-left: auto; margin-right: 0;">
-
-        {% if contact.DPH == 1 %}
-            <tr>
-                <td>Sazba DPH</td>
-                <td>{{ dph }}%</td>
-            </tr>
-            <tr>
-                <td>Základ DPH</td>
-                <td>{{ sum_without_dph }}</td>
-            </tr>
-            <tr>
-                <td>DPH</td>
-                <td>{{ sum_dph }}</td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
-        {% endif %}
         <tr>
-            <td>Celkem k úhradě [Eur]</td>
+            <td>Sazba DPH</td>
+            <td>{{ tax }}%</td>
+        </tr>
+        <tr>
+            <td>Základ DPH</td>
+            <td>{{ sum_without_tax }}</td>
+        </tr>
+        <tr>
+            <td>DPH</td>
+            <td>{{ sum_tax_only }}</td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Celkem k úhradě [{{currency}}]</td>
             <td class="bordered-cell"> {{ sum }} </td>
         </tr>
     </table>

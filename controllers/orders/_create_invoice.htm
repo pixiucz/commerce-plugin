@@ -1,0 +1,24 @@
+<a
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-request="onSave"
+        data-request-data="redirect:0"
+        data-request-success="triggerCreateInvoice()"
+
+>
+    Vygenerovat a stáhnout fakturu
+</a>
+<a
+        href="<?= Backend::url('pixiu/commerce/orders/createinvoice') . '/' . $formModel->id ?>"
+        style="visibility: hidden"
+        id="create_invoice"
+>
+    __CREATE_INVOICE___
+</a>
+
+<script>
+    function triggerCreateInvoice(){
+        $(location).attr("href","<?= Backend::url('pixiu/commerce/orders/createinvoice') . '/' . $formModel->id ?>");
+    }
+
+</script>
