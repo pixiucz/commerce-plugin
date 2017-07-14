@@ -2,6 +2,7 @@
 
 use Model;
 use Pixiu\Commerce\Models\CommerceSettings;
+use Pixiu\Commerce\Classes\Tax;
 
 /**
  * ProductCombination Model
@@ -81,12 +82,12 @@ class ProductVariant extends Model
 
     public function getResolvedPriceWithoutTaxAttribute()
     {
-        return round($this->resolved_price * (1 - (CommerceSettings::get('tax')/100)), 2);
+        return round((new Tax())->getWithoutTax($this->resolved_price), 2);
     }
 
     public function getTaxOnlyAttribute()
     {
-        return round($this->resolved_price * (CommerceSettings::get('tax')/100), 2);
+        return round((new Tax())->getTax($this->resolved_price), 2);
     }
 
 }

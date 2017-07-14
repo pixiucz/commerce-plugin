@@ -61,17 +61,25 @@ secondaryTabs:
             form:
                 fields:
                     variant_repeater_id:
-                        label: Product
+                        label: pixiu.commerce::lang.fields.product
                         type: dropdown
                         emptyOption: -
                         span: storm
-                        cssClass: col-sm-10
+                        cssClass: col-sm-8
+
+                    variant_repeater_price:
+                        label: pixiu.commerce::lang.fields.price
+                        type: number
+                        placeholder: Ponechat katalogovou cenu
+                        dependsOn: variant_repeater_id
+                        span: storm
+                        cssClass: col-sm-3
 
                     variant_repeater_quantity:
-                        label: Quantity
+                        label: pixiu.commerce::lang.fields.quantity
                         type: number
                         span: storm
-                        cssClass: col-sm-2
+                        cssClass: col-sm-1
             tab: pixiu.commerce::lang.tabs.order
 
         logs@update:
