@@ -29,19 +29,7 @@ class Orders extends Controller
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orders');
     }
 
-    public function formBeforeSave($model)
-    {
-        // TODO: Stocks
-        if (!array_has($model->attributes, 'id')){
-            return;
-        }
-
-
-        $currentOrderStatus = OrderStatus::find($model->order_status_id);
-
-    }
-
-    public function formAfterSave($model)
+    public function manageStocks($model)
     {
         $canceledFlag = $model->order_status->is_canceled;
         if ($canceledFlag === 0) {
@@ -63,7 +51,11 @@ class Orders extends Controller
                 }
             });
         }
+    }
 
+    public function formAfterSave($model)
+    {
+        $this->manageStocks($model);
     }
 
     public function createInvoice($id)
