@@ -14,10 +14,10 @@ fields:
         span: storm
         cssClass: col-sm-12
 
-    decreases_stock:
-        label: pixiu.commerce::lang.fields.decreases_stock
-        commentAbove: pixiu.commerce::lang.comments.orderstatus.decreases_stock
-        type: switch
-        default: true
+    is_canceled:
+        label: pixiu.commerce::lang.fields.is_canceled
+        commentAbove: pixiu.commerce::lang.comments.orderstatus.is_canceled
+        type: checkbox
+        default: false
         span: storm
         cssClass: col-sm-4

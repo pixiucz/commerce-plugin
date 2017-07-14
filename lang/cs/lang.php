@@ -15,8 +15,11 @@ return [
         'decreases_stock' => 'Snižuje stav zásob',
         'delivery_address' => 'Doručovací adresa',
         'delivery_option' => 'Doprava',
+        'dic' => 'DIČ',
         'first_name' => 'Jméno',
+        'ic' => 'IČ',
         'images' => 'Obrázky',
+        'invoices_log' => 'Historie vygenerovaných faktur',
         'last_name' => 'Příjmení',
         'long_description' => 'Dlouhý popis',
         'name' => 'Název',
@@ -36,7 +39,7 @@ return [
         'variants_and_attributes' => 'Varianty a jejich vlastnosti',
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
-        'invoices_log' => 'Historie vygenerovaných faktur',
+        'is_canceled' => 'Znamená stornování objednávky',
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -49,7 +52,8 @@ return [
     ],
     'comments' => [
         'orderstatus' => [
-            'decreases_stock' => 'Ponechte neoznačený, pokud tento status znamená, že objednávka nesnižuje stav zásob.'
+            'decreases_stock' => 'Ponechte neoznačený, pokud tento status znamená, že objednávka nesnižuje stav zásob.',
+            'is_canceled' => 'Tento status značí, že je objednávka stornována. Zboží se připočte zpět do skladu a nově generované faktury budou obsahovat informaci o stornování.',
         ],
     ],
     'menu' => [

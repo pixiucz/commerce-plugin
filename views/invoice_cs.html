@@ -99,8 +99,8 @@
                         {{ billing_address['address'] }}<br>
                         {{ billing_address['zip'] }} {{ billing_address['city'] }}<br>
                         {{ billing_address['country'] }}<br>
-                        IČ: {{ billing_address['ico'] }} <br>
-                        DIČ: {{ billing_address['dic'] }}}
+                        IČ: {{ billing_address['ic'] }} <br>
+                        DIČ: {{ billing_address['dic'] }}
                     </td>
                 </tr>
             </table>
@@ -212,12 +212,11 @@
         </tr>
     </table>
 </div>
-
-<div style="width: 99.5%; position: relative; top: 180px;">
-    <div style="width: 60%; display: inline-block;"></div>
-    <div style="text-align: right; width: 40%; display: inline-block; border-top: 1px dashed black;">
-        Razítko a podpis
+    {% if order_status.is_canceled == 1 %}
+    <div style="text-align: left; width: 100%; display: inline-block; color: darkred; font-size: 45px;">
+        STORNOVÁNO
     </div>
+    {% endif %}
 </div>
 
 </body>
