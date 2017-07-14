@@ -19,7 +19,6 @@ class Product extends Model
         $this->rules = [
             'name' => 'required',
             'brand' => 'required',
-            'tax_id' => 'required',
             'retail_price' => 'required'
         ];
     }
@@ -69,7 +68,6 @@ class Product extends Model
     ];
     public $belongsTo = [
         'brand' => ['Pixiu\Commerce\Models\Brand'],
-        'tax' => ['Pixiu\Commerce\Models\Tax'],
         'category' => ['Pixiu\Commerce\Models\Category']
     ];
     public $belongsToMany = [

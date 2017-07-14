@@ -33,7 +33,6 @@ fields:
 
     zip:
         label: pixiu.commerce::lang.fields.zip
-        type: number
         span: Strom
         cssClass: col-sm-2
 
@@ -43,3 +42,14 @@ fields:
         type: dropdown
         span: Strom
         cssClass: col-sm-4
+
+    ic:
+        label: pixiu.commerce::lang.fields.ic
+        type: number
+        span: storm
+        cssClass: col-sm-6
+
+    dic:
+        label: pixiu.commerce::lang.fields.dic
+        span: storm
+        cssClass: col-sm-6
