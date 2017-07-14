@@ -39,6 +39,7 @@ return [
         'variants_and_attributes' => 'Varianty a jejich vlastnosti',
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
+        'is_canceled' => 'Znamená stornování objednávky',
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -51,7 +52,8 @@ return [
     ],
     'comments' => [
         'orderstatus' => [
-            'decreases_stock' => 'Ponechte neoznačený, pokud tento status znamená, že objednávka nesnižuje stav zásob.'
+            'decreases_stock' => 'Ponechte neoznačený, pokud tento status znamená, že objednávka nesnižuje stav zásob.',
+            'is_canceled' => 'Tento status značí, že je objednávka stornována. Zboží se připočte zpět do skladu a nově generované faktury budou obsahovat informaci o stornování.',
         ],
     ],
     'menu' => [

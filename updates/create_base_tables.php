@@ -201,7 +201,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('title');
             $table->string('color');
 
-            $table->boolean('decreases_stock')->default(false);
+            $table->boolean('is_canceled')->default(false);
 
             // Requires mail-templates implementation
             // $table->boolean('sends_email')->default(false);

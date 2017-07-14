@@ -10,6 +10,6 @@ columns:
     title:
         label: pixiu.commerce::lang.fields.title
 
-    decreases_stock:
-        label: pixiu.commerce::lang.fields.decreases_stock
+    is_canceled:
+        label: pixiu.commerce::lang.fields.is_canceled
         type: switch
