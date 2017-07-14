@@ -10,18 +10,18 @@ class SeedUsersTable extends Seeder
     public function run()
     {
         Category::create([
-            'name' => 'Tricka',
+            'name' => 'Pocitace',
             'nest_depth' => 1
         ]);
 
         Category::create([
-            'name' => 'S dlouhym rukavem',
+            'name' => 'Tablety',
             'nest_depth' => 2,
             'parent_id' => 1
         ]);
 
         Category::create([
-            'name' => 'S kratkym rukavem',
+            'name' => 'Notebooky',
             'nest_depth' => 2,
             'parent_id' => 1
         ]);
@@ -37,13 +37,13 @@ class SeedUsersTable extends Seeder
         ]);
 
         Brand::create([
-            'name' => 'Nike',
-            'description' => 'Lorem ipsum'
+            'name' => 'Apple',
+            'description' => 'Jabka jo?'
         ]);
 
         Brand::create([
-            'name' => 'Adidas',
-            'description' => 'Boty jo?'
+            'name' => 'Microsoft',
+            'description' => 'Vokna jo?'
         ]);
 
         DeliveryOption::create([
@@ -57,15 +57,21 @@ class SeedUsersTable extends Seeder
         ]);
 
         OrderStatus::create([
-            'title' => 'Canceled',
+            'title' => 'Stornovano',
             'color' => 'red',
-            'decreases_stock' => false
+            'is_canceled' => true
         ]);
 
         OrderStatus::create([
-            'title' => 'Done',
+            'title' => 'Nove',
+            'color' => 'blue',
+            'is_canceled' => false
+        ]);
+
+        OrderStatus::create([
+            'title' => 'Vyrizene',
             'color' => 'green',
-            'decreases_stock' => false
+            'is_canceled' => false
         ]);
     }
 }

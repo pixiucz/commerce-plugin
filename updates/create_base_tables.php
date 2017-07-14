@@ -65,7 +65,7 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('in_stock')->unsigned()->default(0);
             $table->integer('ean')->unsigned()->default(0000000);
-            $table->float('price')->nullable();
+            $table->float('price')->nullable()->default(NULL);
         });
 
         // Images pivot
@@ -299,6 +299,8 @@ class CreateAttributeGroupsTable extends Migration
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
 
             $table->integer('quantity');
+            $table->integer('price');
+            $table->boolean('lowered_stock')->default(false);
 
             $table->primary(['variant_id', 'order_id']);
         });

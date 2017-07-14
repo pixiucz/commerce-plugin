@@ -2,6 +2,7 @@
 
 use Model;
 use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings};
+use Pixiu\Commerce\Classes\Tax;
 
 /**
  * Order Model
@@ -108,9 +109,10 @@ class Order extends Model
     public function getVariantsRepeaterAttribute()
     {
         $variants = [];
-        $this->variants()->withPivot('quantity')->get()->each(function ($item, $key) use(&$variants) {
+        $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use(&$variants) {
             array_push($variants, [
                 "variant_repeater_id" => (int) $item->id,
+                "variant_repeater_price" => $item->pivot->price,
                 "variant_repeater_quantity" => $item->pivot->quantity
             ]);
         });
@@ -119,29 +121,46 @@ class Order extends Model
 
     public function setVariantsRepeaterAttribute($variants)
     {
-        // TODO: Deferred binding problem - move to formAfterSave?
-        $this->variants()->detach();
+        // FIXME: Deferred binding problem - move to formAfterSave?
+        $pV = [];
+
         foreach ($variants as $variant) {
-            $this->variants()->attach(ProductVariant::find($variant['variant_repeater_id']), ["quantity" => $variant['variant_repeater_quantity']]);
+            $productVariant = ProductVariant::find($variant['variant_repeater_id']);
+            $pivot['quantity'] = $variant['variant_repeater_quantity'];
+            if ($variant['variant_repeater_price'] === ""){
+                $pivot['price'] = $productVariant->resolved_price;
+            } else {
+                $pivot['price'] = $variant['variant_repeater_price'];
+            }
+            $pV[$productVariant->id] = $pivot;
         }
+        $this->variants()->sync($pV);
+
     }
 
     public function getSumAttribute()
     {
         $sum = 0;
-        $this->variants()->withPivot('quantity')->get()->each(function ($item, $key) use (&$sum) {
-            $sum += $item->resolved_price * $item->pivot->quantity;
+        $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
+            $sum += $item->pivot->price * $item->pivot->quantity;
         });
         return floor($sum);
     }
 
     public function getSumWithoutTaxAttribute()
     {
-        return round($this->sum * (1 - (CommerceSettings::get('tax')/100)), 2);
+        return round((new Tax())->getWithoutTax($this->sum), 2);
     }
 
     public function getSumTaxOnlyAttribute()
     {
-        return round($this->sum * (CommerceSettings::get('tax')/100), 2);
+        return round((new Tax())->getTax($this->sum), 2);
     }
+
+    public function filterFields($fields, $context = null)
+    {
+
+    }
+
+
 }

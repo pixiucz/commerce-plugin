@@ -40,6 +40,9 @@ return [
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
         'is_canceled' => 'Znamená stornování objednávky',
+        'quantity' => 'Množství',
+        'price' => 'Cena',
+        'product' => 'Produkt',
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -55,6 +58,9 @@ return [
             'decreases_stock' => 'Ponechte neoznačený, pokud tento status znamená, že objednávka nesnižuje stav zásob.',
             'is_canceled' => 'Tento status značí, že je objednávka stornována. Zboží se připočte zpět do skladu a nově generované faktury budou obsahovat informaci o stornování.',
         ],
+        'order' => [
+            'price_empty' => 'Toto pole ponechte prázdné pokud si přejet použít katalogovou cenu.',
+        ]
     ],
     'menu' => [
         'addresses' => 'Adresy',
