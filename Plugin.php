@@ -109,55 +109,55 @@ class Plugin extends PluginBase
                     'orders' => [
                         'label'       => Lang::get('pixiu.commerce::lang.menu.orders'),
                         'url'         => Backend::url('pixiu/commerce/Orders'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-shopping-basket',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'products' => [
                         'label'     => Lang::get('pixiu.commerce::lang.menu.products'),
                         'url'         => Backend::url('pixiu/commerce/Products'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-cube',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'categories' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.categories'),
                         'url'         => Backend::url('pixiu/commerce/Categories'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-cubes',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'brands' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.brands'),
                         'url'         => Backend::url('pixiu/commerce/Brands'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'delivery_options' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
                         'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-truck',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'payment_methods' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
                         'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-credit-card',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'order_statuses' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
                         'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-sliders',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'address' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
                         'url'         => Backend::url('pixiu/commerce/Addresses'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-compass',
                         'permissions' => ['pixiu.commerce.*']
                     ],
                     'users' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.users'),
                         'url'         => Backend::url('rainlab/user/Users'),
-                        'icon'        => 'icon-leaf',
+                        'icon'        => 'icon-male',
                         'permissions' => ['pixiu.commerce.*']
                     ]
                 ]
