@@ -300,6 +300,7 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('quantity');
             $table->integer('price');
+            $table->boolean('lowered_stock')->default(false);
 
             $table->primary(['variant_id', 'order_id']);
         });

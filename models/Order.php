@@ -121,8 +121,9 @@ class Order extends Model
 
     public function setVariantsRepeaterAttribute($variants)
     {
-        // TODO: Deferred binding problem - move to formAfterSave?
-        $this->variants()->detach();
+        // FIXME: Deferred binding problem - move to formAfterSave?
+        $pV = [];
+
         foreach ($variants as $variant) {
             $productVariant = ProductVariant::find($variant['variant_repeater_id']);
             $pivot['quantity'] = $variant['variant_repeater_quantity'];
@@ -131,8 +132,10 @@ class Order extends Model
             } else {
                 $pivot['price'] = $variant['variant_repeater_price'];
             }
-            $this->variants()->attach($productVariant, $pivot);
+            $pV[$productVariant->id] = $pivot;
         }
+        $this->variants()->sync($pV);
+
     }
 
     public function getSumAttribute()
