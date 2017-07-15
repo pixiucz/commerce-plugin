@@ -5,7 +5,7 @@ return [
         'active' => 'Aktivní',
         'address' => 'Adresa',
         'billing_address' => 'Fakturační adresa',
-        'brand' => 'Značka',
+        'brand' => 'Výrobce',
         'categories' => 'Kategorie',
         'city' => 'Město',
         'color' => 'barva',
@@ -64,7 +64,7 @@ return [
     ],
     'menu' => [
         'addresses' => 'Adresy',
-        'brands' => 'Značky',
+        'brands' => 'Výrobci',
         'categories' => 'Kategorie',
         'delivery_options' => 'Způsoby doručení',
         'order_statuses' => 'Stavy objednávky',
