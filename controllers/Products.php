@@ -111,7 +111,7 @@ class Products extends Controller
     public function createProductVariant(array $variant, Product $model, array $attributeGroups)
     {
         $productVariant = new ProductVariant();
-        $productVariant->price = $variant['price'];
+        $productVariant->price = $variant['price'] === "" ? NULL : $variant['price'];
         $productVariant->ean = $variant['ean'];
         $productVariant->in_stock = $variant['in_stock'];
         $productVariant->product()->associate($model);
@@ -136,7 +136,7 @@ class Products extends Controller
     public function updateProductVariant(int $variantId, array $variantData)
     {
         $productVariant = ProductVariant::find($variantId);
-        $productVariant->price = $variantData['price'];
+        $productVariant->price = $variantData['price'] === "" ? NULL : $variantData['price'];
         $productVariant->ean = $variantData['ean'];
         $productVariant->save();
     }

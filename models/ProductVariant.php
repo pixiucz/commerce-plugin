@@ -74,8 +74,8 @@ class ProductVariant extends Model
 
     public function getResolvedPriceAttribute()
     {
-        if (($this->price === null) || ($this->price == 0)){
-            return $this->product->retail_price;
+        if ($this->price === null){
+            return round($this->product->retail_price, 2);
         }
         return round($this->price, 2);
     }
