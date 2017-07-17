@@ -6,3 +6,37 @@ fields:
     id:
         label: ID
         disabled: true
+        span: storm
+        cssClass: col-sm-1
+
+    ean:
+        label: EAN
+        span: storm
+        cssClass: col-sm-11
+
+    product[retail_price]:
+        disabled: true
+        label: pixiu.commerce::lang.fields.product_price
+        span: storm
+        cssClass: col-sm-3
+
+    price:
+        label: pixiu.commerce::lang.fields.price
+        placeholder: pixiu.commerce::lang.placeholders.use_products_price
+        type: number
+        span: storm
+        cssClass: col-sm-9
+
+    in_stock:
+        disabled: true
+        label: pixiu.commerce::lang.fields.in_stock
+        span: storm
+        cssClass: col-sm-1
+
+    change_stock:
+        label: pixiu.commerce::lang.fields.change_stock
+        placeholder: pixiu.commerce::lang.placeholders.change_stock
+        type: number
+        span: storm
+        cssClass: col-sm-4
+

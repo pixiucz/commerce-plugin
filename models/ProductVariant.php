@@ -92,4 +92,13 @@ class ProductVariant extends Model
         return round((new Tax())->getTax($this->resolved_price), 2);
     }
 
+
+    public function setChangeStockAttribute()
+    {
+        $change = post('ProductVariant.change_stock');
+
+        if ($change <> 0 && $change !== "") {
+            $this->increment('in_stock', $change);
+        }
+    }
 }

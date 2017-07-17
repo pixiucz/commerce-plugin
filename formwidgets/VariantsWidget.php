@@ -2,6 +2,7 @@
 
 use Backend\Classes\FormWidgetBase;
 use Pixiu\Commerce\Models\{AttributeGroup, Attribute, ProductVariant};
+use Backend;
 
 /**
  * VariantsWidget Form Widget
@@ -46,6 +47,7 @@ class VariantsWidget extends FormWidgetBase
                 $data['update'] = true;
                 $this->vars['updateOptions'] = array_pluck($productVariants[0]['attributes'], 'attributegroup');
                 $data['variants'] = $productVariants;
+                $data['backendUrl'] = Backend::url('pixiu/commerce/productvariants/');
             };
         }
 

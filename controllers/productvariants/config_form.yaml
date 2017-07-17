@@ -23,8 +23,8 @@ create:
 # Update page
 update:
     title: Edit Product Variant
-    redirect: pixiu/commerce/productvariants
-    redirectClose: pixiu/commerce/productvariants
+    redirect: pixiu/commerce/productvariants/update/:id
+    redirectClose: pixiu/commerce/products
 
 # Preview page
 preview:

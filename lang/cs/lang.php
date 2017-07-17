@@ -41,8 +41,10 @@ return [
         'zip' => 'PSČ',
         'is_canceled' => 'Znamená stornování objednávky',
         'quantity' => 'Množství',
-        'price' => 'Cena',
         'product' => 'Produkt',
+        'change_stock' => 'Upravit stav zásob',
+        'in_stock' => 'Skladem',
+        'product_price' => 'Výchozí cena produktu',
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -73,4 +75,8 @@ return [
         'products' => 'Produkty',
         'users' => 'Uživatelé',
     ],
+    'placeholders' => [
+        'use_products_price' => 'Použít výchozí cenu produktu',
+        'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',
+    ]
 ];
