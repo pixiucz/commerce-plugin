@@ -54,7 +54,9 @@ class InvoiceRobot {
                     $attributes .= $attribute['value'] . ';';
                 }
                 array_push($order['variants'], [
-                    'name' => $item->product->brand->name . ' ' . $item->product->name . ' (' . $attributes . ')',
+                    'name' => $item->product->brand !== null ?
+                        $item->product->brand->name . ' ' . $item->product->name . ' (' . $attributes . ')' :
+                        $item->product->name,
                     'ean' => $item->ean,
                     'tax_rate' => $tax->rate,
                     'price' => $item->pivot->price,

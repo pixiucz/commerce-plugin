@@ -18,7 +18,6 @@ class Product extends Model
         parent::__construct();
         $this->rules = [
             'name' => 'required',
-            'brand' => 'required',
             'retail_price' => 'required'
         ];
     }

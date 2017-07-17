@@ -36,7 +36,7 @@ class CreateAttributeGroupsTable extends Migration
 //
 //            $table->integer('tax_id')->unsigned();
 //            $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
-            $table->integer('brand_id')->unsigned();
+            $table->integer('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');
 
 

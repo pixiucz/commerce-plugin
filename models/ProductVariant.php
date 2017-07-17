@@ -64,7 +64,9 @@ class ProductVariant extends Model
     public function getFullNameAttribute()
     {
         $product = $this->product()->with('brand')->first();
-        $productName = $product->brand->name . ' ' . $product->name;
+
+        $product->brand !== null ? $productName = $product->brand->name . ' ' . $product->name : $productName = $product->name;
+
 
         $this->attributes()->get()->each(function($item, $key) use (&$productName){
             $productName .= ' - ' . $item->value;
