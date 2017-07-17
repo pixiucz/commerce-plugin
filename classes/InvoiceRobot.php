@@ -34,11 +34,11 @@ class InvoiceRobot {
 
     private function generateData($model) : array {
         $tax = new Tax();
+        $delivery_option = $model->delivery_option;
         $order = $model
             ->with('billing_address')
             ->with('user')
             ->with('delivery_address')
-            ->with('delivery_option')
             ->with('payment_method')
             ->with('order_status')
             ->find($model->id)->toArray();
@@ -70,6 +70,12 @@ class InvoiceRobot {
 
         $order['tax'] = CommerceSettings::get('tax');
         $order['currency'] = CommerceSettings::get('currency');
+        $order['delivery_option'] = [
+            'name' => $delivery_option->name,
+            'price' => $delivery_option->price,
+            'price_without_tax' => $delivery_option->price_without_tax,
+            'tax' => $delivery_option->tax
+        ];
         $order['sum'] = $model->sum;
         $order['sum_without_tax'] = $model->sum_without_tax;
         $order['sum_tax_only'] = $model->sum_tax_only;

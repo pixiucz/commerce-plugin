@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
+use Pixiu\Commerce\Classes\Tax;
 
 /**
  * DeliveryOption Model
@@ -34,4 +35,14 @@ class DeliveryOption extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    public function getPriceWithoutTaxAttribute()
+    {
+        return (new Tax())->getWithoutTax($this->price);
+    }
+
+    public function getTaxAttribute()
+    {
+        return (new Tax())->getTax($this->price);
+    }
 }

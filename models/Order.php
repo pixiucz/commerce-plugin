@@ -144,7 +144,7 @@ class Order extends Model
         $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
             $sum += $item->pivot->price * $item->pivot->quantity;
         });
-        return floor($sum);
+        return floor($sum + $this->delivery_option->price);
     }
 
     public function getSumWithoutTaxAttribute()

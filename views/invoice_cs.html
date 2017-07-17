@@ -184,6 +184,17 @@
         <td style="text-align: right;"> {{ variant.sum }} </td>
     </tr>
     {% endfor %}
+    <tr>
+        <td> 0000 </td>
+        <td> Doprava: {{ deliver_option.name }} </td>
+        <td> 1 </td>
+        <td> {{ delivery_option.price }} </td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.tax }}</td>
+        <td> {{ tax }}% </td>
+        <td style="text-align: right;"> {{ delivery_option.price }}</td>
+    </tr>
 </table>
 
 <br>
