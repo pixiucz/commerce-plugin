@@ -13,7 +13,7 @@ use Pixiu\Commerce\Models\CommerceSettings;
 use Pixiu\Commerce\Classes\Tax;
 use Illuminate\Support\Facades\Lang;
 
-class InvoiceRobot {
+class InvoiceBuilder {
     private $data;
     private $fileName;
     private $twig;
