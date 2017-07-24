@@ -49,24 +49,9 @@ class Products extends Controller
          *  If no variant exist, create 'empty' variant
          */
         if (!$variants = post('variant')){
-            if (!$productVariant = $model->productvariants->first()){
-                $productVariant = new ProductVariant();
-                $productVariant->product()->associate($model);
-            };
-            $productVariant->ean = post('Product._ean');
-            $productVariant->in_stock = post('Product._in_stock');
-            $productVariant->save();
+            $this->handleEmptyVariant($model);
             return;
         };
-
-        if (!$model->has_variants){
-            $emptyVariant = $model->productvariants()->first();
-            $model->images()->get()->each(function($item, $key) use ($emptyVariant) {
-                if (!$emptyVariant->images->contains($item)){
-                    $emptyVariant->images()->attach($item);
-                }
-            });
-        }
 
         $options = post('options');
 
@@ -88,7 +73,7 @@ class Products extends Controller
 
                     /*
                      *  Otherwise we have to create new variant and
-                     *  resolve all it's attributes and their groups (?)
+                     *  resolve all it's attributes and their groups
                      */
                     $this->createProductVariant(
                         $variant,
@@ -286,5 +271,26 @@ class Products extends Controller
     {
         $variant = ProductVariant::find(post('variantId'));
         $variant->images()->detach(post('imageId'));
+    }
+
+    /**
+     * @param $model
+     */
+    private function handleEmptyVariant($model): void
+    {
+        if (!$productVariant = $model->productvariants->first()) {
+            $productVariant = new ProductVariant();
+            $productVariant->product()->associate($model);
+        };
+        $productVariant->ean = post('Product._ean');
+        $productVariant->in_stock = post('Product._in_stock');
+        $productVariant->price = post('Product.retail_price');
+        $productVariant->save();
+
+        $model->images()->get()->each(function($item, $key) use ($productVariant) {
+            if (!$productVariant->images->contains($item)){
+                $productVariant->images()->attach($item);
+            }
+        });
     }
 }
