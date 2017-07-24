@@ -1,0 +1,15 @@
+<?php if ($formModel->status === "finished"): ?>
+    <div style="margin: -25px 15px 0px 0px;" class="pull-right">
+
+        <a
+                href="javascript:;"
+                class="btn btn-secondary"
+                data-control="popup"
+                data-request-data="<?= $this->id ?>"
+                data-handler="onRefundsPartial"
+                data-size="large"
+        > Vratky </a>
+
+    </div>
+<?php endif ?>
+

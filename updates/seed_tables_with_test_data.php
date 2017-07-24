@@ -1,7 +1,9 @@
 <?php namespace Pixiu\Crm\Models\Updates;
 
 use Seeder;
-use Pixiu\Commerce\Models\{Category, Tax, Brand, Address, PaymentMethod, DeliveryOption, OrderStatus};
+use Pixiu\Commerce\Models\{
+    Category, Brand, Address, PaymentMethod, DeliveryOption, OrderStatus, Product, ProductVariant
+};
 use RainLab\User\Models\User;
 use Faker;
 
@@ -26,16 +28,6 @@ class SeedUsersTable extends Seeder
             'parent_id' => 1
         ]);
 
-        Tax::create([
-            'name' => 'DPH21',
-            'rate' => 21
-        ]);
-
-        Tax::create([
-            'name' => 'Snizena sazba',
-            'rate' => 11
-        ]);
-
         Brand::create([
             'name' => 'Apple',
             'description' => 'Jabka jo?'
@@ -46,32 +38,46 @@ class SeedUsersTable extends Seeder
             'description' => 'Vokna jo?'
         ]);
 
+        $product = new Product();
+        $product->brand_id = 1;
+        $product->name = "iPhone 7";
+        $product->ean = 8439893823;
+        $product->visible = true;
+        $product->active = true;
+        $product->retail_price = 21999;
+        $product->save();
+
+        $address = new Address();
+        $address->user_id = 1;
+        $address->first_name = 'Karel';
+        $address->last_name = "Obecnik";
+        $address->address = "Svatovaclavske 432/21";
+        $address->city = "Brno";
+        $address->zip = "620 02";
+        $address->country = "Czech republic";
+        $address->save();
+
         DeliveryOption::create([
             'name' => 'Post',
             'shipping_time' => 12345,
-            'price' => 99.9
+            'price' => 99.9,
+            'personal_collection' => false
+        ]);
+
+        DeliveryOption::create([
+            'name' => 'Personal Collection',
+            'shipping_time' => 12345,
+            'price' => 99.9,
+            'personal_collection' => true
         ]);
 
         PaymentMethod::create([
-            'name' => 'Platba pri dobirce'
+            'name' => 'Cash on delivery',
         ]);
 
-        OrderStatus::create([
-            'title' => 'Stornovano',
-            'color' => 'red',
-            'is_canceled' => true
+        PaymentMethod::create([
+            'name' => 'Some other payment method'
         ]);
 
-        OrderStatus::create([
-            'title' => 'Nove',
-            'color' => 'blue',
-            'is_canceled' => false
-        ]);
-
-        OrderStatus::create([
-            'title' => 'Vyrizene',
-            'color' => 'green',
-            'is_canceled' => false
-        ]);
     }
 }

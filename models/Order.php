@@ -1,8 +1,10 @@
 <?php namespace Pixiu\Commerce\Models;
 
+use Faker\Provider\Payment;
 use Model;
-use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings};
-use Pixiu\Commerce\Classes\Tax;
+use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings, OrderLog};
+use Pixiu\Commerce\Classes\{Tax, OrderStatus, PaymentStatus};
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Order Model
@@ -24,8 +26,7 @@ class Order extends Model
             'delivery_address_id' => 'required',
             'billing_address_id' => 'required',
             'delivery_option' => 'required',
-            'payment_method' => 'required',
-            'order_status' => 'required'
+            'payment_method' => 'required'
         ];
     }
 
@@ -50,15 +51,15 @@ class Order extends Model
      */
     public $hasOne = [];
     public $hasMany = [
-        'logs' => 'Pixiu\Commerce\Models\OrderLog',
-        'invoices' => 'Pixiu\Commerce\Models\PdfInvoice'
+        'notes' => 'Pixiu\Commerce\Models\OrderNote',
+        'invoices' => 'Pixiu\Commerce\Models\PdfInvoice',
+        'logs' => 'Pixiu\Commerce\Models\OrderLog'
     ];
     public $belongsTo = [
         'payment_method' => 'Pixiu\Commerce\Models\PaymentMethod',
         'delivery_option' => 'Pixiu\Commerce\Models\DeliveryOption',
         'delivery_address' => 'Pixiu\Commerce\Models\Address',
         'billing_address' => 'Pixiu\Commerce\Models\Address',
-        'order_status' => 'Pixiu\Commerce\Models\OrderStatus',
         'user' => 'RainLab\User\Models\User'
     ];
     public $belongsToMany = [
@@ -66,7 +67,8 @@ class Order extends Model
             'Pixiu\Commerce\Models\ProductVariant',
             'table' => 'pixiu_com_orders_variants',
             'key' => 'order_id',
-            'otherKey' => 'variant_id'
+            'otherKey' => 'variant_id',
+            'pivot' => ['price','quantity','refunded_quantity']
         ]
     ];
     public $morphTo = [];
@@ -74,6 +76,32 @@ class Order extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    public function getStatusOptions()
+    {
+        return [
+            OrderStatus::NEW => OrderStatus::getNew(),
+            OrderStatus::SHIPPED => OrderStatus::getShipped(),
+            OrderStatus::READY_FOR_COLLECTION => OrderStatus::getReadyForCollection(),
+            OrderStatus::CANCELED => OrderStatus::getCanceled(),
+            OrderStatus::FINISHED => OrderStatus::getFinished()
+        ];
+    }
+
+    public function getPaymentStatusOptions()
+    {
+        $options = PaymentStatus::getAll();
+        if ($this->id === null) {
+            return $options;
+        }
+
+        if (strtolower($this->payment_method->name) == "cash on delivery") {
+            return PaymentStatus::getCashOnDelivery();
+        }
+
+        unset($options[PaymentStatus::CASH_ON_DELIVERY]);
+        return $options;
+    }
 
     public function getDeliveryAddressIdOptions()
     {
@@ -88,54 +116,9 @@ class Order extends Model
         return $addressArray;
     }
 
-
     public function getBillingAddressIdOptions()
     {
         return $this->getDeliveryAddressIdOptions();
-    }
-
-    public function getVariantRepeaterIdOptions()
-    {
-        $variantsArray = [];
-
-        // TODO: Potential resources bottleneck - cache candidate
-        // This will be called every time somebody tries to add item to repeater
-        ProductVariant::get()->each(function ($item, $key) use (&$variantsArray) {
-            $variantsArray = array_add($variantsArray, $item->id, $item->full_name);
-        });
-        return $variantsArray;
-    }
-
-    public function getVariantsRepeaterAttribute()
-    {
-        $variants = [];
-        $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use(&$variants) {
-            array_push($variants, [
-                "variant_repeater_id" => (int) $item->id,
-                "variant_repeater_price" => $item->pivot->price,
-                "variant_repeater_quantity" => $item->pivot->quantity
-            ]);
-        });
-        return $variants;
-    }
-
-    public function setVariantsRepeaterAttribute($variants)
-    {
-        // FIXME: Deferred binding problem - move to formAfterSave?
-        $pV = [];
-
-        foreach ($variants as $variant) {
-            $productVariant = ProductVariant::find($variant['variant_repeater_id']);
-            $pivot['quantity'] = $variant['variant_repeater_quantity'];
-            if ($variant['variant_repeater_price'] === ""){
-                $pivot['price'] = $productVariant->resolved_price;
-            } else {
-                $pivot['price'] = $variant['variant_repeater_price'];
-            }
-            $pV[$productVariant->id] = $pivot;
-        }
-        $this->variants()->sync($pV);
-
     }
 
     public function getSumAttribute()
@@ -157,10 +140,39 @@ class Order extends Model
         return round((new Tax())->getTax($this->sum), 2);
     }
 
-    public function filterFields($fields, $context = null)
+    public function getRefundedSumAttribute()
     {
-
+        $sum = 0;
+        $this->variants()->withPivot('refunded_quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
+            $sum += $item->pivot->price * $item->pivot->refunded_quantity;
+        });
+        return floor($sum);
     }
 
+    public function getRefundedSumWithoutTaxAttribute()
+    {
+        return round((new Tax())->getWithoutTax($this->refunded_sum), 2);
+    }
 
+    public function getRefundedSumTaxOnlyAttribute()
+    {
+        return round((new Tax())->getTax($this->refunded_sum), 2);
+    }
+
+    public function beforeCreate()
+    {
+        if ($this->payment_method->name === "Cash on delivery") {
+            $this->payment_status = "cash on delivery";
+        } else {
+            $this->payment_status = "awaiting payment";
+        }
+    }
+
+    public function afterCreate()
+    {
+        $this->logs()->create([
+            'title' => Lang::get('pixiu.commerce::lang.orderlog.created'),
+            'style' => 'text-info'
+        ]);
+    }
 }

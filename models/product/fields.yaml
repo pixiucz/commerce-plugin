@@ -37,7 +37,74 @@ secondaryTabs:
             cssClass: col-sm-12
             tab: pixiu.commerce::lang.tabs.details
 
-        _form_widget:
+        specifications:
+            label: pixiu.commerce::lang.fields.specifications
+            type: repeater
+            form:
+                fields:
+                    name:
+                        label: pixiu.commerce::lang.fields.name
+                        span: storm
+                        cssClass: col-sm-4
+                    value:
+                        label: pixiu.commerce::lang.fields.value
+                        span: storm
+                        cssClass: col-sm-8
+            tab: pixiu.commerce::lang.tabs.details
+
+        has_variants@create:
+            label: pixiu.commerce::lang.fields.has_variants
+            type: checkbox
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-12
+
+        _in_stock@create:
+            label: pixiu.commerce::lang.fields.in_stock
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+            trigger:
+                action: show
+                field: has_variants
+                condition: unchecked
+
+        _ean@create:
+            label: EAN
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+            trigger:
+                action: show
+                field: has_variants
+                condition: unchecked
+
+        _form_widget@create:
+            label: pixiu.commerce::lang.fields.variants_and_attributes
+            type: \pixiu\commerce\formwidgets\variantswidget
+            tab: pixiu.commerce::lang.tabs.details
+            trigger:
+                action: hide
+                field: has_variants
+                condition: unchecked
+
+        _in_stock@update:
+            label: pixiu.commerce::lang.fields.in_stock
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+
+        _ean@update:
+            label: EAN
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+
+        _form_widget@update:
             label: pixiu.commerce::lang.fields.variants_and_attributes
             type: \pixiu\commerce\formwidgets\variantswidget
             tab: pixiu.commerce::lang.tabs.details

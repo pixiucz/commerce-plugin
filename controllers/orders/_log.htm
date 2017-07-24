@@ -1,0 +1,21 @@
+<?php if (count($logs)): ?>
+<div class="align-center">
+    <h4> Log: </h4>
+    <div class="control-list">
+        <table class="table data">
+            <tbody>
+                <?php foreach ($logs as $log): ?>
+                <tr>
+                    <td>
+                        <span class="oc-icon-circle <?= $log['style'] ?>">
+                            <?= $log['title'] ?>
+                        </span>
+                    </td>
+                    <td><?= $log['created_at'] ?></td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php endif ?>

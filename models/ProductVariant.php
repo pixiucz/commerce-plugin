@@ -25,6 +25,8 @@ class ProductVariant extends Model
      */
     protected $fillable = [];
 
+    protected $jsonable = ['specifications'];
+
     /**
      * @var array Relations
      */
@@ -52,7 +54,8 @@ class ProductVariant extends Model
             'Pixiu\Commerce\Models\Orders',
             'table' => 'pixiu_com_orders_variants',
             'key' => 'variant_id',
-            'otherKey' => 'order_id'
+            'otherKey' => 'order_id',
+            'pivot' => ['price','quantity','refunded_quantity']
         ]
     ];
     public $morphTo = [];

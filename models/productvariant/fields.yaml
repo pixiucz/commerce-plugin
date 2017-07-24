@@ -40,3 +40,16 @@ fields:
         span: storm
         cssClass: col-sm-4
 
+    specifications:
+        label: pixiu.commerce::lang.fields.variant_specifications
+        type: repeater
+        form:
+            fields:
+                name:
+                    label: pixiu.commerce::lang.fields.name
+                    span: storm
+                    cssClass: col-sm-4
+                value:
+                    label: pixiu.commerce::lang.fields.value
+                    span: storm
+                    cssClass: col-sm-8

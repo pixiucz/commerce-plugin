@@ -42,11 +42,8 @@ columns:
         searchable: true
         sortable: true
 
-    order_status:
+    status:
         label: pixiu.commerce::lang.fields.order_status
-        relation: order_status
-        type: partial
-        path: ~/plugins/pixiu/commerce/controllers/orderstatuses/_status_column.htm
         searchable: true
         sortable: true
 

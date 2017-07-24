@@ -1,4 +1,4 @@
-<?= $test ?>
+<?php if ($formModel->has_variants): ?>
 <a
     href="javascript:;"
     class="btn btn-secondary oc-icon-plus"
@@ -7,8 +7,10 @@
     data-request-success="triggerPhotosToVariantsSelector()"
 
 >
-    Add photos to variants
+    Přiřadit fotky k variantám
 </a>
+<?php endif ?>
+
 
 <a
         href="javascript:;"
@@ -18,7 +20,7 @@
         data-request-success="triggerPrimaryPictureSelector()"
 
 >
-    Select primary photo for variants
+    Vybrat primární obrázek
 </a>
 
 <a

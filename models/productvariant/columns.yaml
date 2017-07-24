@@ -6,3 +6,20 @@ columns:
     id:
         label: ID
         searchable: true
+
+    product:
+        label: Product
+        relation: product
+        select: name
+        searchable: true
+        sortable: true
+
+    attributes:
+        label: Attributes
+        relation: attributes
+        select: value
+        searchable: true
+        sortable: true
+
+    price:
+        label: price

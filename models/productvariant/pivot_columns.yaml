@@ -1,0 +1,27 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    product:
+        label: pixiu.commerce::lang.fields.product
+        relation: product
+        select: name
+
+    attributes:
+        label: pixiu.commerce::lang.fields.attributes
+        relation: attributes
+        select: value
+
+    pivot[price]:
+        label: pixiu.commerce::lang.fields.price
+
+    pivot[quantity]:
+        label: pixiu.commerce::lang.fields.quantity
+
+    pivot[refunded_quantity]:
+        label: pixiu.commerce::lang.fields.refunded_quantity

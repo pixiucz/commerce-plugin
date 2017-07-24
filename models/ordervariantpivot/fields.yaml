@@ -3,6 +3,8 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    pivot[quantity]:
+        label: quantity
+
+    pivot[price]:
+        label: price

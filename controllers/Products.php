@@ -10,6 +10,7 @@ use Pixiu\Commerce\Models\AttributeGroup;
 use Pixiu\Commerce\Models\ProductVariant;
 use Pixiu\Commerce\Models\Attribute;
 use Pixiu\Commerce\Classes\Utils;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Products Back-end Controller
@@ -44,10 +45,29 @@ class Products extends Controller
     }
 
     public function formAfterSave($model) {
-        // Gets all variants + all attribute groups
+        /*
+         *  If no variant exist, create 'empty' variant
+         */
         if (!$variants = post('variant')){
+            if (!$productVariant = $model->productvariants->first()){
+                $productVariant = new ProductVariant();
+                $productVariant->product()->associate($model);
+            };
+            $productVariant->ean = post('Product._ean');
+            $productVariant->in_stock = post('Product._in_stock');
+            $productVariant->save();
             return;
         };
+
+        if (!$model->has_variants){
+            $emptyVariant = $model->productvariants()->first();
+            $model->images()->get()->each(function($item, $key) use ($emptyVariant) {
+                if (!$emptyVariant->images->contains($item)){
+                    $emptyVariant->images()->attach($item);
+                }
+            });
+        }
+
         $options = post('options');
 
         /*
@@ -63,7 +83,7 @@ class Products extends Controller
                  *  we can only update it's EAN number and Price
                  */
                 if (array_has($variant, 'id')){
-                    $this->updateProductVariant($variant['id'], $variant);
+                    $this->updateProductVariant($variant['id'], $model, $variant);
                 } else {
 
                     /*
@@ -79,9 +99,6 @@ class Products extends Controller
             }
         }
     }
-
-
-    // TODO: Are these concern of controller or model?
 
     /**
      * @param array $options (array of attribute group names)
@@ -111,7 +128,7 @@ class Products extends Controller
     public function createProductVariant(array $variant, Product $model, array $attributeGroups)
     {
         $productVariant = new ProductVariant();
-        $productVariant->price = $variant['price'] === "" ? NULL : $variant['price'];
+        $productVariant->price = $variant['price'] === "" ? $model->retail_price : $variant['price'];
         $productVariant->ean = $variant['ean'];
         $productVariant->in_stock = $variant['in_stock'];
         $productVariant->product()->associate($model);
@@ -133,22 +150,18 @@ class Products extends Controller
      * @param int $variantId
      * @param array $variantData
      */
-    public function updateProductVariant(int $variantId, array $variantData)
+    public function updateProductVariant(int $variantId, Product $model, array $variantData)
     {
         $productVariant = ProductVariant::find($variantId);
-        $productVariant->price = $variantData['price'] === "" ? NULL : $variantData['price'];
+        $productVariant->price = $variantData['price'] === "" ? $model->price : $variantData['price'];
         $productVariant->ean = $variantData['ean'];
         $productVariant->save();
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
     | Partials handling
     |--------------------------------------------------------------------------
-    |
-    |
     |
     |
     */

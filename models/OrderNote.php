@@ -3,14 +3,14 @@
 use Model;
 
 /**
- * Tax Model
+ * OrderLog Model
  */
-class Tax extends Model
+class OrderNote extends Model
 {
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_com_taxes';
+    public $table = 'pixiu_com_order_notes';
 
     /**
      * @var array Guarded fields
@@ -27,7 +27,9 @@ class Tax extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        'order' => 'Pixiu\Commerce\Models\Order'
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

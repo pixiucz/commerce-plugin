@@ -2,13 +2,13 @@
 #  Relation Behavior Config
 # ===================================
 
-logs:
-    label: log
+notes:
+    label: pixiu.commerce::lang.fields.notes
     view:
-        list: $/pixiu/commerce/models/orderlog/columns.yaml
-        toolbarButtons: create|delete
+        list: $/pixiu/commerce/models/ordernote/columns.yaml
+        toolbarButtons: create
     manage:
-        form: $/pixiu/commerce/models/orderlog/fields.yaml
+        form: $/pixiu/commerce/models/ordernote/fields.yaml
         recordsPerPage: 10
 
 invoices:
@@ -16,3 +16,26 @@ invoices:
     readOnly: true
     view:
         list: $/pixiu/commerce/models/pdfinvoice/columns.yaml
+        recordsPerPage: 5
+
+variants:
+    label: pixiu.commerce::lang.fields.products
+    view:
+        list: $/pixiu/commerce/models/productvariant/pivot_columns.yaml
+        toolbarPartial: list_toolbar_variants
+    manage:
+        list: $/pixiu/commerce/models/productvariant/columns.yaml
+        showSearch: true
+    pivot:
+        form:
+            fields:
+                pivot[price]:
+                    label: pixiu.commerce::lang.fields.price
+                    span: auto
+                    type: number
+                    defaultFrom: price
+
+                pivot[quantity]:
+                    label: pixiu.commerce::lang.fields.quantity
+                    span: auto
+                    type: number

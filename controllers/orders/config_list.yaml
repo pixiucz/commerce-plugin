@@ -12,7 +12,7 @@ modelClass: Pixiu\Commerce\Models\Order
 title: Manage Orders
 
 # Link URL for each record
-recordUrl: pixiu/commerce/orders/update/:id
+recordUrl: pixiu/commerce/orders/preview/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

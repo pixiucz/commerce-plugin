@@ -18,11 +18,17 @@ class InvoiceRobot {
     private $twig;
     private $language;
     private $tax;
+    private $model;
 
     public function __construct(string $language, $model)
     {
+        $this->model = $model;
         $this->language = $language;
+
+        // FIXME: Posunout do generate invoice a prejmenovat, pro generovani storno invoice pouzit jinou metodu!!!
         $this->data = $this->generateData($model);
+        // FIXME:
+
         $this->fileName = $this->generateFilename($model);
         $this->twig = new Twig();
         $this->tax = new Tax();
@@ -40,7 +46,6 @@ class InvoiceRobot {
             ->with('user')
             ->with('delivery_address')
             ->with('payment_method')
-            ->with('order_status')
             ->find($model->id)->toArray();
         $order['variants'] = [];
         $model->variants()
@@ -103,14 +108,64 @@ class InvoiceRobot {
         $invoicePDF = @$pdf->setOptions(['isFontSubsettingEnabled' => true, 'isRemoteEnabled' => true])->loadHTML($html)->output();
         $filePath = 'invoices/' . $this->fileName;
 
+        $this->saveInvoice($filePath, $invoicePDF);
+
+        return 'app/'.$filePath;
+    }
+
+    public function generateStornoInvoice($stornoVariants) {
+        /*
+         *  majstrštyk
+         */
+        $this->data['variants'] = [];
+        $this->data['delivery_option'] = [];
+        $this->data['sum'] = $this->model->refunded_sum;
+        $this->data['sum_without_tax'] = $this->model->refunded_sum_without_tax;
+        $this->data['sum_tax_only'] = $this->model->refunded_sum_tax_only;
+        $this->data['status'] = "canceled";
+
+        $this->fileName = 'storno_' . $this->fileName;
+        $tax = new Tax();
+
+        foreach ($stornoVariants as $stornoVariant) {
+            array_push($this->data['variants'], [
+                'name' => $stornoVariant->product->brand !== null ?
+                    $stornoVariant->product->brand->name . ' ' . $stornoVariant->product->name  :
+                    $stornoVariant->product->name,
+                'ean' => $stornoVariant->ean,
+                'tax_rate' => $tax->rate,
+                'price' => $stornoVariant->pivot->price,
+                'price_without_tax' => $tax->getWithoutTax($stornoVariant->pivot->price),
+                'sum_without_tax' => $tax->getWithoutTax($stornoVariant->pivot->price) * $stornoVariant->pivot->refunded_quantity,
+                'tax' => $tax->getTax($stornoVariant->pivot->price) * $stornoVariant->pivot->refunded_quantity,
+                'quantity' => $stornoVariant->pivot->refunded_quantity,
+                'sum' => $stornoVariant->pivot->price * $stornoVariant->pivot->refunded_quantity
+            ]);
+        }
+
+        $invoiceTemplatePath = '/pixiu/commerce/views/invoice_' . $this->language . '.html';
+        $html = $this->twig->parse(File::get(plugins_path().$invoiceTemplatePath), $this->data);
+        $pdf = App::make('dompdf.wrapper');
+        $invoicePDF = @$pdf->setOptions(['isFontSubsettingEnabled' => true, 'isRemoteEnabled' => true])->loadHTML($html)->output();
+        $filePath = 'invoices/' . $this->fileName;
+
+        $this->saveInvoice($filePath, $invoicePDF);
+
+        return 'app/'.$filePath;
+    }
+
+    /**
+     * @param $filePath
+     * @param $invoicePDF
+     */
+    private function saveInvoice($filePath, $invoicePDF): void
+    {
         Storage::put($filePath, $invoicePDF);
 
         $pdfInvoice = new PdfInvoice();
-        $pdfInvoice->path = 'app/'.$filePath;
+        $pdfInvoice->path = 'app/' . $filePath;
         $pdfInvoice->order_id = $this->data['id'];
         $pdfInvoice->save();
-
-        return 'app/'.$filePath;
     }
 
 }

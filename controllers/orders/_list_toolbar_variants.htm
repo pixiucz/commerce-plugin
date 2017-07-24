@@ -1,0 +1,4 @@
+<?php if (!($formModel->status === "finished") AND !($formModel->status === "shipped") AND !($formModel->status === "ready for collection")): ?>
+    <?= $this->relationMakePartial('button_add') ?>
+    <?= $this->relationMakePartial('button_remove') ?>
+<?php endif ?>

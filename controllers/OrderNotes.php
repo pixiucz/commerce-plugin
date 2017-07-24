@@ -6,7 +6,7 @@ use Backend\Classes\Controller;
 /**
  * Order Logs Back-end Controller
  */
-class OrderLogs extends Controller
+class OrderNotes extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
@@ -20,6 +20,6 @@ class OrderLogs extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orderlogs');
+        BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'ordernotes');
     }
 }

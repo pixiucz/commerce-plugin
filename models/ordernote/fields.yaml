@@ -1,0 +1,12 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: pixiu.commerce::lang.fields.title
+        type: text
+
+    text:
+        label: Text
+        type: richeditor
