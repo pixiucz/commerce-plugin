@@ -2,7 +2,7 @@
     <form method="post">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="popup">×</button>
-            <h4 class="modal-title">Vyberte obrázky </h4>
+            <h4 class="modal-title"> <?= Lang::get('pixiu.commerce::lang.other.select_pictures') ?> </h4>
             <div class="row">
                 <?php foreach($productImages as $productImage): ?>
                 <div class="col-sm-6 col-md-4">
@@ -18,7 +18,7 @@
         </div>
 
         <div class="modal-body">
-            <h4>... a varianty ke kterým je přiřadit</h4>
+            <h4>... <?= Lang::get('pixiu.commerce::lang.other.and_variants_to_add_them_to') ?></h4>
             <div class="list-preview list-flush">
                 <div class="control-list">
                     <table class="table data">
@@ -65,13 +65,13 @@
                     data-request-flash
                     data-dismiss="popup"
             >
-                Pair these
+                <?= Lang::get('pixiu.commerce::lang.other.pair_these') ?>
             </button>
             <button
                     type="button"
                     class="btn btn-default"
                     data-dismiss="popup">
-                Cancel
+                <?= Lang::get('pixiu.commerce::lang.other.cancel') ?>
             </button>
         </div>
     </form>
@@ -98,6 +98,11 @@
                 },
                 success: function() {
                     img.remove();
+                    $.oc.flashMsg({
+                        'text': "Obrázek odebrán",
+                        'class': 'success',
+                        'interval': 3
+                    });
                 }
             })
 

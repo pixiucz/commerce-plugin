@@ -3,7 +3,7 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Pixiu\Commerce\Classes\InvoiceRobot;
+use Pixiu\Commerce\Classes\InvoiceBuilder;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;
@@ -95,7 +95,7 @@ class Orders extends Controller
 
     public function createInvoice($id)
     {
-        (new InvoiceRobot('cs', Order::find($id)))->generateInvoice();
+        (new InvoiceBuilder('cs', Order::find($id)))->generateInvoice();
     }
 
     public function onRefundsPartial($id = null)
@@ -130,7 +130,7 @@ class Orders extends Controller
             }
         }
 
-        (new InvoiceRobot('cs', $order))->generateStornoInvoice($variants);
+        (new InvoiceBuilder('cs', $order))->generateStornoInvoice($variants);
 
         \Flash::success('Vratky zapocitany');
         return \redirect()->refresh();

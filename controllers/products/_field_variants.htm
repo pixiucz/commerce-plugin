@@ -1,26 +1,26 @@
 <?php if ($formModel->has_variants): ?>
 <a
     href="javascript:;"
-    class="btn btn-secondary oc-icon-plus"
+    class="btn btn-secondary icon-object-group"
     data-request="onSave"
     data-request-data="redirect:0"
     data-request-success="triggerPhotosToVariantsSelector()"
 
 >
-    Přiřadit fotky k variantám
+    <?= Lang::get('pixiu.commerce::lang.other.add_pictures_to_variants') ?>
 </a>
 <?php endif ?>
 
 
 <a
         href="javascript:;"
-        class="btn btn-secondary oc-icon-plus"
+        class="btn btn-secondary icon-file-image-o"
         data-request="onSave"
         data-request-data="redirect:0"
         data-request-success="triggerPrimaryPictureSelector()"
 
 >
-    Vybrat primární obrázek
+    <?= Lang::get('pixiu.commerce::lang.other.select_primary_pictures') ?>
 </a>
 
 <a

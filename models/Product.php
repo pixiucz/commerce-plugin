@@ -48,6 +48,7 @@ class Product extends Model
         if ($context === 'update') {
             if ($this->has_variants) {
                 $fields->{'_in_stock@update'}->hidden = true;
+                $fields->{'_change_stock@update'}->hidden = true;
                 $fields->{'_ean@update'}->hidden = true;
             } else {
                 $fields->{'_form_widget@update'}->hidden = true;

@@ -69,6 +69,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('ean')->unsigned()->default(0000000);
             $table->float('price')->nullable();
             $table->longText('specifications')->nullable();
+            $table->string('slug')->unique();
         });
 
         // Images pivot

@@ -37,8 +37,12 @@ secondaryTabs:
             cssClass: col-sm-12
             tab: pixiu.commerce::lang.tabs.details
 
-        specifications:
+        specifications_section:
             label: pixiu.commerce::lang.fields.specifications
+            type: section
+            tab: pixiu.commerce::lang.tabs.details
+
+        specifications:
             type: repeater
             form:
                 fields:
@@ -50,6 +54,11 @@ secondaryTabs:
                         label: pixiu.commerce::lang.fields.value
                         span: storm
                         cssClass: col-sm-8
+            tab: pixiu.commerce::lang.tabs.details
+
+        variants_section:
+            label: pixiu.commerce::lang.fields.variants_handling
+            type: section
             tab: pixiu.commerce::lang.tabs.details
 
         has_variants@create:
@@ -93,9 +102,18 @@ secondaryTabs:
         _in_stock@update:
             label: pixiu.commerce::lang.fields.in_stock
             type: number
+            disabled: true
             tab: pixiu.commerce::lang.tabs.details
             span: storm
             cssClass: col-sm-3
+
+        _change_stock@update:
+            label: pixiu.commerce::lang.fields.change_stock
+            placeholder: pixiu.commerce::lang.placeholders.change_stock
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-5
 
         _ean@update:
             label: EAN
@@ -133,10 +151,16 @@ secondaryTabs:
             path: field_variants
             tab: pixiu.commerce::lang.tabs.images
 
+        pictures_list@update:
+            label:
+            type: partial
+            path: pictures_list
+            tab: pixiu.commerce::lang.tabs.images
+
         decomposite_on@update:
             label: pixiu.commerce::lang.fields.decomposite_on
             type: checkboxlist
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules
 
         visible:
             label: pixiu.commerce::lang.fields.visible
@@ -144,7 +168,7 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules
 
         active:
             label: pixiu.commerce::lang.fields.active
@@ -152,4 +176,4 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules

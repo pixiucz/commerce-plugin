@@ -6,6 +6,10 @@ fields:
     status_buttons:
         type: partial
 
+    user_details_section:
+            label: pixiu.commerce::lang.fields.customer
+            type: section
+
     status:
         label: pixiu.commerce::lang.fields.order_status
         type: dropdown
@@ -70,9 +74,10 @@ fields:
         disabled: true
         span: storm
         cssClass: col-sm-3
-#
-#        status_buttons:
-#            type: partial
+
+    variants_details_section:
+        label: pixiu.commerce::lang.fields.products
+        type: section
 
     variants:
         type: partial
@@ -83,13 +88,23 @@ fields:
     refunds:
         type: partial
 
+    notes_section:
+            label: pixiu.commerce::lang.fields.notes
+            type: section
+
     notes:
-        label: pixiu.commerce::lang.fields.notes
         type: partial
 
+    invoices_section:
+            label: pixiu.commerce::lang.fields.invoices
+            type: section
+
     invoices:
-        label: pixiu.commerce::lang.fields.invoices_log
         type: partial
+
+    log_section:
+        label: pixiu.commerce::lang.fields.log
+        type: section
 
     log:
         type: partial

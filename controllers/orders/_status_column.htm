@@ -1,30 +1,37 @@
 <?php
     $colorClass = "";
+    $text = "";
     switch ($record->status) {
         case "new":
             $colorClass = "text-muted";
+            $text = Lang::get('pixiu.commerce::lang.orderstatus.new');
             break;
         case "ready for collection":
             $colorClass = "text-info";
+            $text = Lang::get('pixiu.commerce::lang.orderstatus.ready_for_collection');
             break;
         case "shipped":
             $colorClass = "text-info";
+            $text = Lang::get('pixiu.commerce::lang.orderstatus.shipped');
             break;
 
         case "finished":
             $colorClass = "text-success";
+            $text = Lang::get('pixiu.commerce::lang.orderstatus.finished');
             break;
 
         case "canceled":
             $colorClass = "text-danger";
+            $text = Lang::get('pixiu.commerce::lang.orderstatus.canceled');
             break;
 
         default:
             $colorClass = "text-info";
+            $text = $record->status;
     }
 
 ?>
 
     <span class="oc-icon-circle <?= $colorClass ?>">
-        <?= $record->status ?>
+        <?= $text ?>
     </span>
