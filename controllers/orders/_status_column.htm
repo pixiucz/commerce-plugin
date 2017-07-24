@@ -1,0 +1,30 @@
+<?php
+    $colorClass = "";
+    switch ($record->status) {
+        case "new":
+            $colorClass = "text-muted";
+            break;
+        case "ready for collection":
+            $colorClass = "text-info";
+            break;
+        case "shipped":
+            $colorClass = "text-info";
+            break;
+
+        case "finished":
+            $colorClass = "text-success";
+            break;
+
+        case "canceled":
+            $colorClass = "text-danger";
+            break;
+
+        default:
+            $colorClass = "text-info";
+    }
+
+?>
+
+    <span class="oc-icon-circle <?= $colorClass ?>">
+        <?= $record->status ?>
+    </span>
