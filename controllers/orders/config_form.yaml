@@ -23,7 +23,7 @@ create:
 # Update page
 update:
     title: Edit Order
-    redirect: pixiu/commerce/orders
+    redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Preview page

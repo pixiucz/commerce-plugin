@@ -106,10 +106,6 @@ secondaryTabs:
             type: partial
             tab: pixiu.commerce::lang.tabs.notes
 
-        create_invoice@update:
-            type: partial
-            tab: pixiu.commerce::lang.tabs.invoices
-
         invoices@update:
             label: pixiu.commerce::lang.fields.invoices_log
             type: partial

@@ -333,6 +333,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
+            $table->string('type');
             $table->string('path');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');

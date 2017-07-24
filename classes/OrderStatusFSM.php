@@ -33,19 +33,22 @@ class OrderStatusFSM
             $this->allButtons['canceled']
         ];
 
-        if ($this->order->status === OS::NEW) {
-            if ($this->order->payment_status == PS::AWAITING_PAYMENT){
-                array_push($buttons, $this->allButtons[PS::PAID]);
-                return array_reverse($buttons);
-            }
+        if (count($this->order->variants)) {
+            if ($this->order->status === OS::NEW) {
+                if ($this->order->payment_status == PS::AWAITING_PAYMENT) {
+                    array_push($buttons, $this->allButtons[PS::PAID]);
+                    return array_reverse($buttons);
+                }
 
-            //FIXME: toto se dojebe s branou
-            if ($this->order->delivery_option->name == "Personal Collection") {
-                array_push($buttons, $this->allButtons[OS::READY_FOR_COLLECTION]);
-                return array_reverse($buttons);
-            } else {
-                array_push($buttons, $this->allButtons[OS::SHIPPED]);
-                return array_reverse($buttons);
+
+
+                if ($this->order->delivery_option->name == "Personal Collection") {
+                    array_push($buttons, $this->allButtons[OS::READY_FOR_COLLECTION]);
+                    return array_reverse($buttons);
+                } else {
+                    array_push($buttons, $this->allButtons[OS::SHIPPED]);
+                    return array_reverse($buttons);
+                }
             }
         }
 
@@ -53,7 +56,6 @@ class OrderStatusFSM
             array_push($buttons, $this->allButtons[OS::FINISHED]);
             return array_reverse($buttons);
         }
-
         return $buttons;
     }
 

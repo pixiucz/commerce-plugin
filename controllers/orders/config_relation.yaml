@@ -31,11 +31,20 @@ variants:
             fields:
                 pivot[price]:
                     label: pixiu.commerce::lang.fields.price
-                    span: auto
                     type: number
                     defaultFrom: price
+                    span: storm
+                    cssClass: col-sm-5
 
                 pivot[quantity]:
                     label: pixiu.commerce::lang.fields.quantity
-                    span: auto
                     type: number
+                    span: storm
+                    cssClass: col-sm-5
+
+                in_stock:
+                    label: pixiu.commerce::lang.fields.in_stock
+                    disabled: true
+                    type: number
+                    span: storm
+                    cssClass: col-sm-2

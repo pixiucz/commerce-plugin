@@ -7,6 +7,19 @@ use Model;
  */
 class OrderNote extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+    public $rules = [];
+    public $customMessages = [];
+    public $attributeNames = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->rules = [
+            'title' => 'required'
+        ];
+    }
     /**
      * @var string The database table used by the model.
      */
