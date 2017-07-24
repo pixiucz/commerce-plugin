@@ -7,9 +7,14 @@ columns:
         label: ID
         searchable: true
 
+    type:
+        label: pixiu.commerce::lang.fields.type
+        searchable: true
+
     created_at:
-        label: Generated at
+        label: pixiu.commerce::lang.fields.created_at
 
     download:
+        label: pixiu.commerce::lang.fields.download
         type: partial
         path: ~/plugins/pixiu/commerce/controllers/pdfinvoices/_download.htm

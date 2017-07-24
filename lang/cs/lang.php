@@ -55,6 +55,9 @@ return [
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
         'has_variants' => 'Má varianty',
+        'normal_invoice' => 'Běžná faktura',
+        'download' => 'Stáhnout',
+        'type' => 'Typ',
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -113,5 +116,7 @@ return [
     'other' => [
         'edit' => 'Upravit',
         'change_status' => 'Změna statusu',
+        'cancel_invoice' => 'Stornovací faktura',
+        'normal_invoice' => 'Běžná faktura',
     ]
 ];

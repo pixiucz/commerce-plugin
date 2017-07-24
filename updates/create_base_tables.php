@@ -337,7 +337,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->string('path');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
-
         });
 
     }

@@ -90,11 +90,12 @@ class Orders extends Controller
     public function formAfterSave($model)
     {
         // $this->manageStocks($model);
+        $this->createInvoice($model->id);
     }
 
     public function createInvoice($id)
     {
-        return Response::download(storage_path((new InvoiceRobot('cs', Order::find($id)))->generateInvoice()));
+        (new InvoiceRobot('cs', Order::find($id)))->generateInvoice();
     }
 
     public function onRefundsPartial($id = null)

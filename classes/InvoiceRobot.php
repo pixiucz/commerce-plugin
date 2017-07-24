@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\PDF;
 use Pixiu\Commerce\Models\PdfInvoice;
 use Pixiu\Commerce\Models\CommerceSettings;
 use Pixiu\Commerce\Classes\Tax;
+use Illuminate\Support\Facades\Lang;
 
 class InvoiceRobot {
     private $data;
@@ -108,7 +109,7 @@ class InvoiceRobot {
         $invoicePDF = @$pdf->setOptions(['isFontSubsettingEnabled' => true, 'isRemoteEnabled' => true])->loadHTML($html)->output();
         $filePath = 'invoices/' . $this->fileName;
 
-        $this->saveInvoice($filePath, $invoicePDF);
+        $this->saveInvoice($filePath, $invoicePDF, Lang::get('pixiu.commerce::lang.other.normal_invoice'));
 
         return 'app/'.$filePath;
     }
@@ -149,7 +150,7 @@ class InvoiceRobot {
         $invoicePDF = @$pdf->setOptions(['isFontSubsettingEnabled' => true, 'isRemoteEnabled' => true])->loadHTML($html)->output();
         $filePath = 'invoices/' . $this->fileName;
 
-        $this->saveInvoice($filePath, $invoicePDF);
+        $this->saveInvoice($filePath, $invoicePDF, Lang::get('pixiu.commerce::lang.other.cancel_invoice'));
 
         return 'app/'.$filePath;
     }
@@ -157,14 +158,24 @@ class InvoiceRobot {
     /**
      * @param $filePath
      * @param $invoicePDF
+     * @param string $type
      */
-    private function saveInvoice($filePath, $invoicePDF): void
+    private function saveInvoice($filePath, $invoicePDF, string $type): void
     {
         Storage::put($filePath, $invoicePDF);
 
         $pdfInvoice = new PdfInvoice();
         $pdfInvoice->path = 'app/' . $filePath;
         $pdfInvoice->order_id = $this->data['id'];
+        $pdfInvoice->type = $type;
+
+        /*
+         *  Get rid of all non-storno invoices and create a new one
+         */
+        if ($type === Lang::get('pixiu.commerce::lang.other.normal_invoice')) {
+            PdfInvoice::where('order_id', $this->data['id'])->where('type', Lang::get('pixiu.commerce::lang.other.normal_invoice'))->delete();
+        }
+
         $pdfInvoice->save();
     }
 
