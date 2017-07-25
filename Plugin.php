@@ -1,12 +1,14 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Pixiu\Commerce\Classes\TaxHandler;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
 use RainLab\User\Models\User;
 use Barryvdh\DomPDF\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Classes\CurrencyHandler;
 
 /**
  * Commerce Plugin Information File
@@ -38,6 +40,12 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        \App::bind('CurrencyHandler', function($app) {
+            return new CurrencyHandler;
+        });
+        \App::bind('TaxHandler', function($app) {
+            return new TaxHandler;
+        });
 
     }
 
