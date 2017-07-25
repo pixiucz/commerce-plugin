@@ -1,7 +1,7 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('pixiu/commerce/productvariants') ?>">Product Variants</a></li>
-        <li><?= e($this->pageTitle) ?></li>
+        <li><a href="<?= Backend::url('pixiu/commerce/productvariants') ?>"><li><?= Lang::get('pixiu.commerce::lang.other.product_variants') ?></a></li>
+        <li><?= Lang::get('pixiu.commerce::lang.buttons.update') ?></li>
     </ul>
 <?php Block::endPut() ?>
 
@@ -22,7 +22,7 @@
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Saving ProductVariant..."
                     class="btn btn-primary">
-                    <u>S</u>ave
+                    <?= Lang::get('pixiu.commerce::lang.buttons.save') ?>
                 </button>
                 <button
                     type="button"
@@ -31,7 +31,7 @@
                     data-hotkey="ctrl+enter, cmd+enter"
                     data-load-indicator="Saving ProductVariant..."
                     class="btn btn-default">
-                    Save and Close
+                    <?= Lang::get('pixiu.commerce::lang.buttons.save_and_close') ?>
                 </button>
                 <button
                     type="button"
@@ -41,7 +41,7 @@
                     data-request-confirm="Delete this productvariant?">
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('pixiu/commerce/productvariants') ?>">Cancel</a>
+                    <a href="<?= Backend::url('pixiu/commerce/productvariants') ?>"><?= Lang::get('pixiu.commerce::lang.buttons.cancel') ?></a>
                 </span>
             </div>
         </div>

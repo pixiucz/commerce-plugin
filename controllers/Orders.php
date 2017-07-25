@@ -66,30 +66,23 @@ class Orders extends Controller
 
     public function manageStocks($model)
     {
-        if ($model->status === "canceled") {
-            $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
-                if ($item->pivot->lowered_stock === 0){
-                    $item->in_stock -= $item->pivot->quantity;
-                    $item->pivot->lowered_stock = true;
-                    $item->pivot->save();
-                    $item->save();
-                }
-            });
-        } else {
-            $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
-                if ($item->pivot->lowered_stock === 1){
-                    $item->in_stock += $item->pivot->quantity;
-                    $item->pivot->lowered_stock = false;
-                    $item->pivot->save();
-                    $item->save();
-                }
-            });
-        }
+        $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
+            if ($item->pivot->lowered_stock === 0) {
+                // $item->changeStock($item->pivot->quantity);
+                $item->moveFromStockToReserved($item->pivot->quantity);
+                $item->pivot->lowered_stock = true;
+                $item->pivot->save();
+                $item->save();
+            }
+        });
     }
 
     public function formAfterSave($model)
     {
-        // $this->manageStocks($model);
+        if ($model->status === OrderStatus::NEW) {
+            $this->manageStocks($model);
+        }
+
         $this->createInvoice($model->id);
     }
 
@@ -118,13 +111,16 @@ class Orders extends Controller
             if (array_key_exists('checked', $postVariant)) {
                 array_push($variants, $orderVariant);
                 if ($postVariant['quantity'] === "") {
+                    $orderVariant->changeStock($orderVariant->pivot->quantity - $orderVariant->pivot->refunded_quantity);
                     $orderVariant->pivot->refunded_quantity = $orderVariant->pivot->quantity;
                     $orderVariant->pivot->save();
                 } else {
+                    $orderVariant->changeStock($postVariant['quantity'] - $orderVariant->pivot->refunded_quantity);
                     $orderVariant->pivot->refunded_quantity = $postVariant['quantity'];
                     $orderVariant->pivot->save();
                 }
             } else {
+                $orderVariant->changeStock(-$orderVariant->pivot->refunded_quantity);
                 $orderVariant->pivot->refunded_quantity = 0;
                 $orderVariant->pivot->save();
             }

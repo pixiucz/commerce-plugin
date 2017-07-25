@@ -1,7 +1,7 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('pixiu/commerce/products') ?>">Products</a></li>
-        <li><?= e($this->pageTitle) ?></li>
+        <li><a href="<?= Backend::url('pixiu/commerce/products') ?>"><li><?= Lang::get('pixiu.commerce::lang.other.products') ?></a></li>
+        <li><?= Lang::get('pixiu.commerce::lang.buttons.create') ?></li>
     </ul>
 <?php Block::endPut() ?>
 
@@ -22,7 +22,7 @@
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Creating product..."
                     class="btn btn-primary">
-                    Create
+                    <?= Lang::get('pixiu.commerce::lang.buttons.create') ?>
                 </button>
                 <button
                     type="button"
@@ -31,10 +31,10 @@
                     data-hotkey="ctrl+enter, cmd+enter"
                     data-load-indicator="Creating product..."
                     class="btn btn-default">
-                    Create and Close
+                    <?= Lang::get('pixiu.commerce::lang.buttons.create_and_close') ?>
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('pixiu/commerce/products') ?>">Cancel</a>
+                    <a href="<?= Backend::url('pixiu/commerce/products') ?>"><?= Lang::get('pixiu.commerce::lang.buttons.cancel') ?></a>
                 </span>
             </div>
         </div>

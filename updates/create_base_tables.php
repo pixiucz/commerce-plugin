@@ -66,6 +66,9 @@ class CreateAttributeGroupsTable extends Migration
             $table->foreign('primary_picture_id')->references('id')->on('system_files');
 
             $table->integer('in_stock')->unsigned()->default(0);
+            $table->integer('reserved_stock')->unsigned()->default(0);
+
+
             $table->integer('ean')->unsigned()->default(0000000);
             $table->bigInteger('price')->unsigned()->nullable();
             $table->longText('specifications')->nullable();

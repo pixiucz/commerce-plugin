@@ -19,7 +19,7 @@ fields:
         placeholder: pixiu.commerce::lang.placeholders.use_products_price
         type: \pixiu\commerce\formwidgets\currency
         span: storm
-        cssClass: col-sm-9
+        cssClass: col-sm-12
 
     in_stock:
         disabled: true

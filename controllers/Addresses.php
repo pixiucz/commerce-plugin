@@ -13,6 +13,8 @@ class Addresses extends Controller
         'Backend.Behaviors.ListController'
     ];
 
+    public $pageTitle;
+
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
 

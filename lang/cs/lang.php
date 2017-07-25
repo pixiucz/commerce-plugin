@@ -74,6 +74,12 @@ return [
     ],
     'buttons' => [
         'refund' => 'Vrátit zboží',
+        'create_and_close' => 'Vytvořit a zavřít',
+        'create' => 'Vytvořit',
+        'cancel' => 'Zrušit',
+        'save' => 'Uložit',
+        'save_and_close' => 'Uložit a zavřít',
+        'update' => 'Upravit'
     ],
     'tabs' => [
         'descriptions' => 'Popis',
@@ -151,6 +157,12 @@ return [
         'saved_primary_picutres' => 'Primární obrázky přiřazeny',
         'select_pictures' => 'Vyberte obrázky',
         'select_primary_pictures' => 'Vybrat titulní obrázek',
+        'addresses' => 'Adresy',
+        'brands' => 'Značky',
+        'categories' => 'Kategorie',
+        'orders' => 'Objednávky',
+        'products' => 'Produkty',
+        'product_variants' => 'Varianty produktů',
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',

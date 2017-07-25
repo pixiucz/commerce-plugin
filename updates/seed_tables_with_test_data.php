@@ -58,25 +58,25 @@ class SeedUsersTable extends Seeder
         $address->save();
 
         DeliveryOption::create([
-            'name' => 'Post',
+            'name' => 'Česká pošta',
             'shipping_time' => 12345,
             'price' => 9900,
             'personal_collection' => false
         ]);
 
         DeliveryOption::create([
-            'name' => 'Personal Collection',
+            'name' => 'Osobní vyzvednutí',
             'shipping_time' => 12345,
             'price' => 2500,
             'personal_collection' => true
         ]);
 
         PaymentMethod::create([
-            'name' => 'Cash on delivery',
+            'name' => 'Dobírka',
         ]);
 
         PaymentMethod::create([
-            'name' => 'Some other payment method'
+            'name' => 'Platba kartou'
         ]);
 
     }
