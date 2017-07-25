@@ -27,13 +27,15 @@ class OrderStatusFSM
 
     public function getAvailableActions() : array
     {
+        $buttons = [];
+
         if ($this->order->status === OS::FINISHED OR $this->order->status === OS::CANCELED) { return []; }
 
-        $buttons = [
-            $this->allButtons['canceled']
-        ];
-
         if (count($this->order->variants)) {
+            $buttons = [
+                $this->allButtons['canceled']
+            ];
+
             if ($this->order->status === OS::NEW) {
                 if ($this->order->payment_status == PS::AWAITING_PAYMENT) {
                     array_push($buttons, $this->allButtons[PS::PAID]);
@@ -131,18 +133,20 @@ class OrderStatusFSM
     {
         $this->order->status = OS::CANCELED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.canceled'), 'text-danger');
+        $this->order->returnVariantsToStock();
     }
 
     public function changeStateToShipped()
     {
         $this->order->status = OS::SHIPPED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.shipped'), 'text-info');
-
+        $this->order->removeReservedStock();
     }
 
     public function changeStateToFinished()
     {
         $this->order->status = OS::FINISHED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.finished'), 'text-success');
+        $this->order->removeReservedStock();
     }
 }

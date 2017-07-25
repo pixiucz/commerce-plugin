@@ -100,12 +100,38 @@ class ProductVariant extends Model
     }
 
 
-    public function setChangeStockAttribute()
+    public function setChangeStockAttribute($change = null)
     {
-        $change = post('ProductVariant.change_stock');
+        if ($change === null) {
+            $change = post('ProductVariant.change_stock');
+        }
 
         if ($change <> 0 && $change !== "") {
             $this->increment('in_stock', $change);
         }
     }
+
+    public function changeStock($amount)
+    {
+        $this->increment('in_stock', $amount);
+    }
+
+    public function moveFromStockToReserved($amount)
+    {
+        $this->increment('in_stock', -$amount);
+        $this->increment('reserved_stock', $amount);
+    }
+
+
+    public function removeReservedStock()
+    {
+        $this->reserved_stock = 0;
+    }
+
+    public function moveReservedToStock()
+    {
+        $this->increment('in_stock', $this->reserved_stock);
+        $this->reserved_stock = 0;
+    }
+
 }

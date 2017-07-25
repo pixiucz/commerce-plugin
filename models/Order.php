@@ -83,6 +83,15 @@ class Order extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function filterFields($fields, $context = null)
+    {
+        if ($context === "update"){
+            $fields->user->disabled = true;
+            $fields->billing_address_id->disabled = true;
+            $fields->delivery_address_id->disabled = true;
+        }
+    }
+
     public function getStatusOptions()
     {
         return [
@@ -163,6 +172,22 @@ class Order extends Model
     public function getRefundedSumTaxOnlyAttribute()
     {
         return $this->taxHandler->getTax($this->refunded_sum);
+    }
+
+    public function removeReservedStock()
+    {
+        $this->variants->each(function($item, $key) {
+            $item->removeReservedStock();
+            $item->save();
+        });
+    }
+
+    public function returnVariantsToStock()
+    {
+        $this->variants()->withPivot('quantity')->get()->each(function($item, $key) {
+            $item->removeReservedStock();
+            $item->changeStock($item->pivot->quantity);
+        });
     }
 
     public function beforeCreate()
