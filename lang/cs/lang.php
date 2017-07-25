@@ -2,18 +2,23 @@
 
 return [
     'fields' => [
+        'account_number' => 'Číslo účtu',
         'active' => 'Aktivní',
         'address' => 'Adresa',
         'attributes' => 'Vlastnosti',
+        'bank' => 'Banka',
         'billing_address' => 'Fakturační adresa',
         'brand' => 'Výrobce',
         'categories' => 'Kategorie',
         'change_stock' => 'Upravit stav zásob',
         'city' => 'Město',
         'color' => 'barva',
+        'company_name' => 'Název společnosti',
         'country' => 'Stát',
         'created_at' => 'Vytvořeno',
+        'currencySymbol' => 'Symbol měny',
         'customer' => 'Zákazník',
+        'decimal_symbol' => 'Oddělovač pro desetinné místa',
         'decomposite_on' => 'Rozkládat podle',
         'decreases_stock' => 'Snižuje stav zásob',
         'delivery_address' => 'Doručovací adresa',
@@ -23,6 +28,8 @@ return [
         'first_name' => 'Jméno',
         'has_variants' => 'Má varianty',
         'ic' => 'IČ',
+        'ic_dph' => 'IČ DPH',
+        'ico' => 'IČO',
         'images' => 'Obrázky',
         'in_stock' => 'Skladem',
         'invoices' => 'Faktury',
@@ -52,6 +59,7 @@ return [
         'specifications' => 'Obecné specifikace',
         'status' => 'Status',
         'tax' => 'Daň',
+        'tax_size' => 'Výše daně (%)',
         'title' => 'Titulek',
         'type' => 'Typ',
         'updated_at' => 'Upraveno',
@@ -62,6 +70,7 @@ return [
         'variants_handling' => 'Správa variant',
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
+
     ],
     'buttons' => [
         'refund' => 'Vrátit zboží',
@@ -128,6 +137,7 @@ return [
         'cancel_invoice' => 'Stornovací faktura',
         'change_status' => 'Změna statusu',
         'confirm' => 'Potvrdit',
+        'continue' => 'Pokračovat',
         'edit' => 'Upravit',
         'image_remove' => 'Obrázek odebrán',
         'new_category' => 'Nová kategorie',
@@ -141,17 +151,13 @@ return [
         'saved_primary_picutres' => 'Primární obrázky přiřazeny',
         'select_pictures' => 'Vyberte obrázky',
         'select_primary_pictures' => 'Vybrat titulní obrázek',
-        'continue' => 'Pokračovat',
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',
         'new_brand' => 'Nový výrobce',
         'new_category' => 'Nová kategorie',
-        'reorder' => 'Změnit uspořádání',
         'new_order' => 'Nová objednávka',
         'new_product' => 'Nový produkt',
-
-
-
+        'reorder' => 'Změnit uspořádání',
     ]
 ];
