@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\PDF;
 use Pixiu\Commerce\Models\PdfInvoice;
 use Pixiu\Commerce\Models\CommerceSettings;
-use Pixiu\Commerce\Classes\Tax;
+use Pixiu\Commerce\Classes\TaxHandler;
 use Illuminate\Support\Facades\Lang;
 
 class InvoiceBuilder {
@@ -18,7 +18,8 @@ class InvoiceBuilder {
     private $fileName;
     private $twig;
     private $language;
-    private $tax;
+    private $taxHandler;
+    private $currencyHandler;
     private $model;
 
     public function __construct(string $language, $model)
@@ -32,7 +33,8 @@ class InvoiceBuilder {
 
         $this->fileName = $this->generateFilename($model);
         $this->twig = new Twig();
-        $this->tax = new Tax();
+        $this->taxHandler = \App::make('TaxHandler');
+        $this->currencyHandler = \App::make('CurrencyHandler');
     }
 
     private function generateFilename($model) : string {
@@ -40,7 +42,9 @@ class InvoiceBuilder {
     }
 
     private function generateData($model) : array {
-        $tax = new Tax();
+        $taxHandler = \App::make('TaxHandler');
+        $currencyHandler = \App::make('CurrencyHandler');
+
         $delivery_option = $model->delivery_option;
         $order = $model
             ->with('billing_address')
@@ -54,7 +58,7 @@ class InvoiceBuilder {
             ->with('attributes')
             ->with('product.brand')
             ->get()
-            ->each(function ($item, $key) use (&$tax, &$order) {
+            ->each(function ($item, $key) use ($currencyHandler, &$taxHandler, &$order) {
                 $attributes = '';
                 foreach ($item->toArray()['attributes'] as $attribute){
                     $attributes .= $attribute['value'] . ';';
@@ -64,13 +68,13 @@ class InvoiceBuilder {
                         $item->product->brand->name . ' ' . $item->product->name . ' (' . $attributes . ')' :
                         $item->product->name,
                     'ean' => $item->ean,
-                    'tax_rate' => $tax->rate,
-                    'price' => $item->pivot->price,
-                    'price_without_tax' => $tax->getWithoutTax($item->pivot->price),
-                    'sum_without_tax' => $tax->getWithoutTax($item->pivot->price) * $item->pivot->quantity,
-                    'tax' => $tax->getTax($item->pivot->price) * $item->pivot->quantity,
+                    'tax_rate' => $taxHandler->rate,
+                    'price' => $currencyHandler->getValueForInput($item->pivot->price),
+                    'price_without_tax' => $currencyHandler->getValueForInput($taxHandler->getWithoutTax($item->pivot->price)),
+                    'sum_without_tax' => $currencyHandler->getValueForInput($taxHandler->getWithoutTax($item->pivot->price) * $item->pivot->quantity),
+                    'tax' => $currencyHandler->getValueForInput($taxHandler->getTax($item->pivot->price) * $item->pivot->quantity),
                     'quantity' => $item->pivot->quantity,
-                    'sum' => $item->pivot->price * $item->pivot->quantity
+                    'sum' => $currencyHandler->getValueForInput($item->pivot->price * $item->pivot->quantity)
                 ]);
             });
 
@@ -78,13 +82,13 @@ class InvoiceBuilder {
         $order['currency'] = CommerceSettings::get('currency');
         $order['delivery_option'] = [
             'name' => $delivery_option->name,
-            'price' => $delivery_option->price,
-            'price_without_tax' => $delivery_option->price_without_tax,
-            'tax' => $delivery_option->tax
+            'price' => $currencyHandler->getValueForInput($delivery_option->price),
+            'price_without_tax' => $currencyHandler->getValueForInput($delivery_option->price_without_tax),
+            'tax' => $currencyHandler->getValueForInput($delivery_option->tax)
         ];
-        $order['sum'] = $model->sum;
-        $order['sum_without_tax'] = $model->sum_without_tax;
-        $order['sum_tax_only'] = $model->sum_tax_only;
+        $order['sum'] = $currencyHandler->getValueForInput($model->sum);
+        $order['sum_without_tax'] = $currencyHandler->getValueForInput($model->sum_without_tax);
+        $order['sum_tax_only'] = $currencyHandler->getValueForInput($model->sum_tax_only);
         $order['updated_at'] = date('d. m. Y', strtotime(strtok($order['updated_at'], ' ')));
 
         $order['company'] = [
@@ -120,13 +124,13 @@ class InvoiceBuilder {
          */
         $this->data['variants'] = [];
         $this->data['delivery_option'] = [];
-        $this->data['sum'] = $this->model->refunded_sum;
-        $this->data['sum_without_tax'] = $this->model->refunded_sum_without_tax;
-        $this->data['sum_tax_only'] = $this->model->refunded_sum_tax_only;
+        $this->data['sum'] = $this->currencyHandler->getValueForInput($this->model->refunded_sum);
+        $this->data['sum_without_tax'] = $this->currencyHandler->getValueForInput($this->model->refunded_sum_without_tax);
+        $this->data['sum_tax_only'] = $this->currencyHandler->getValueForInput($this->model->refunded_sum_tax_only);
         $this->data['status'] = "canceled";
 
         $this->fileName = 'storno_' . $this->fileName;
-        $tax = new Tax();
+        $tax = new TaxHandler();
 
         foreach ($stornoVariants as $stornoVariant) {
             array_push($this->data['variants'], [
