@@ -12,6 +12,7 @@ use Pixiu\Commerce\Models\ProductVariant;
 use Pixiu\Commerce\Models\Attribute;
 use Pixiu\Commerce\Classes\Utils;
 use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Classes\CurrencyHandler;
 
 /**
  * Products Back-end Controller
@@ -28,10 +29,13 @@ class Products extends Controller
     public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
 
-    public function __construct($id = null)
+    private $currencyHandler;
+
+    public function __construct($id = null, CurrencyHandler $currencyHandler)
     {
         parent::__construct();
 
+        $this->currencyHandler = $currencyHandler;
         $this->vars['test'] = $id;
 
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'products');
@@ -121,7 +125,7 @@ class Products extends Controller
     public function createProductVariant(array $variant, Product $model, array $attributeGroups)
     {
         $productVariant = new ProductVariant();
-        $productVariant->price = $variant['price'] === "" ? $model->retail_price : $variant['price'];
+        $productVariant->price = $variant['price'] === "" ? $model->retail_price : $this->currencyHandler->getValueFromInput($variant['price']);
         $productVariant->ean = $variant['ean'];
         $productVariant->in_stock = $variant['in_stock'];
         $productVariant->product()->associate($model);
@@ -154,7 +158,7 @@ class Products extends Controller
     public function updateProductVariant(int $variantId, Product $model, array $variantData)
     {
         $productVariant = ProductVariant::find($variantId);
-        $productVariant->price = $variantData['price'] === "" ? $model->price : $variantData['price'];
+        $productVariant->price = $variantData['price'] === "" ? $model->retail_price : $this->currencyHandler->getValueFromInput($variantData['price']);
         $productVariant->ean = $variantData['ean'];
         $productVariant->save();
     }
@@ -301,7 +305,7 @@ class Products extends Controller
             $productVariant->product()->associate($model);
         };
         $productVariant->ean = post('Product._ean');
-        $productVariant->price = post('Product.retail_price');
+        $productVariant->price = $this->currencyHandler->getValueFromInput(post('Product.retail_price'));
 
         $slug = $this->getBasicSlug($model);
         $productVariant->slug = str_slug($slug, '-');

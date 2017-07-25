@@ -3,8 +3,9 @@
 use Faker\Provider\Payment;
 use Model;
 use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings, OrderLog};
-use Pixiu\Commerce\Classes\{Tax, OrderStatus, PaymentStatus};
+use Pixiu\Commerce\Classes\{TaxHandler, OrderStatus, PaymentStatus};
 use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Classes\CurrencyHandler;
 
 /**
  * Order Model
@@ -16,11 +17,16 @@ class Order extends Model
     public $customMessages = [];
     public $attributeNames = [];
 
+    private $currencyHandler;
+    private $taxHandler;
+
     public function __construct()
     {
         parent::__construct();
 
-        //TODO: Billing address should be optional
+        $this->currencyHandler = \App::make('CurrencyHandler');
+        $this->taxHandler = \App::make('TaxHandler');
+
         $this->rules = [
             'user' => 'required',
             'delivery_address_id' => 'required',
@@ -127,17 +133,17 @@ class Order extends Model
         $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
             $sum += $item->pivot->price * $item->pivot->quantity;
         });
-        return floor($sum + $this->delivery_option->price);
+        return $sum + $this->delivery_option->price;
     }
 
     public function getSumWithoutTaxAttribute()
     {
-        return round((new Tax())->getWithoutTax($this->sum), 2);
+        return $this->taxHandler->getWithoutTax($this->sum);
     }
 
     public function getSumTaxOnlyAttribute()
     {
-        return round((new Tax())->getTax($this->sum), 2);
+        return $this->taxHandler->getTax($this->sum);
     }
 
     public function getRefundedSumAttribute()
@@ -146,17 +152,17 @@ class Order extends Model
         $this->variants()->withPivot('refunded_quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
             $sum += $item->pivot->price * $item->pivot->refunded_quantity;
         });
-        return floor($sum);
+        return $sum;
     }
 
     public function getRefundedSumWithoutTaxAttribute()
     {
-        return round((new Tax())->getWithoutTax($this->refunded_sum), 2);
+        return $this->taxHandler->getWithoutTax($this->refunded_sum);
     }
 
     public function getRefundedSumTaxOnlyAttribute()
     {
-        return round((new Tax())->getTax($this->refunded_sum), 2);
+        return $this->taxHandler->getTax($this->refunded_sum);
     }
 
     public function beforeCreate()

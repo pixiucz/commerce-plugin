@@ -1,7 +1,7 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
-use Pixiu\Commerce\Classes\Tax;
+use Pixiu\Commerce\Classes\TaxHandler;
 
 /**
  * DeliveryOption Model
@@ -38,11 +38,11 @@ class DeliveryOption extends Model
 
     public function getPriceWithoutTaxAttribute()
     {
-        return (new Tax())->getWithoutTax($this->price);
+        return (new TaxHandler())->getWithoutTax($this->price);
     }
 
     public function getTaxAttribute()
     {
-        return (new Tax())->getTax($this->price);
+        return (new TaxHandler())->getTax($this->price);
     }
 }

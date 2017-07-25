@@ -23,3 +23,5 @@ columns:
 
     price:
         label: price
+        type: partial
+        path: ~/plugins/pixiu/commerce/controllers/productvariants/_column_price.htm

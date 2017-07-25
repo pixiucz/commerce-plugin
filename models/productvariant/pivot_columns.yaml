@@ -19,6 +19,8 @@ columns:
 
     pivot[price]:
         label: pixiu.commerce::lang.fields.price
+        type: partial
+        path: ~/plugins/pixiu/commerce/controllers/productvariants/_column_price.htm
 
     pivot[quantity]:
         label: pixiu.commerce::lang.fields.quantity

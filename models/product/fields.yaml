@@ -24,7 +24,7 @@ secondaryTabs:
 
         retail_price:
             label: pixiu.commerce::lang.fields.retail_price
-            default: 9999
+            type: \pixiu\commerce\formwidgets\currency
             span: storm
             cssClass: col-sm-8
             tab: pixiu.commerce::lang.tabs.details

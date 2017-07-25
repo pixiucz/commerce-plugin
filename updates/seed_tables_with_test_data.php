@@ -60,14 +60,14 @@ class SeedUsersTable extends Seeder
         DeliveryOption::create([
             'name' => 'Post',
             'shipping_time' => 12345,
-            'price' => 99.9,
+            'price' => 9900,
             'personal_collection' => false
         ]);
 
         DeliveryOption::create([
             'name' => 'Personal Collection',
             'shipping_time' => 12345,
-            'price' => 99.9,
+            'price' => 2500,
             'personal_collection' => true
         ]);
 

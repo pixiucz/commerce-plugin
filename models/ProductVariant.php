@@ -2,13 +2,20 @@
 
 use Model;
 use Pixiu\Commerce\Models\CommerceSettings;
-use Pixiu\Commerce\Classes\Tax;
+use Pixiu\Commerce\Classes\TaxHandler;
 
 /**
  * ProductCombination Model
  */
 class ProductVariant extends Model
 {
+    private $taxHandler;
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->taxHandler = \App::make('TaxHandler');
+    }
 
     /**
      * @var string The database table used by the model.
@@ -79,20 +86,17 @@ class ProductVariant extends Model
 
     public function getResolvedPriceAttribute()
     {
-        if ($this->price === null){
-            return round($this->product->retail_price, 2);
-        }
-        return round($this->price, 2);
+        return $this->price;
     }
 
     public function getResolvedPriceWithoutTaxAttribute()
     {
-        return round((new Tax())->getWithoutTax($this->resolved_price), 2);
+        return $this->taxHandler->getWithoutTax($this->resolved_price);
     }
 
     public function getTaxOnlyAttribute()
     {
-        return round((new Tax())->getTax($this->resolved_price), 2);
+        return $this->taxHandler->getTax($this->resolved_price);
     }
 
 

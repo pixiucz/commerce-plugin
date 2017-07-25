@@ -46,7 +46,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->boolean('active')->default(true);
             $table->text('short_description')->nullable();
             $table->longText('long_description')->nullable();
-            $table->float('retail_price');
+            $table->bigInteger('retail_price')->unsigned();
             $table->longText('specifications')->nullable();
             $table->boolean('has_variants')->default(true);
 
@@ -67,7 +67,7 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('in_stock')->unsigned()->default(0);
             $table->integer('ean')->unsigned()->default(0000000);
-            $table->float('price')->nullable();
+            $table->bigInteger('price')->unsigned()->nullable();
             $table->longText('specifications')->nullable();
             $table->string('slug')->unique();
         });
@@ -191,7 +191,7 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->string('name');
             $table->integer('shipping_time');
-            $table->float('price');
+            $table->bigInteger('price')->unsigned();
 
             $table->boolean('personal_collection');
 

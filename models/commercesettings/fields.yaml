@@ -6,62 +6,68 @@ fields:
 secondaryTabs:
     fields:
         tax:
-            label: Výše DPH (%)
+            label: pixiu.commerce::lang.fields.tax_size
             type: number
             span: storm
             cssClass: col-sm-2
             tab: Basics
 
         currency:
-            label: Měna
+            label: pixiu.commerce::lang.fields.currencySymbol
             span: storm
-            cssClass: col-sm-1
+            cssClass: col-sm-2
+            tab: Basics
+
+        decimalSymbol:
+            label: pixiu.commerce::lang.fields.decimal_symbol
+            span: storm
+            cssClass: col-sm-3
             tab: Basics
 
         company_name:
-            label: Název společnosti
+            label: pixiu.commerce::lang.fields.company_name
             span: Storm
             cssClass: col-sm-12
             tab: Company
 
         address:
-            label: Adresa
+            label: pixiu.commerce::lang.fields.address
             span: Storm
             cssClass: col-sm-9
             tab: Company
 
         zip:
-            label: PSČ
+            label: pixiu.commerce::lang.fields.zip
             span: Storm
             cssClass: col-sm-3
             tab: Company
 
         ico:
-            label: ICO
+            label: pixiu.commerce::lang.fields.ico
             span: Storm
             cssClass: col-sm-4
             tab: Company
 
         dic:
-            label: DIČ
+            label: pixiu.commerce::lang.fields.dic
             span: Storm
             cssClass: col-sm-4
             tab: Company
 
         ic_dph:
-            label: IČ DPH
+            label: pixiu.commerce::lang.fields.ic_dph
             span: Storm
             cssClass: col-sm-4
             tab: Company
 
         bank:
-            label: Banka
+            label: pixiu.commerce::lang.fields.bank
             span: Strom
             cssClass: col-sm-12
             tab: Company
 
         account_number:
-            label: Číslo účtu
+            label: pixiu.commerce::lang.fields.account_number
             span: Storm
             cssClass: col-sm-4
             tab: Company

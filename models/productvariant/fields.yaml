@@ -14,16 +14,10 @@ fields:
         span: storm
         cssClass: col-sm-11
 
-    product[retail_price]:
-        disabled: true
-        label: pixiu.commerce::lang.fields.product_price
-        span: storm
-        cssClass: col-sm-3
-
     price:
         label: pixiu.commerce::lang.fields.price
         placeholder: pixiu.commerce::lang.placeholders.use_products_price
-        type: number
+        type: \pixiu\commerce\formwidgets\currency
         span: storm
         cssClass: col-sm-9
 
