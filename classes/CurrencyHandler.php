@@ -23,7 +23,8 @@ class CurrencyHandler
 
     public function getValueFromInput($input) : int
     {
-        return (int) str_replace(' ', '', str_replace($this->decimalSymbol, '', substr($input, 0, -3)));
+
+        return (int) str_replace(' ', '', str_replace($this->decimalSymbol, '', substr($input, 0, -(strlen($this->currencySymbol)+1))));
     }
 
     public function getValueForInput($value) : float
