@@ -70,6 +70,7 @@ return [
         'variants_handling' => 'Správa variant',
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
+        'eshop_email' => 'eShop email'
 
     ],
     'buttons' => [
@@ -91,6 +92,8 @@ return [
         'presentation_rules' => 'Pravidla pro zobrazování',
         'products' => 'Produkty',
         'rules' => 'Pravidla',
+        'basics' => 'Základy',
+        'eshop' => 'eShop',
     ],
     'comments' => [
         'orderstatus' => [

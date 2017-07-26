@@ -6,6 +6,8 @@ use Pixiu\Commerce\Classes\OrderStatus as OS;
 use Pixiu\Commerce\Classes\PaymentStatus as PS;
 use Pixiu\Commerce\Classes\OrderLogger;
 use Pixiu\Commerce\Models\OrderLog;
+use Illuminate\Support\Facades\Mail;
+use Pixiu\Commerce\Models\CommerceSettings;
 
 class OrderStatusFSM
 {
@@ -115,6 +117,20 @@ class OrderStatusFSM
                 'id' => str_slug(PS::PAID, '-')
             ]
         ];
+    }
+
+    public function changeStateToNew()
+    {
+        $this->order->status = OS::NEW;
+
+        $order = $this->order;
+//        Mail::send('pixiu.areklama::mail.supplier', function($message) use ($order){
+//            $eshop = CommerceSettings::get('commerce_email');
+//            $message->from($eshop);
+//            $message->to($order->user->email);
+//            $message->bcc($eshop);
+//            $message->subject('Informace o vytvoření objednávky č.: ');
+//        });
     }
 
     public function changeStateToPaid()
