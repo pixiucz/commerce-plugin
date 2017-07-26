@@ -3,7 +3,7 @@
 use Faker\Provider\Payment;
 use Model;
 use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings, OrderLog};
-use Pixiu\Commerce\Classes\{TaxHandler, OrderStatus, PaymentStatus};
+use Pixiu\Commerce\Classes\{TaxHandler, OrderStatus, PaymentStatus, OrderStatusFSM};
 use Illuminate\Support\Facades\Lang;
 use Pixiu\Commerce\Classes\CurrencyHandler;
 
@@ -86,9 +86,7 @@ class Order extends Model
     public function filterFields($fields, $context = null)
     {
         if ($context === "update"){
-            $fields->user->disabled = true;
-            $fields->billing_address_id->disabled = true;
-            $fields->delivery_address_id->disabled = true;
+            //
         }
     }
 
@@ -201,6 +199,9 @@ class Order extends Model
 
     public function afterCreate()
     {
+        $fsm = new OrderStatusFSM($this);
+        $fsm->changeStateToNew();
+
         $this->logs()->create([
             'title' => Lang::get('pixiu.commerce::lang.orderlog.created'),
             'style' => 'text-info'
