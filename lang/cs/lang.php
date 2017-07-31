@@ -80,7 +80,8 @@ return [
         'cancel' => 'Zrušit',
         'save' => 'Uložit',
         'save_and_close' => 'Uložit a zavřít',
-        'update' => 'Upravit'
+        'update' => 'Upravit',
+        'done' => 'Hotovo'
     ],
     'tabs' => [
         'descriptions' => 'Popis',
