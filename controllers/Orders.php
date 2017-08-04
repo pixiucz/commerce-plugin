@@ -3,7 +3,7 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Pixiu\Commerce\Classes\InvoiceBuilder;
+use Pixiu\Commerce\Classes\InvoiceHandler;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;
@@ -69,7 +69,7 @@ class Orders extends Controller
         $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
             if ($item->pivot->lowered_stock === 0) {
                 // $item->changeStock($item->pivot->quantity);
-                $item->moveFromStockToReserved($item->pivot->quantity);
+                $item->changeReserved($item->pivot->quantity);
                 $item->pivot->lowered_stock = true;
                 $item->pivot->save();
                 $item->save();
@@ -88,7 +88,13 @@ class Orders extends Controller
 
     public function createInvoice($id)
     {
-        (new InvoiceBuilder('cs', Order::find($id)))->generateInvoice();
+        $type = Lang::get('pixiu.commerce::lang.other.normal_invoice');
+
+        $order = Order::find($id);
+        $order->status === "canceled" ? $type = Lang::get('pixiu.commerce::lang.other.cancel_invoice') : null;
+
+
+        (new InvoiceHandler('cs', Order::find($id)))->generateInvoice($type);
     }
 
     public function onRefundsPartial($id = null)
@@ -105,28 +111,28 @@ class Orders extends Controller
         $variants = [];
         $order = Order::findOrFail($orderId);
 
-
         foreach ($postVariants as $postVariant){
             $orderVariant = $order->variants()->withPivot('refunded_quantity', 'quantity')->find($postVariant['id']);
             if (array_key_exists('checked', $postVariant)) {
-                array_push($variants, $orderVariant);
                 if ($postVariant['quantity'] === "") {
-                    $orderVariant->changeStock($orderVariant->pivot->quantity - $orderVariant->pivot->refunded_quantity);
-                    $orderVariant->pivot->refunded_quantity = $orderVariant->pivot->quantity;
+                    $orderVariant->changeStock($orderVariant->pivot->quantity);
+                    $orderVariant->pivot->refunded_quantity += $orderVariant->pivot->quantity;
+                    $invoiceRefundedQuantity = $orderVariant->pivot->quantity;
+                    $orderVariant->pivot->quantity = 0;
                     $orderVariant->pivot->save();
                 } else {
-                    $orderVariant->changeStock($postVariant['quantity'] - $orderVariant->pivot->refunded_quantity);
-                    $orderVariant->pivot->refunded_quantity = $postVariant['quantity'];
+                    $orderVariant->changeStock($postVariant['quantity']);
+                    $orderVariant->pivot->quantity -= $postVariant['quantity'];
+                    $orderVariant->pivot->refunded_quantity += $postVariant['quantity'];
+                    $invoiceRefundedQuantity = $postVariant['quantity'];
                     $orderVariant->pivot->save();
                 }
-            } else {
-                $orderVariant->changeStock(-$orderVariant->pivot->refunded_quantity);
-                $orderVariant->pivot->refunded_quantity = 0;
-                $orderVariant->pivot->save();
+                array_push($variants, ['variant' => $orderVariant, 'refunded_quantity' => $invoiceRefundedQuantity]);
             }
         }
 
-        (new InvoiceBuilder('cs', $order))->generateStornoInvoice($variants);
+        // TODO: Fix invoices
+        (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
 
         \Flash::success('Vratky zapocitany');
         return \redirect()->refresh();

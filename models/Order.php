@@ -184,7 +184,6 @@ class Order extends Model
     {
         $this->variants()->withPivot('quantity')->get()->each(function($item, $key) {
             $item->removeReservedStock();
-            $item->changeStock($item->pivot->quantity);
         });
     }
 

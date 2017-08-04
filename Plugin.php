@@ -6,6 +6,7 @@ use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
 use RainLab\User\Models\User;
 use Barryvdh\DomPDF\ServiceProvider;
+use Pixiucz\Invoices\InvoicesServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Lang;
 use Pixiu\Commerce\Classes\CurrencyHandler;
@@ -47,6 +48,12 @@ class Plugin extends PluginBase
             return new TaxHandler;
         });
 
+        $this->app->register(InvoicesServiceProvider::class);
+
+        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
+        $migration->down();
+        $migration->up();
+        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
     }
 
     /**
@@ -65,6 +72,8 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(ServiceProvider::class);
+
+
         AliasLoader::getInstance()->alias('PDF', 'Barryvdh\DomPDF\Facade');
     }
 

@@ -52,7 +52,7 @@ return [
         'products' => 'Produkty',
         'quantity' => 'Množství',
         'rate' => 'Sazba',
-        'refunded_quantity' => 'Z toho vráceno',
+        'refunded_quantity' => 'Vrácených',
         'retail_price' => 'Základní cena',
         'shipping_time' => 'Doručovací doba',
         'short_description' => 'Krátký popis',
@@ -70,7 +70,8 @@ return [
         'variants_handling' => 'Správa variant',
         'visible' => 'Viditělný',
         'zip' => 'PSČ',
-        'eshop_email' => 'eShop email'
+        'eshop_email' => 'eShop email',
+        'variant' => 'Varianta',
 
     ],
     'buttons' => [

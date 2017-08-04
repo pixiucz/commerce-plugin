@@ -339,10 +339,12 @@ class CreateAttributeGroupsTable extends Migration
             $table->increments('id');
             $table->string('type');
             $table->string('path');
+            $table->string('invoice_number');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
         });
 
+        // Pixiu Invoices Package
     }
 
     public function down()
@@ -369,5 +371,6 @@ class CreateAttributeGroupsTable extends Migration
         Schema::dropIfExists('pixiu_com_brands');
         Schema::dropIfExists('pixiu_com_order_statuses');
         Schema::dropIfExists('pixiu_com_addresses');
+//        Schema::dropIfExists('pixiu_invoices');
     }
 }

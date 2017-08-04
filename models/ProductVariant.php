@@ -116,9 +116,8 @@ class ProductVariant extends Model
         $this->increment('in_stock', $amount);
     }
 
-    public function moveFromStockToReserved($amount)
+    public function changeReserved($amount)
     {
-        $this->increment('in_stock', -$amount);
         $this->increment('reserved_stock', $amount);
     }
 
@@ -126,6 +125,7 @@ class ProductVariant extends Model
     public function removeReservedStock()
     {
         $this->reserved_stock = 0;
+        $this->save();
     }
 
     public function moveReservedToStock()

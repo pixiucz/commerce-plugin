@@ -12,7 +12,7 @@
                             <tr>
                                 <th class="list-checkbox">
                                     <div class="checkbox custom-checkbox nolabel">
-                                        <input type="checkbox" id="checkboxAll" />
+                                        <input type="checkbox" id="checkboxAll" checked="checked" />
                                         <label for="checkboxAll"></label>
                                     </div>
                                 </th>
@@ -33,9 +33,7 @@
                                                     class="variant-checkbox"
                                                     id="checkbox_ <?= $variant->id ?>"
                                                     type="checkbox"
-                                                    <?php if ($variant->pivot->refunded_quantity > 0): ?>
                                                     checked="checked"
-                                                    <?php endif ?>
                                             />
                                             <label for="checkbox_ <?= $variant->id ?>"></label>
                                         </div>
@@ -51,7 +49,6 @@
                                                 name="variants[<?= $variant->id ?>][quantity]"
                                                 class="form-control variant-quantity-input"
                                                 type="number" placeholder="Vsechny"
-                                                value="<?= $variant->pivot->refunded_quantity ?>"
                                         >
                                         <input
                                                 type="hidden"
