@@ -180,6 +180,15 @@ class Order extends Model
         });
     }
 
+    public function variantsLeftWarehouse()
+    {
+        $this->variants->each(function ($item, $key) {
+            $item->changeStock(-$item->reserved_stock);
+            $item->removeReservedStock();
+            $item->save();
+        });
+    }
+
     public function returnVariantsToStock()
     {
         $this->variants()->withPivot('quantity')->get()->each(function($item, $key) {
