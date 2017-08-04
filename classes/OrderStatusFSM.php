@@ -123,7 +123,11 @@ class OrderStatusFSM
     {
         $this->order->status = OS::NEW;
 
-        $order = $this->order;
+        if ($this->order->payment_method->cash_on_delivery === 1) {
+            $this->order->payment_status = PS::CASH_ON_DELIVERY;
+        }
+
+        $this->order->save();
 //        Mail::send('pixiu.areklama::mail.supplier', function($message) use ($order){
 //            $eshop = CommerceSettings::get('commerce_email');
 //            $message->from($eshop);

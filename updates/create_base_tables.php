@@ -182,6 +182,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->increments('id');
 
             $table->string('name');
+            $table->boolean('cash_on_delivery')->default(false);
 
             // TODO
         });

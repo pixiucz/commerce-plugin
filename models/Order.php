@@ -108,7 +108,7 @@ class Order extends Model
             return $options;
         }
 
-        if (strtolower($this->payment_method->name) == "cash on delivery") {
+        if ($this->payment_status === PaymentStatus::CASH_ON_DELIVERY) {
             return PaymentStatus::getCashOnDelivery();
         }
 

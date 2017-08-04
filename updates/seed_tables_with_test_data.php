@@ -73,6 +73,7 @@ class SeedUsersTable extends Seeder
 
         PaymentMethod::create([
             'name' => 'Dobírka',
+            'cash_on_delivery' => true
         ]);
 
         PaymentMethod::create([
