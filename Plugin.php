@@ -49,11 +49,11 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(InvoicesServiceProvider::class);
-
-        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
-        $migration->down();
-        $migration->up();
-        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
+//
+//        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
+//        $migration->down();
+//        $migration->up();
+//        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
     }
 
     /**
