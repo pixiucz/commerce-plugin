@@ -2,6 +2,7 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use Illuminate\Support\Facades\Redirect;
 use October\Rain\Support\Facades\Flash;
 use Pixiu\Commerce\Models\Product;
 use function Stringy\create;
@@ -10,6 +11,8 @@ use Pixiu\Commerce\Models\AttributeGroup;
 use Pixiu\Commerce\Models\ProductVariant;
 use Pixiu\Commerce\Models\Attribute;
 use Pixiu\Commerce\Classes\Utils;
+use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Classes\CurrencyHandler;
 
 /**
  * Products Back-end Controller
@@ -26,13 +29,23 @@ class Products extends Controller
     public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
 
-    public function __construct($id = null)
+    private $currencyHandler;
+
+    public function __construct($id = null, CurrencyHandler $currencyHandler)
     {
         parent::__construct();
 
+        $this->currencyHandler = $currencyHandler;
         $this->vars['test'] = $id;
 
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'products');
+    }
+
+    public function update($id = null)
+    {
+        parent::update($id);
+        $this->vars['picturesListVariants'] = $this->prepareVariantsForPartials($id);
+        $this->vars['picturesListImages'] = $this->prepareVariantImagesForPartias($id);
     }
 
     public function makeProductVariantsListWidget()
@@ -44,10 +57,14 @@ class Products extends Controller
     }
 
     public function formAfterSave($model) {
-        // Gets all variants + all attribute groups
+        /*
+         *  If no variant exist, create 'empty' variant
+         */
         if (!$variants = post('variant')){
+            $this->handleEmptyVariant($model);
             return;
         };
+
         $options = post('options');
 
         /*
@@ -63,12 +80,12 @@ class Products extends Controller
                  *  we can only update it's EAN number and Price
                  */
                 if (array_has($variant, 'id')){
-                    $this->updateProductVariant($variant['id'], $variant);
+                    $this->updateProductVariant($variant['id'], $model, $variant);
                 } else {
 
                     /*
                      *  Otherwise we have to create new variant and
-                     *  resolve all it's attributes and their groups (?)
+                     *  resolve all it's attributes and their groups
                      */
                     $this->createProductVariant(
                         $variant,
@@ -79,9 +96,6 @@ class Products extends Controller
             }
         }
     }
-
-
-    // TODO: Are these concern of controller or model?
 
     /**
      * @param array $options (array of attribute group names)
@@ -111,11 +125,14 @@ class Products extends Controller
     public function createProductVariant(array $variant, Product $model, array $attributeGroups)
     {
         $productVariant = new ProductVariant();
-        $productVariant->price = $variant['price'];
+        $productVariant->price = $variant['price'] === "" ? $model->retail_price : $this->currencyHandler->getValueFromInput($variant['price']);
         $productVariant->ean = $variant['ean'];
         $productVariant->in_stock = $variant['in_stock'];
         $productVariant->product()->associate($model);
+        $productVariant->slug = "temp " . random_int(1, 10);
         $productVariant->save();
+
+        $slug = $this->getBasicSlug($model);
 
         foreach(json_decode($variant['attributes']) as $attribute){
             $newAttribute = Attribute::whereRaw('lower(value) = ?', [strtolower($attribute->value)])->where('attribute_group_id', $attributeGroups[$attribute->attributegroup->name]->id)->first();
@@ -124,31 +141,32 @@ class Products extends Controller
                 $newAttribute->attributegroup()->associate($attributeGroups[$attribute->attributegroup->name]);
             }
             $newAttribute->value = $attribute->value;
+            $slug .= ' ' . $attribute->value;
             $newAttribute->save();
             $newAttribute->productvariant()->attach($productVariant,  ['group_id' => $newAttribute->attribute_group_id]);
         }
+
+        $productVariant->slug = str_slug($slug, '-');
+        $productVariant->save();
+
     }
 
     /**
      * @param int $variantId
      * @param array $variantData
      */
-    public function updateProductVariant(int $variantId, array $variantData)
+    public function updateProductVariant(int $variantId, Product $model, array $variantData)
     {
         $productVariant = ProductVariant::find($variantId);
-        $productVariant->price = $variantData['price'];
+        $productVariant->price = $variantData['price'] === "" ? $model->retail_price : $this->currencyHandler->getValueFromInput($variantData['price']);
         $productVariant->ean = $variantData['ean'];
         $productVariant->save();
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
     | Partials handling
     |--------------------------------------------------------------------------
-    |
-    |
     |
     |
     */
@@ -201,7 +219,6 @@ class Products extends Controller
         return $returnArray;
     }
 
-
     /*
      *  Partial with dialog allowing user to
      *  attach any uploaded image to any variant
@@ -212,7 +229,7 @@ class Products extends Controller
         $this->vars['productVariants'] = $this->prepareVariantsForPartials($id);
 
         if ((empty($this->vars['productImages'])) || (empty($this->vars['productVariants']))){
-            $this->vars['message'] = "Check if there are variants generated and pictures uploaded. Otherwise we can't perform any pairing.";
+            $this->vars['message'] = Lang::get('pixiu.commerce::lang.other.noimages_or_novariants');
             return $this->makePartial('error_dialog');
         }
 
@@ -220,8 +237,8 @@ class Products extends Controller
     }
 
     /*
-     *  Partial that allows user to select
-     *  picture from uploaded  as primary picture
+     *  Partial that allows user to select one
+     *  picture from uploaded pictures as primary picture
      */
     public function onPrimaryPictureForVariantsPartial($id = null)
     {
@@ -235,7 +252,7 @@ class Products extends Controller
         $images = post('images');
         $variants = post('variants');
         if (($images === null) || ($variants === null)){
-            return;
+            return back();
         }
 
         foreach ($variants as $variant) {
@@ -248,7 +265,8 @@ class Products extends Controller
             }
         }
 
-        Flash::success('Pictures added!');
+        Flash::success(Lang::get('pixiu.commerce::lang.other.pictures_added'));
+        return back();
     }
 
     public function onSavePrimaryPictures($id = null)
@@ -266,12 +284,56 @@ class Products extends Controller
             $variant->save();
         }
 
-        Flash::success('Primary pictures attached');
+        Flash::success(Lang::get('pixiu.commerce::lang.other.saved_primary_pictures'));
+        return back();
     }
 
     public function onDeletePictureFromVariant()
     {
         $variant = ProductVariant::find(post('variantId'));
         $variant->images()->detach(post('imageId'));
+    }
+
+    /**
+     * @param $model
+     */
+    private function handleEmptyVariant($model): void
+    {
+        if (!$productVariant = $model->productvariants->first()) {
+            $productVariant = new ProductVariant();
+            $productVariant->in_stock = post('Product._in_stock');
+            $productVariant->product()->associate($model);
+        };
+        $productVariant->ean = post('Product._ean');
+        $productVariant->price = $this->currencyHandler->getValueFromInput(post('Product.retail_price'));
+
+        $slug = $this->getBasicSlug($model);
+        $productVariant->slug = str_slug($slug, '-');
+
+        if ($stockChange = post('Product._change_stock')){
+            $productVariant->in_stock += $stockChange;
+        }
+
+        $productVariant->save();
+
+        $model->images()->get()->each(function($item, $key) use ($productVariant) {
+            if (!$productVariant->images->contains($item)){
+                $productVariant->images()->attach($item);
+            }
+        });
+    }
+
+    /**
+     * @param $model
+     * @return string
+     */
+    private function getBasicSlug($model): string
+    {
+        $slug = "";
+        if (count($model->brand)) {
+            $slug = $model->brand->name . ' ';
+        }
+        $slug .= $model->name;
+        return $slug;
     }
 }

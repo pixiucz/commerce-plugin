@@ -7,7 +7,7 @@ categories:
     showTree: true
     view:
         list: $/pixiu/commerce/models/category/columns.yaml
-        toolbarButtons: add|remove
+        toolbarButtons: add|remove|create
     manage:
         list: $/pixiu/commerce/models/category/columns.yaml
         form: $/pixiu/commerce/models/category/fields.yaml

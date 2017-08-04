@@ -24,7 +24,7 @@ secondaryTabs:
 
         retail_price:
             label: pixiu.commerce::lang.fields.retail_price
-            default: 9999
+            type: \pixiu\commerce\formwidgets\currency
             span: storm
             cssClass: col-sm-8
             tab: pixiu.commerce::lang.tabs.details
@@ -37,7 +37,92 @@ secondaryTabs:
             cssClass: col-sm-12
             tab: pixiu.commerce::lang.tabs.details
 
-        _form_widget:
+        specifications_section:
+            label: pixiu.commerce::lang.fields.specifications
+            type: section
+            tab: pixiu.commerce::lang.tabs.details
+
+        specifications:
+            type: repeater
+            form:
+                fields:
+                    name:
+                        label: pixiu.commerce::lang.fields.name
+                        span: storm
+                        cssClass: col-sm-4
+                    value:
+                        label: pixiu.commerce::lang.fields.value
+                        span: storm
+                        cssClass: col-sm-8
+            tab: pixiu.commerce::lang.tabs.details
+
+        variants_section:
+            label: pixiu.commerce::lang.fields.variants_handling
+            type: section
+            tab: pixiu.commerce::lang.tabs.details
+
+        has_variants@create:
+            label: pixiu.commerce::lang.fields.has_variants
+            type: checkbox
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-12
+
+        _in_stock@create:
+            label: pixiu.commerce::lang.fields.in_stock
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+            trigger:
+                action: show
+                field: has_variants
+                condition: unchecked
+
+        _ean@create:
+            label: EAN
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+            trigger:
+                action: show
+                field: has_variants
+                condition: unchecked
+
+        _form_widget@create:
+            label: pixiu.commerce::lang.fields.variants_and_attributes
+            type: \pixiu\commerce\formwidgets\variantswidget
+            tab: pixiu.commerce::lang.tabs.details
+            trigger:
+                action: hide
+                field: has_variants
+                condition: unchecked
+
+        _in_stock@update:
+            label: pixiu.commerce::lang.fields.in_stock
+            type: number
+            disabled: true
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+
+        _change_stock@update:
+            label: pixiu.commerce::lang.fields.change_stock
+            placeholder: pixiu.commerce::lang.placeholders.change_stock
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-5
+
+        _ean@update:
+            label: EAN
+            type: number
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-3
+
+        _form_widget@update:
             label: pixiu.commerce::lang.fields.variants_and_attributes
             type: \pixiu\commerce\formwidgets\variantswidget
             tab: pixiu.commerce::lang.tabs.details
@@ -66,10 +151,16 @@ secondaryTabs:
             path: field_variants
             tab: pixiu.commerce::lang.tabs.images
 
+        pictures_list@update:
+            label:
+            type: partial
+            path: pictures_list
+            tab: pixiu.commerce::lang.tabs.images
+
         decomposite_on@update:
             label: pixiu.commerce::lang.fields.decomposite_on
             type: checkboxlist
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules
 
         visible:
             label: pixiu.commerce::lang.fields.visible
@@ -77,7 +168,7 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules
 
         active:
             label: pixiu.commerce::lang.fields.active
@@ -85,4 +176,4 @@ secondaryTabs:
             default: true
             span: strom
             cssClass: col-sm-2
-            tab: pixiu.commerce::lang.tabs.rules
+            tab: pixiu.commerce::lang.tabs.presentation_rules

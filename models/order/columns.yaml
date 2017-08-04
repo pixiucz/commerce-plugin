@@ -21,13 +21,6 @@ columns:
         searchable: true
         sortable: true
 
-    billing_address:
-        label: pixiu.commerce::lang.fields.billing_address
-        relation: billing_address
-        select: concat(first_name, ' ', last_name, ' ', address, ' ', city, ' ', zip, ' ', country)
-        searchable: true
-        sortable: true
-
     delivery_option:
         label: pixiu.commerce::lang.fields.delivery_option
         relation: delivery_option
@@ -42,11 +35,20 @@ columns:
         searchable: true
         sortable: true
 
-    order_status:
+    status:
         label: pixiu.commerce::lang.fields.order_status
-        relation: order_status
         type: partial
-        path: ~/plugins/pixiu/commerce/controllers/orderstatuses/_status_column.htm
+        path: ~/plugins/pixiu/commerce/controllers/orders/_status_column.htm
+        searchable: true
+        sortable: true
+
+    updated_at:
+        label: pixiu.commerce::lang.fields.updated_at
+        searchable: true
+        sortable: true
+
+    created_at:
+        label: pixiu.commerce::lang.fields.created_at
         searchable: true
         sortable: true
 

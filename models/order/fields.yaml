@@ -3,8 +3,18 @@
 # ===================================
 
 fields:
+    status_buttons@update:
+                type: partial
 secondaryTabs:
     fields:
+        status:
+            label: pixiu.commerce::lang.fields.order_status
+            type: dropdown
+            disabled: true
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.info
+
         user:
             label: pixiu.commerce::lang.fields.user
             type: relation
@@ -30,7 +40,7 @@ secondaryTabs:
             cssClass: col-sm-6
             tab: pixiu.commerce::lang.tabs.info
 
-        delivery_option:
+        delivery_option@create:
             label: pixiu.commerce::lang.fields.delivery_option
             type: relation
             emptyOption: -
@@ -38,7 +48,7 @@ secondaryTabs:
             cssClass: col-sm-5
             tab: pixiu.commerce::lang.tabs.info
 
-        payment_method:
+        payment_method@create:
             label: pixiu.commerce::lang.fields.payment_method
             type: relation
             emptyOption: -
@@ -46,52 +56,58 @@ secondaryTabs:
             cssClass: col-sm-4
             tab: pixiu.commerce::lang.tabs.info
 
-        order_status:
-            label: pixiu.commerce::lang.fields.order_status
+        delivery_option@update:
+            label: pixiu.commerce::lang.fields.delivery_option
             type: relation
-            select: title
+            disabled: true
             emptyOption: -
+            span: storm
+            cssClass: col-sm-5
+            tab: pixiu.commerce::lang.tabs.info
+
+        payment_method@update:
+            label: pixiu.commerce::lang.fields.payment_method
+            type: relation
+            disabled: true
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.info
+
+#        status:
+#            label: pixiu.commerce::lang.fields.order_status
+#            type: dropdown
+#            span: storm
+#            dependsOn: payment_status
+#            cssClass: col-sm-3
+#            tab: pixiu.commerce::lang.tabs.info
+
+        payment_status@update:
+            label: pixiu.commerce::lang.fields.payment_status
+            type: dropdown
+            disabled: true
             span: storm
             cssClass: col-sm-3
             tab: pixiu.commerce::lang.tabs.info
 
-        _variants_repeater@update:
-            label: pixiu.commerce::lang.fields.products
-            type: repeater
-            form:
-                fields:
-                    variant_repeater_id:
-                        label: pixiu.commerce::lang.fields.product
-                        type: dropdown
-                        emptyOption: -
-                        span: storm
-                        cssClass: col-sm-8
-
-                    variant_repeater_price:
-                        label: pixiu.commerce::lang.fields.price
-                        type: number
-                        placeholder: Ponechat katalogovou cenu
-                        dependsOn: variant_repeater_id
-                        span: storm
-                        cssClass: col-sm-3
-
-                    variant_repeater_quantity:
-                        label: pixiu.commerce::lang.fields.quantity
-                        type: number
-                        span: storm
-                        cssClass: col-sm-1
-            tab: pixiu.commerce::lang.tabs.order
-
-        logs@update:
-            label: Log
+        variants@update:
             type: partial
-            tab: Log
+            path: variants
+            tab: pixiu.commerce::lang.tabs.products
+            span: storm
+            cssClass: col-sm-12
 
-        create_invoice@update:
+        refunds:
             type: partial
-            tab: pixiu.commerce::lang.tabs.invoices
+            tab: pixiu.commerce::lang.tabs.products
+
+        notes@update:
+            label: pixiu.commerce::lang.fields.notes
+            type: partial
+            tab: pixiu.commerce::lang.tabs.notes
 
         invoices@update:
             label: pixiu.commerce::lang.fields.invoices_log
             type: partial
             tab: pixiu.commerce::lang.tabs.invoices
+

@@ -1,0 +1,113 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    status_buttons:
+        type: partial
+
+    user_details_section:
+            label: pixiu.commerce::lang.fields.customer
+            type: section
+
+    status:
+        label: pixiu.commerce::lang.fields.order_status
+        type: dropdown
+        span: storm
+        cssClass: col-sm-12
+
+    user:
+        label: pixiu.commerce::lang.fields.user
+        type: relation
+        select: concat(name, ' ', surname, ' | ', email)
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-12
+
+    delivery_address_id:
+        label: pixiu.commerce::lang.fields.delivery_address
+        type: dropdown
+        dependsOn: user
+        span: storm
+        cssClass: col-sm-6
+
+    billing_address_id:
+        label: pixiu.commerce::lang.fields.billing_address
+        type: dropdown
+        dependsOn: user
+        span: storm
+        cssClass: col-sm-6
+
+    delivery_option:
+        label: pixiu.commerce::lang.fields.delivery_option
+        type: relation
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-5
+
+    payment_method:
+        label: pixiu.commerce::lang.fields.payment_method
+        type: relation
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-4
+
+    delivery_option:
+        label: pixiu.commerce::lang.fields.delivery_option
+        type: relation
+        disabled: true
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-5
+
+    payment_method:
+        label: pixiu.commerce::lang.fields.payment_method
+        type: relation
+        disabled: true
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-4
+
+    payment_status:
+        label: pixiu.commerce::lang.fields.payment_status
+        type: dropdown
+        disabled: true
+        span: storm
+        cssClass: col-sm-3
+
+    variants_details_section:
+        label: pixiu.commerce::lang.fields.products
+        type: section
+
+    variants:
+        type: partial
+        path: variants
+        span: storm
+        cssClass: col-sm-12
+
+    refunds:
+        type: partial
+
+    notes_section:
+            label: pixiu.commerce::lang.fields.notes
+            type: section
+
+    notes:
+        type: partial
+
+    invoices_section:
+            label: pixiu.commerce::lang.fields.invoices
+            type: section
+
+    invoices:
+        type: partial
+
+    log_section:
+        label: pixiu.commerce::lang.fields.log
+        type: section
+
+    log:
+        type: partial
+
+    update_button:
+        type: partial

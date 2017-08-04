@@ -23,9 +23,10 @@ create:
 # Update page
 update:
     title: Edit Order
-    redirect: pixiu/commerce/orders
+    redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Preview page
 preview:
     title: Preview Order
+    form: $/pixiu/commerce/models/order/preview_fields.yaml

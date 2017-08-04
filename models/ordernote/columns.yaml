@@ -1,0 +1,18 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    title:
+        label: pixiu.commerce::lang.fields.title
+
+    created_at:
+        label: pixiu.commerce::lang.fields.created_at
+
+    updated_at:
+        label: pixiu.commerce::lang.fields.updated_at
+

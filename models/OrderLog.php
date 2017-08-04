@@ -20,7 +20,9 @@ class OrderLog extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'title', 'style'
+    ];
 
     /**
      * @var array Relations

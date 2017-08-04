@@ -1,0 +1,15 @@
+<?php if ($formModel->status === "finished"): ?>
+    <div style="margin: -25px 15px 0px 0px;" class="pull-right">
+
+        <a
+                href="javascript:;"
+                class="btn btn-primary"
+                data-control="popup"
+                data-request-data="<?= $this->id ?>"
+                data-handler="onRefundsPartial"
+                data-size="large"
+        > <?= Lang::get('pixiu.commerce::lang.buttons.refund') ?> </a>
+
+    </div>
+<?php endif ?>
+

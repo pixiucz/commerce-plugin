@@ -184,6 +184,19 @@
         <td style="text-align: right;"> {{ variant.sum }} </td>
     </tr>
     {% endfor %}
+    {% if status != 'canceled' %}
+    <tr>
+        <td> 0000 </td>
+        <td> Doprava: {{ delivery_option.name }} </td>
+        <td> 1 </td>
+        <td> {{ delivery_option.price }} </td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.tax }}</td>
+        <td> {{ tax }}% </td>
+        <td style="text-align: right;"> {{ delivery_option.price }}</td>
+    </tr>
+    {% endif %}
 </table>
 
 <br>
@@ -212,7 +225,7 @@
         </tr>
     </table>
 </div>
-    {% if order_status.is_canceled == 1 %}
+    {% if status == 'canceled' %}
     <div style="text-align: left; width: 100%; display: inline-block; color: darkred; font-size: 45px;">
         STORNOVÁNO
     </div>

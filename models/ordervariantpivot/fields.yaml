@@ -1,0 +1,10 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    pivot[quantity]:
+        label: quantity
+
+    pivot[price]:
+        label: price

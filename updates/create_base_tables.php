@@ -36,7 +36,7 @@ class CreateAttributeGroupsTable extends Migration
 //
 //            $table->integer('tax_id')->unsigned();
 //            $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
-            $table->integer('brand_id')->unsigned();
+            $table->integer('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');
 
 
@@ -46,7 +46,9 @@ class CreateAttributeGroupsTable extends Migration
             $table->boolean('active')->default(true);
             $table->text('short_description')->nullable();
             $table->longText('long_description')->nullable();
-            $table->float('retail_price');
+            $table->bigInteger('retail_price')->unsigned();
+            $table->longText('specifications')->nullable();
+            $table->boolean('has_variants')->default(true);
 
             $table->timestamps();
         });
@@ -64,8 +66,13 @@ class CreateAttributeGroupsTable extends Migration
             $table->foreign('primary_picture_id')->references('id')->on('system_files');
 
             $table->integer('in_stock')->unsigned()->default(0);
+            $table->integer('reserved_stock')->unsigned()->default(0);
+
+
             $table->integer('ean')->unsigned()->default(0000000);
-            $table->float('price')->nullable()->default(NULL);
+            $table->bigInteger('price')->unsigned()->nullable();
+            $table->longText('specifications')->nullable();
+            $table->string('slug')->unique();
         });
 
         // Images pivot
@@ -187,7 +194,9 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->string('name');
             $table->integer('shipping_time');
-            $table->float('price');
+            $table->bigInteger('price')->unsigned();
+
+            $table->boolean('personal_collection');
 
             // TODO: Rules for pricing, Size rules,...
         });
@@ -200,8 +209,6 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->string('title');
             $table->string('color');
-
-            $table->boolean('is_canceled')->default(false);
 
             // Requires mail-templates implementation
             // $table->boolean('sends_email')->default(false);
@@ -257,14 +264,33 @@ class CreateAttributeGroupsTable extends Migration
 
             $table->integer('delivery_option_id')->unsigned()->nullable();
             $table->foreign('delivery_option_id')->references('id')->on('pixiu_com_delivery_options');
-            
-            // TODO
-            // $table->integer('user_id')->unsigned();
-            // $table->foreign('user_id')->references('id')->on('users');
+
+            $table->enum('status', [
+                'new', 'ready for collection', 'shipped', 'finished', 'canceled'
+            ]);
+
+            $table->enum('payment_status', [
+                'paid', 'awaiting payment', 'cash on delivery'
+            ]);
+
         });
 
-        // Order logs
+        // OrderLog
         Schema::create('pixiu_com_order_logs', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->timestamps();
+            $table->increments('id');
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
+
+            $table->string('title');
+            $table->mediumText('content')->nullable();
+            $table->string('style')->nullable();
+
+        });
+
+        // Order notes
+        Schema::create('pixiu_com_order_notes', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
@@ -298,8 +324,9 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
 
-            $table->integer('quantity');
-            $table->integer('price');
+            $table->integer('quantity')->default(0);
+            $table->integer('refunded_quantity')->default(0);
+            $table->integer('price')->default(0);
             $table->boolean('lowered_stock')->default(false);
 
             $table->primary(['variant_id', 'order_id']);
@@ -310,12 +337,14 @@ class CreateAttributeGroupsTable extends Migration
             $table->engine = 'InnoDB';
             $table->timestamps();
             $table->increments('id');
+            $table->string('type');
             $table->string('path');
+            $table->string('invoice_number');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
-
         });
 
+        // Pixiu Invoices Package
     }
 
     public function down()
@@ -326,6 +355,7 @@ class CreateAttributeGroupsTable extends Migration
         Schema::dropIfExists('pixiu_com_variant_images');
         Schema::dropIfExists('pixiu_com_order_variants');
         Schema::dropIfExists('pixiu_com_order_logs');
+        Schema::dropIfExists('pixiu_com_order_notes');
         Schema::dropIfExists('pixiu_com_orders');
         Schema::dropIfExists('pixiu_com_payment_methods');
         Schema::dropIfExists('pixiu_com_delivery_options');
@@ -341,5 +371,6 @@ class CreateAttributeGroupsTable extends Migration
         Schema::dropIfExists('pixiu_com_brands');
         Schema::dropIfExists('pixiu_com_order_statuses');
         Schema::dropIfExists('pixiu_com_addresses');
+//        Schema::dropIfExists('pixiu_invoices');
     }
 }

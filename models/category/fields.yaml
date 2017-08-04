@@ -9,3 +9,4 @@ fields:
     parent:
         label: pixiu.commerce::lang.fields.parent
         type: relation
+        emptyOption: - 

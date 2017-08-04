@@ -1,12 +1,15 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Pixiu\Commerce\Classes\TaxHandler;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
 use RainLab\User\Models\User;
 use Barryvdh\DomPDF\ServiceProvider;
+use Pixiucz\Invoices\InvoicesServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Classes\CurrencyHandler;
 
 /**
  * Commerce Plugin Information File
@@ -38,7 +41,19 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        \App::bind('CurrencyHandler', function($app) {
+            return new CurrencyHandler;
+        });
+        \App::bind('TaxHandler', function($app) {
+            return new TaxHandler;
+        });
 
+        $this->app->register(InvoicesServiceProvider::class);
+
+        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
+        $migration->down();
+        $migration->up();
+        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
     }
 
     /**
@@ -57,6 +72,8 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(ServiceProvider::class);
+
+
         AliasLoader::getInstance()->alias('PDF', 'Barryvdh\DomPDF\Facade');
     }
 
@@ -130,24 +147,24 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-                    'delivery_options' => [
-                        'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
-                        'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
-                        'icon'        => 'icon-truck',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
-                    'payment_methods' => [
-                        'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
-                        'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
-                        'icon'        => 'icon-credit-card',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
-                    'order_statuses' => [
-                        'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
-                        'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
-                        'icon'        => 'icon-sliders',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
+//                    'delivery_options' => [
+//                        'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
+//                        'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
+//                        'icon'        => 'icon-truck',
+//                        'permissions' => ['pixiu.commerce.*']
+//                    ],
+//                    'payment_methods' => [
+//                        'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
+//                        'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
+//                        'icon'        => 'icon-credit-card',
+//                        'permissions' => ['pixiu.commerce.*']
+//                    ],
+//                    'order_statuses' => [
+//                        'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
+//                        'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
+//                        'icon'        => 'icon-sliders',
+//                        'permissions' => ['pixiu.commerce.*']
+//                    ],
                     'address' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
                         'url'         => Backend::url('pixiu/commerce/Addresses'),

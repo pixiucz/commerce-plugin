@@ -1,0 +1,13 @@
+<div class="pull-right"
+     style="margin: 15px;">
+    <?php if (count($buttons)): ?> <h4>Změna statusu</h4> <?php endif ?>
+    <?php foreach ($buttons as $button): ?>
+        <a
+                id="<?= $button['id'] ?> -action"
+                class="btn btn-lg btn-primary"
+                href="<?= Backend::url('pixiu/commerce/orders/changeState') . '/' . $formModel->id . '/' . $button['id'] ?>"
+        >
+            <?= $button['label'] ?>
+        </a>
+    <?php endforeach ?>
+</div>

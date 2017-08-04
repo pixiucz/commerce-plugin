@@ -2,10 +2,14 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
-use Pixiu\Commerce\Classes\InvoiceRobot;
+use Illuminate\Support\Facades\Redirect;
+use Pixiu\Commerce\Classes\InvoiceHandler;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
-use Pixiu\Commerce\Models\OrderStatus;
+use Pixiu\Commerce\classes\OrderStatus;
+use Pixiu\Commerce\Classes\OrderStatusFSM as FSM;
+use Illuminate\Support\Facades\Lang;
+use Pixiu\Commerce\Models\ProductVariant;
 
 /**
  * Orders Back-end Controller
@@ -22,44 +26,116 @@ class Orders extends Controller
     public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
 
-    public function __construct()
+    private $fsm;
+
+    public function __construct($id = null)
     {
         parent::__construct();
-
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orders');
+    }
+
+    public function update($id = null)
+    {
+        $this->relationConfig = "config_relation_finished.yaml";
+
+        parent::update($id);
+        $this->fsm = new FSM(Order::find($id));
+        $this->vars['buttons'] = $this->fsm->getAvailableActions();
+
+    }
+
+    public function preview($id = null)
+    {
+        parent::preview($id);
+        $this->fsm = new FSM(Order::find($id));
+        $this->vars['buttons'] = $this->fsm->getAvailableActions();
+        $this->vars['logs'] = Order::find($id)->logs()->orderBy('created_at', 'desc')->get()->toArray();
+    }
+
+    public function changeState($id, $action)
+    {
+        $this->fsm = new FSM(Order::find($id));
+        if ($this->fsm->manageStateChange($action)) {
+            \Flash::success('Status zmenen');
+            return Redirect::back();
+        };
+
+        \Flash::error('Oooops');
+        return Redirect::back();
     }
 
     public function manageStocks($model)
     {
-        $canceledFlag = $model->order_status->is_canceled;
-        if ($canceledFlag === 0) {
-            $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) use ($canceledFlag) {
-                if ($item->pivot->lowered_stock === 0){
-                    $item->in_stock -= $item->pivot->quantity;
-                    $item->pivot->lowered_stock = true;
-                    $item->pivot->save();
-                    $item->save();
-                }
-            });
-        } else {
-            $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) use ($canceledFlag) {
-                if ($item->pivot->lowered_stock === 1){
-                    $item->in_stock += $item->pivot->quantity;
-                    $item->pivot->lowered_stock = false;
-                    $item->pivot->save();
-                    $item->save();
-                }
-            });
-        }
+        $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
+            if ($item->pivot->lowered_stock === 0) {
+                // $item->changeStock($item->pivot->quantity);
+                $item->changeReserved($item->pivot->quantity);
+                $item->pivot->lowered_stock = true;
+                $item->pivot->save();
+                $item->save();
+            }
+        });
     }
 
     public function formAfterSave($model)
     {
-        $this->manageStocks($model);
+        if ($model->status === OrderStatus::NEW) {
+            $this->manageStocks($model);
+        }
+
+        $this->createInvoice($model->id);
     }
 
     public function createInvoice($id)
     {
-        return Response::download(storage_path((new InvoiceRobot('cs', Order::find($id)))->generateInvoice()));
+        $type = Lang::get('pixiu.commerce::lang.other.normal_invoice');
+
+        $order = Order::find($id);
+        $order->status === "canceled" ? $type = Lang::get('pixiu.commerce::lang.other.cancel_invoice') : null;
+
+
+        (new InvoiceHandler('cs', Order::find($id)))->generateInvoice($type);
+    }
+
+    public function onRefundsPartial($id = null)
+    {
+        $this->vars['orderId'] = $id;
+        $this->vars['variants'] = Order::find($id)->variants;
+        return $this->makePartial('refunds_popup');
+    }
+
+    public function onRefundVariants()
+    {
+        $orderId = post('orderId');
+        $postVariants = post('variants');
+        $variants = [];
+        $order = Order::findOrFail($orderId);
+
+        foreach ($postVariants as $postVariant){
+            $orderVariant = $order->variants()->withPivot('refunded_quantity', 'quantity')->find($postVariant['id']);
+            if (array_key_exists('checked', $postVariant)) {
+                if ($postVariant['quantity'] === "") {
+                    $orderVariant->changeStock($orderVariant->pivot->quantity);
+                    $orderVariant->pivot->refunded_quantity += $orderVariant->pivot->quantity;
+                    $invoiceRefundedQuantity = $orderVariant->pivot->quantity;
+                    $orderVariant->pivot->quantity = 0;
+                    $orderVariant->pivot->save();
+                } else {
+                    $orderVariant->changeStock($postVariant['quantity']);
+                    $orderVariant->pivot->quantity -= $postVariant['quantity'];
+                    $orderVariant->pivot->refunded_quantity += $postVariant['quantity'];
+                    $invoiceRefundedQuantity = $postVariant['quantity'];
+                    $orderVariant->pivot->save();
+                }
+                array_push($variants, ['variant' => $orderVariant, 'refunded_quantity' => $invoiceRefundedQuantity]);
+            }
+        }
+
+        // TODO: Fix invoices
+        (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
+
+        \Flash::success('Vratky zapocitany');
+        return \redirect()->refresh();
+
     }
 }

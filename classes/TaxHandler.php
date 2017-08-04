@@ -2,7 +2,7 @@
 
 use Pixiu\Commerce\Models\CommerceSettings;
 
-class Tax
+class TaxHandler
 {
     public $rate;
 

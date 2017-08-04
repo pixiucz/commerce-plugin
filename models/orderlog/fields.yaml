@@ -3,10 +3,6 @@
 # ===================================
 
 fields:
-    title:
-        label: pixiu.commerce::lang.fields.title
-        type: text
-
-    text:
-        label: Text
-        type: richeditor
+    id:
+        label: ID
+        disabled: true

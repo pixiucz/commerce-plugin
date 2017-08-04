@@ -2,13 +2,20 @@
 
 use Model;
 use Pixiu\Commerce\Models\CommerceSettings;
-use Pixiu\Commerce\Classes\Tax;
+use Pixiu\Commerce\Classes\TaxHandler;
 
 /**
  * ProductCombination Model
  */
 class ProductVariant extends Model
 {
+    private $taxHandler;
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->taxHandler = \App::make('TaxHandler');
+    }
 
     /**
      * @var string The database table used by the model.
@@ -24,6 +31,8 @@ class ProductVariant extends Model
      * @var array Fillable fields
      */
     protected $fillable = [];
+
+    protected $jsonable = ['specifications'];
 
     /**
      * @var array Relations
@@ -52,7 +61,8 @@ class ProductVariant extends Model
             'Pixiu\Commerce\Models\Orders',
             'table' => 'pixiu_com_orders_variants',
             'key' => 'variant_id',
-            'otherKey' => 'order_id'
+            'otherKey' => 'order_id',
+            'pivot' => ['price','quantity','refunded_quantity']
         ]
     ];
     public $morphTo = [];
@@ -64,7 +74,9 @@ class ProductVariant extends Model
     public function getFullNameAttribute()
     {
         $product = $this->product()->with('brand')->first();
-        $productName = $product->brand->name . ' ' . $product->name;
+
+        $product->brand !== null ? $productName = $product->brand->name . ' ' . $product->name : $productName = $product->name;
+
 
         $this->attributes()->get()->each(function($item, $key) use (&$productName){
             $productName .= ' - ' . $item->value;
@@ -74,20 +86,52 @@ class ProductVariant extends Model
 
     public function getResolvedPriceAttribute()
     {
-        if (($this->price === null) || ($this->price == 0)){
-            return $this->product->retail_price;
-        }
-        return round($this->price, 2);
+        return $this->price;
     }
 
     public function getResolvedPriceWithoutTaxAttribute()
     {
-        return round((new Tax())->getWithoutTax($this->resolved_price), 2);
+        return $this->taxHandler->getWithoutTax($this->resolved_price);
     }
 
     public function getTaxOnlyAttribute()
     {
-        return round((new Tax())->getTax($this->resolved_price), 2);
+        return $this->taxHandler->getTax($this->resolved_price);
+    }
+
+
+    public function setChangeStockAttribute($change = null)
+    {
+        if ($change === null) {
+            $change = post('ProductVariant.change_stock');
+        }
+
+        if ($change <> 0 && $change !== "") {
+            $this->increment('in_stock', $change);
+        }
+    }
+
+    public function changeStock($amount)
+    {
+        $this->increment('in_stock', $amount);
+    }
+
+    public function changeReserved($amount)
+    {
+        $this->increment('reserved_stock', $amount);
+    }
+
+
+    public function removeReservedStock()
+    {
+        $this->reserved_stock = 0;
+        $this->save();
+    }
+
+    public function moveReservedToStock()
+    {
+        $this->increment('in_stock', $this->reserved_stock);
+        $this->reserved_stock = 0;
     }
 
 }

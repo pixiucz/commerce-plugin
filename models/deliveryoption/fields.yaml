@@ -19,3 +19,9 @@ fields:
         type: number
         span: storm
         cssClass: col-sm-4
+
+    personal_collection:
+        label: pixiu.commerce::lang.fields.personal_collection
+        type: checkbox
+        span: storm
+        cssClass: col-sm-12

@@ -1,0 +1,32 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+    <input
+        type="text"
+        id="<?= $this->getId('input') ?>"
+        name="<?= $name ?>"
+        value="<?= $value ?>"
+        class="form-control price-formatter"
+        autocomplete="off" />
+
+<?php endif ?>
+
+<script>
+    $(document).ready(function() {
+        var symbol = "<?= $currencySymbol ?>";
+        var decimalSymbol = "<?= $decimalSymbol ?>";
+        var format = "<?= $format ?>";
+
+        var priceInput = $('.price-formatter');
+
+        priceInput.formatCurrency({ 'decimalSymbol': decimalSymbol, 'symbol' : symbol, 'positiveFormat': format, 'digitGroupSymbol': " "});
+        priceInput.blur(function() {
+            priceInput.formatCurrency({ 'decimalSymbol': decimalSymbol, 'symbol' : symbol, 'positiveFormat': format, 'digitGroupSymbol': " "});
+        });
+    });
+</script>
