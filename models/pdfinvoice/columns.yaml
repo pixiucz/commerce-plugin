@@ -7,6 +7,11 @@ columns:
         label: ID
         searchable: true
 
+    invoice_number:
+        label: pixiu.commerce::lang.fields.invoice_number
+        searchable: true
+        sortable: true
+
     type:
         label: pixiu.commerce::lang.fields.type
         searchable: true

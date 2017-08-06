@@ -72,6 +72,7 @@ return [
         'zip' => 'PSČ',
         'eshop_email' => 'eShop email',
         'variant' => 'Varianta',
+        'invoice_number' => 'Číslo faktury',
 
     ],
     'buttons' => [
@@ -157,6 +158,7 @@ return [
         'pair_these' => 'Spárovat vybrané / Potvrdit',
         'pictures_added' => 'Obrázky přidány',
         'primary_picture' => 'Titulní obrázek',
+        'refund_invoice' => 'Opravná faktura',
         'reorder' => 'Změnit uspořádání',
         'return' => 'Vrátit se',
         'saved_primary_picutres' => 'Primární obrázky přiřazeny',
