@@ -3,13 +3,15 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Illuminate\Support\Facades\Redirect;
+use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
+use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
+use Pixiu\Commerce\Classes\Invoice\RefundInvoiceManager;
 use Pixiu\Commerce\Classes\InvoiceHandler;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;
 use Pixiu\Commerce\Classes\OrderStatusFSM as FSM;
 use Illuminate\Support\Facades\Lang;
-use Pixiu\Commerce\Models\ProductVariant;
 
 /**
  * Orders Back-end Controller
@@ -82,19 +84,13 @@ class Orders extends Controller
         if ($model->status === OrderStatus::NEW) {
             $this->manageStocks($model);
         }
-
-        $this->createInvoice($model->id);
+        $this->createInvoice($model);
     }
 
-    public function createInvoice($id)
-    {
-        $type = Lang::get('pixiu.commerce::lang.other.normal_invoice');
-
-        $order = Order::find($id);
-        $order->status === "canceled" ? $type = Lang::get('pixiu.commerce::lang.other.cancel_invoice') : null;
-
-
-        (new InvoiceHandler('cs', Order::find($id)))->generateInvoice($type);
+    public function createInvoice($model) {
+        if ($model->status === OrderStatus::NEW){
+            (new NormalInvoiceManager($model))->generateInvoice();
+        }
     }
 
     public function onRefundsPartial($id = null)
@@ -132,7 +128,8 @@ class Orders extends Controller
         }
 
         // TODO: Fix invoices
-        (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
+        // (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
+        (new RefundInvoiceManager($order))->generateInvoice($variants);
 
         \Flash::success('Vratky zapocitany');
         return \redirect()->refresh();

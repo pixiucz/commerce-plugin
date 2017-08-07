@@ -140,7 +140,7 @@ class Order extends Model
         $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
             $sum += $item->pivot->price * $item->pivot->quantity;
         });
-        return $sum + $this->delivery_option->price;
+        return $sum;
     }
 
     public function getSumWithoutTaxAttribute()
@@ -151,25 +151,6 @@ class Order extends Model
     public function getSumTaxOnlyAttribute()
     {
         return $this->taxHandler->getTax($this->sum);
-    }
-
-    public function getRefundedSumAttribute()
-    {
-        $sum = 0;
-        $this->variants()->withPivot('refunded_quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
-            $sum += $item->pivot->price * $item->pivot->refunded_quantity;
-        });
-        return $sum;
-    }
-
-    public function getRefundedSumWithoutTaxAttribute()
-    {
-        return $this->taxHandler->getWithoutTax($this->refunded_sum);
-    }
-
-    public function getRefundedSumTaxOnlyAttribute()
-    {
-        return $this->taxHandler->getTax($this->refunded_sum);
     }
 
     public function removeReservedStock()

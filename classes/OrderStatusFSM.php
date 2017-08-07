@@ -8,6 +8,7 @@ use Pixiu\Commerce\Classes\OrderLogger;
 use Pixiu\Commerce\Models\OrderLog;
 use Illuminate\Support\Facades\Mail;
 use Pixiu\Commerce\Models\CommerceSettings;
+use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
 
 class OrderStatusFSM
 {
@@ -155,6 +156,7 @@ class OrderStatusFSM
         $this->order->status = OS::CANCELED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.canceled'), 'text-danger');
         $this->order->returnVariantsToStock();
+        (new CanceledInvoiceManager($this->order))->generateInvoice();
     }
 
     public function changeStateToShipped()
