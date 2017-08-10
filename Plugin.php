@@ -63,6 +63,8 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        // $this->logQueries();
+
         Event::listen('backend.menu.extendItems', function($manager) {
             $manager->removeMainMenuItem('RainLab.User', 'user');
         });
@@ -196,6 +198,17 @@ class Plugin extends PluginBase
                 'permissions' => ['pixiu.turistickeznamky.*']
             ]
         ];
+    }
+
+    private function logQueries()
+    {
+        \DB::listen(function($query) {
+            \Log::info(
+                $query->sql,
+                $query->bindings,
+                $query->time
+            );
+        });
     }
 
 }

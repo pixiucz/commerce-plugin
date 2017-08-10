@@ -65,11 +65,11 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('primary_picture_id')->unsigned()->nullable();
             $table->foreign('primary_picture_id')->references('id')->on('system_files');
 
-            $table->integer('in_stock')->unsigned()->default(0);
+            $table->integer('in_stock')->default(0);
             $table->integer('reserved_stock')->unsigned()->default(0);
 
 
-            $table->integer('ean')->unsigned()->default(0000000);
+            $table->integer('ean')->unsigned()->nullable();
             $table->bigInteger('price')->unsigned()->nullable();
             $table->longText('specifications')->nullable();
             $table->string('slug')->unique();
@@ -132,6 +132,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->timestamps();
 
             $table->string('name', 128);
+            $table->string('slug');
 
             #Nested tree
             $table->integer('parent_id')->unsigned()->nullable();
@@ -345,7 +346,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
         });
 
-        // Pixiu Invoices Package
+        // Invoices -> Commerce Product Variants
     }
 
     public function down()

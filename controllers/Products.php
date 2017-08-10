@@ -45,6 +45,7 @@ class Products extends Controller
     {
         parent::update($id);
         $this->vars['picturesListVariants'] = $this->prepareVariantsForPartials($id);
+        $this->vars['hasVariants'] = Product::find($id)->has_variants;
         $this->vars['picturesListImages'] = $this->prepareVariantImagesForPartias($id);
     }
 

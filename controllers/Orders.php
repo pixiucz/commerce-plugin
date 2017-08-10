@@ -7,6 +7,7 @@ use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
 use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
 use Pixiu\Commerce\Classes\Invoice\RefundInvoiceManager;
 use Pixiu\Commerce\Classes\InvoiceHandler;
+use Pixiu\Commerce\Classes\PaymentStatus;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;
@@ -34,14 +35,23 @@ class Orders extends Controller
     {
         parent::__construct();
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orders');
+
+        $this->vars['variantsOptions'] = [];
+
     }
 
     public function update($id = null)
     {
-        $this->relationConfig = "config_relation_finished.yaml";
-
         parent::update($id);
-        $this->fsm = new FSM(Order::find($id));
+        $order = Order::find($id);
+
+        if (($order->status !== OrderStatus::NEW) OR ($order->payment_status === PaymentStatus::PAID)){
+            $this->vars['variantsOptions'] = ['readOnly' => true];
+        } else {
+            $this->vars['variantsOptions'] = ['readOnly' => false];
+        }
+
+        $this->fsm = new FSM($order);
         $this->vars['buttons'] = $this->fsm->getAvailableActions();
 
     }
@@ -49,9 +59,13 @@ class Orders extends Controller
     public function preview($id = null)
     {
         parent::preview($id);
-        $this->fsm = new FSM(Order::find($id));
+        $order = Order::find($id);
+        $this->fsm = new FSM($order);
+
+        // Setting up buttons for state change
         $this->vars['buttons'] = $this->fsm->getAvailableActions();
-        $this->vars['logs'] = Order::find($id)->logs()->orderBy('created_at', 'desc')->get()->toArray();
+        $this->vars['logs'] = $order->logs()->orderBy('created_at', 'desc')->get()->toArray();
+        $this->vars['variantsOptions'] = ['readOnly' => true];
     }
 
     public function changeState($id, $action)

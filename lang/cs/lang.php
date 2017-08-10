@@ -73,6 +73,7 @@ return [
         'eshop_email' => 'eShop email',
         'variant' => 'Varianta',
         'invoice_number' => 'Číslo faktury',
+        'slug' => 'slug',
 
     ],
     'buttons' => [

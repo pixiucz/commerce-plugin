@@ -12,40 +12,24 @@ class SeedUsersTable extends Seeder
     public function run()
     {
         Category::create([
-            'name' => 'Pocitace',
+            'name' => 'Známky',
+            'slug' => str_slug('Známky'),
             'nest_depth' => 1
         ]);
 
         Category::create([
-            'name' => 'Tablety',
+            'name' => 'Výročné známky',
+            'slug' => str_slug('Výročné známky'),
             'nest_depth' => 2,
             'parent_id' => 1
         ]);
 
         Category::create([
-            'name' => 'Notebooky',
+            'name' => 'Zrušené známky',
+            'slug' => str_slug('Zrušené známky'),
             'nest_depth' => 2,
             'parent_id' => 1
         ]);
-
-        Brand::create([
-            'name' => 'Apple',
-            'description' => 'Jabka jo?'
-        ]);
-
-        Brand::create([
-            'name' => 'Microsoft',
-            'description' => 'Vokna jo?'
-        ]);
-
-        $product = new Product();
-        $product->brand_id = 1;
-        $product->name = "iPhone 7";
-        $product->ean = 8439893823;
-        $product->visible = true;
-        $product->active = true;
-        $product->retail_price = 21999;
-        $product->save();
 
         $address = new Address();
         $address->user_id = 1;
