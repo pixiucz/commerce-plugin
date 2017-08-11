@@ -31,15 +31,15 @@ class SeedUsersTable extends Seeder
             'parent_id' => 1
         ]);
 
-        $address = new Address();
-        $address->user_id = 1;
-        $address->first_name = 'Karel';
-        $address->last_name = "Obecnik";
-        $address->address = "Svatovaclavske 432/21";
-        $address->city = "Brno";
-        $address->zip = "620 02";
-        $address->country = "Czech republic";
-        $address->save();
+//        $address = new Address();
+//        $address->user_id = 1;
+//        $address->first_name = 'Karel';
+//        $address->last_name = "Obecnik";
+//        $address->address = "Svatovaclavske 432/21";
+//        $address->city = "Brno";
+//        $address->zip = "620 02";
+//        $address->country = "Czech republic";
+//        $address->save();
 
         DeliveryOption::create([
             'name' => 'Česká pošta',
