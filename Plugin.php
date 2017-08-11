@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
 use Pixiu\Commerce\Classes\TaxHandler;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
@@ -74,7 +75,6 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(ServiceProvider::class);
-
 
         AliasLoader::getInstance()->alias('PDF', 'Barryvdh\DomPDF\Facade');
     }

@@ -144,7 +144,7 @@ return [
         'paid' => 'Zaplaceno',
     ],
     'other' => [
-        'add_pictures_to_variants' => 'Přiřadit obrázky k variantám',
+        'add_pictures_to_variants' => 'Přidat obrázky k variantám',
         'and_variants_to_add_them_to' => 'a varianty ke kterým je přiřadit',
         'cancel' => 'Zrušit',
         'cancel_invoice' => 'Stornovací faktura',
@@ -171,7 +171,6 @@ return [
         'orders' => 'Objednávky',
         'products' => 'Produkty',
         'product_variants' => 'Varianty produktů',
-        "noimages_or_novariants" => "Pro zahájení přiřazování je potřeba nejprve nahrát obrázky (těštně nad stisknutým tlačítkem)"
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',

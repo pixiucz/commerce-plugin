@@ -116,7 +116,7 @@ class ProductVariant extends Model
         $this->increment('in_stock', $amount);
     }
 
-    public function changeReserved($amount)
+    public function changeReservedStock($amount)
     {
         $this->increment('reserved_stock', $amount);
     }

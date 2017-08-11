@@ -163,9 +163,9 @@ class Order extends Model
 
     public function variantsLeftWarehouse()
     {
-        $this->variants->each(function ($item, $key) {
-            $item->changeStock(-$item->reserved_stock);
-            $item->removeReservedStock();
+        $this->variants()->withPivot('quantity')->get()->each(function ($item, $key) {
+            $item->changeStock(-$item->pivot->quantity);
+            $item->changeReservedStock(-$item->pivot->quantity);
             $item->save();
         });
     }

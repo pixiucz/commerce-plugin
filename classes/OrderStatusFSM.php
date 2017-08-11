@@ -129,13 +129,6 @@ class OrderStatusFSM
         }
 
         $this->order->save();
-//        Mail::send('pixiu.areklama::mail.supplier', function($message) use ($order){
-//            $eshop = CommerceSettings::get('commerce_email');
-//            $message->from($eshop);
-//            $message->to($order->user->email);
-//            $message->bcc($eshop);
-//            $message->subject('Informace o vytvoření objednávky č.: ');
-//        });
     }
 
     public function changeStateToPaid()
