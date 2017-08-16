@@ -121,7 +121,7 @@ class Plugin extends PluginBase
             'commerce' => [
                 'label'       => 'Commerce',
                 'url'         => Backend::url('pixiu/commerce/Orders'),
-                'icon'        => 'icon-leaf',
+                'icon'        => 'icon-balance-scale',
                 'permissions' => ['pixiu.commerce.*'],
                 'order' => 500,
                 'sideMenu' => [
@@ -149,24 +149,6 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-//                    'delivery_options' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
-//                        'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
-//                        'icon'        => 'icon-truck',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
-//                    'payment_methods' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
-//                        'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
-//                        'icon'        => 'icon-credit-card',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
-//                    'order_statuses' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
-//                        'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
-//                        'icon'        => 'icon-sliders',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
                     'address' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
                         'url'         => Backend::url('pixiu/commerce/Addresses'),

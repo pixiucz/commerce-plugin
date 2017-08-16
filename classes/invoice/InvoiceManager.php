@@ -26,6 +26,9 @@ abstract class InvoiceManager
     protected $currencyHandler;
     protected $invoiceLine;
     protected $model;
+    protected $sum;
+    protected $sumWithoutTax;
+    protected $sumTaxOnly;
 
     public function __construct($model)
     {
@@ -76,11 +79,20 @@ abstract class InvoiceManager
     protected function prepareDeliveryOption() : array
     {
         $delivery_option = $this->model->delivery_option;
+
+        $currSum = $this->currencyHandler->getValueForInput($delivery_option->price);
+        $currSumWithouTax = $this->currencyHandler->getValueForInput($delivery_option->price_without_tax);
+        $currTax = $this->currencyHandler->getValueForInput($delivery_option->tax);
+
+        $this->sum += $currSum;
+        $this->sumTaxOnly += $currTax;
+        $this->sumWithoutTax += $currSumWithouTax;
+
         $order = [
             'name' => $delivery_option->name,
-            'price' => $this->currencyHandler->getValueForInput($delivery_option->price),
-            'price_without_tax' => $this->currencyHandler->getValueForInput($delivery_option->price_without_tax),
-            'tax' => $this->currencyHandler->getValueForInput($delivery_option->tax)
+            'price' => $currSum,
+            'price_without_tax' => $currSumWithouTax,
+            'tax' => $currTax
         ];
         return $order;
     }
@@ -92,26 +104,78 @@ abstract class InvoiceManager
             ->withPivot('quantity', 'price')
             ->with('attributes')
             ->with('product.brand')
+            ->with('product.tax')
             ->get()
             ->each(function ($item, $key) use (&$order) {
                 $attributes = '';
                 foreach ($item->toArray()['attributes'] as $attribute) {
                     $attributes .= $attribute['value'] . ';';
                 }
+
+                $sums = $this->handleAndGetSums($item);
+
                 array_push($order, [
                     'name' => $item->product->brand !== null ?
                         $item->product->brand->name . ' ' . $item->product->name . ' (' . $attributes . ')' :
                         $item->product->name,
-                    'ean' => $item->ean,
-                    'tax_rate' => $this->taxHandler->rate,
-                    'price' => $this->currencyHandler->getValueForInput($item->pivot->price),
-                    'price_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price)),
-                    'sum_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price) * $item->pivot->quantity),
-                    'tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getTax($item->pivot->price) * $item->pivot->quantity),
-                    'quantity' => $item->pivot->quantity,
-                    'sum' => $this->currencyHandler->getValueForInput($item->pivot->price * $item->pivot->quantity)
+                    'ean' =>
+                        $item->ean,
+                    'tax_rate' =>
+                        $item->product->tax->rate,
+                    'price' =>
+                        $this->currencyHandler->getValueForInput($item->pivot->price),
+                    'price_without_tax' =>
+                        $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price, $item->product->tax->rate)),
+                    'sum_without_tax' =>
+                        $sums['without_tax'],
+                    'tax' =>
+                        $sums['tax_only'],
+                    'quantity' =>
+                        $item->pivot->quantity,
+                    'sum' =>
+                        $sums['sum']
                 ]);
             });
+        return $order;
+    }
+
+    protected function handleAndGetSums($item, $quantity = null): array
+    {
+        $currSumWithoutTax =
+            $quantity ?
+                $this->currencyHandler
+                    ->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price, $item->product->tax->rate) * $quantity)
+                :
+                $this->currencyHandler
+                ->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price, $item->product->tax->rate) * $item->pivot->quantity);
+        $this->sumWithoutTax += $currSumWithoutTax;
+
+        $currSumTaxOnly =
+            $quantity ?
+                $this->currencyHandler->getValueForInput($this->taxHandler->getTax($item->pivot->price, $item->product->tax->rate) * $quantity)
+                :
+                $this->currencyHandler->getValueForInput($this->taxHandler->getTax($item->pivot->price, $item->product->tax->rate) * $item->pivot->quantity);
+        $this->sumTaxOnly += $currSumTaxOnly;
+
+        $currSum =
+            $quantity ?
+                $this->currencyHandler->getValueForInput($item->pivot->price * $quantity)
+                :
+                $this->currencyHandler->getValueForInput($item->pivot->price * $item->pivot->quantity);
+        $this->sum += $currSum;
+
+        return [
+            'without_tax' => $currSumWithoutTax,
+            'tax_only' => $currSumTaxOnly,
+            'sum' => $currSum
+        ];
+    }
+
+    protected function prepareSum(): array
+    {
+        $order['sum'] = $this->sum;
+        $order['sum_without_tax'] = $this->sumWithoutTax;
+        $order['sum_tax_only'] = $this->sumTaxOnly;
         return $order;
     }
 

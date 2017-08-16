@@ -13,9 +13,9 @@ class NormalInvoiceManager extends InvoiceManager
 {
     protected function prepareSum(): array
     {
-        $order['sum'] = $this->currencyHandler->getValueForInput($this->model->sum) + $this->currencyHandler->getValueForInput($this->model->delivery_option->price);
-        $order['sum_without_tax'] = $this->currencyHandler->getValueForInput($this->model->sum_without_tax) + $this->currencyHandler->getValueForInput($this->model->delivery_option->priceWithoutTax);
-        $order['sum_tax_only'] = $this->currencyHandler->getValueForInput($this->model->sum_tax_only) + $this->currencyHandler->getValueForInput($this->model->delivery_option->tax);
+        $order['sum'] = $this->sum;
+        $order['sum_without_tax'] = $this->sumWithoutTax;
+        $order['sum_tax_only'] = $this->sumTaxOnly;
         return $order;
     }
 
@@ -23,8 +23,8 @@ class NormalInvoiceManager extends InvoiceManager
     {
         $order = $this->generateData();
         $order['variants'] = $this->prepareVariants();
-        $order['sum'] = $this->prepareSum();
         $order['delivery_option'] = $this->prepareDeliveryOption();
+        $order['sum'] = $this->prepareSum();
         $fileName = $this->generateFilename();
         $filePath = 'media/invoices/' . $fileName;
         $invoiceGenerator = app('InvoiceGenerator');

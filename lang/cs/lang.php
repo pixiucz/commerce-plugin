@@ -74,6 +74,7 @@ return [
         'variant' => 'Varianta',
         'invoice_number' => 'Číslo faktury',
         'slug' => 'slug',
+        'tax_rate' => 'Sazba daně',
 
     ],
     'buttons' => [
