@@ -39,7 +39,6 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');
 
-
             $table->string('name');
             $table->string('ean')->nullable();
             $table->boolean('visible')->default(true);
@@ -49,6 +48,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->bigInteger('retail_price')->unsigned();
             $table->longText('specifications')->nullable();
             $table->boolean('has_variants')->default(true);
+            $table->integer('tax_rate')->nullable();
 
             $table->timestamps();
         });

@@ -178,7 +178,13 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('rainlab/user/Users'),
                         'icon'        => 'icon-male',
                         'permissions' => ['pixiu.commerce.*']
-                    ]
+                    ],
+                    'taxes' => [
+                        'label' => Lang::get('pixiu.commerce::lang.menu.taxes'),
+                        'url'         => Backend::url('pixiu/commerce/Taxes'),
+                        'icon'        => 'icon-money',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
                 ]
             ]
         ];

@@ -51,7 +51,7 @@ return [
         'product_price' => 'Výchozí cena produktu',
         'products' => 'Produkty',
         'quantity' => 'Množství',
-        'rate' => 'Sazba',
+        'rate' => 'Sazba (%)',
         'refunded_quantity' => 'Vrácených',
         'retail_price' => 'Základní cena',
         'shipping_time' => 'Doručovací doba',
@@ -118,6 +118,7 @@ return [
         'payment_methods' => 'Způsoby platby',
         'products' => 'Produkty',
         'users' => 'Uživatelé',
+        'taxes' => 'Sazby daně'
     ],
     'placeholders' => [
         'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',

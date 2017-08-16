@@ -2,7 +2,7 @@
 
 use Seeder;
 use Pixiu\Commerce\Models\{
-    Category, Brand, Address, PaymentMethod, DeliveryOption, OrderStatus, Product, ProductVariant
+    Category, Brand, Address, PaymentMethod, DeliveryOption, OrderStatus, Product, ProductVariant, Tax
 };
 use RainLab\User\Models\User;
 use Faker;
@@ -30,6 +30,13 @@ class SeedUsersTable extends Seeder
             'nest_depth' => 2,
             'parent_id' => 1
         ]);
+
+        Tax::create([
+            'name' => 'Zakladni sazba',
+            'rate' => 21
+        ]);
+
+
 
 //        $address = new Address();
 //        $address->user_id = 1;
