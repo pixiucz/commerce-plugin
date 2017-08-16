@@ -34,4 +34,9 @@ class Tax extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    public function getQualifiedNameAttribute()
+    {
+        return $this->name . ' (' . $this->rate . '%)';
+    }
 }
