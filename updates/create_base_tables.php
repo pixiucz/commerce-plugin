@@ -33,8 +33,13 @@ class CreateAttributeGroupsTable extends Migration
         Schema::create('pixiu_com_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+<<<<<<< HEAD
 
             $table->integer('tax_id')->unsigned();
+=======
+//
+            $table->integer('tax_id')->unsigned()->default(1);
+>>>>>>> 1f423f278cb04af349a0eee8cc38a48eb92f16ce
             $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
             $table->integer('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');

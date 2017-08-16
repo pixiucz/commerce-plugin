@@ -23,38 +23,23 @@ class RefundInvoiceManager extends InvoiceManager
                 foreach ($item->toArray()['attributes'] as $attribute) {
                     $attributes .= $attribute['value'] . ';';
                 }
+
+                $sums = $this->handleAndGetSums($item, $this->quantities[$key]);
+
                 array_push($order, [
                     'name' => $item->product->brand !== null ?
                         $item->product->brand->name . ' ' . $item->product->name . ' (' . $attributes . ')' :
                         $item->product->name,
                     'ean' => $item->ean,
-                    'tax_rate' => $this->taxHandler->rate,
+                    'tax_rate' => $item->product->tax->rate,
                     'price' => $this->currencyHandler->getValueForInput($item->pivot->price),
                     'price_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price)),
-                    'sum_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($item->pivot->price) * $this->quantities[$key]),
-                    'tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getTax($item->pivot->price) * $this->quantities[$key]),
+                    'sum_without_tax' => $sums['without_tax'],
+                    'tax' => $sums['tax_only'],
                     'quantity' => $this->quantities[$key],
-                    'sum' => $this->currencyHandler->getValueForInput($item->pivot->price * $this->quantities[$key])
+                    'sum' => $sums['sum']
                 ]);
             });
-        return $order;
-    }
-
-    protected function prepareSum(): array
-    {
-        $sum = 0;
-        $sum_without_tax = 0;
-        $sum_tax_only = 0;
-
-        $this->refundedVariants->each(function($item, $key) use (&$sum, &$sum_without_tax, &$sum_tax_only) {
-            $sum += $this->currencyHandler->getValueForInput($item->resolvedPrice) * $this->quantities[$key];
-            $sum_without_tax += $this->currencyHandler->getValueForInput($item->resolvedPriceWithoutTax) * $this->quantities[$key];
-            $sum_tax_only += $this->currencyHandler->getValueForInput($item->taxOnly) * $this->quantities[$key];
-        });
-
-        $order['sum'] = $sum;
-        $order['sum_without_tax'] = $sum_without_tax;
-        $order['sum_tax_only'] = $sum_tax_only;
         return $order;
     }
 
@@ -68,12 +53,7 @@ class RefundInvoiceManager extends InvoiceManager
             array_push($this->quantities, $variant['refunded_quantity']);
         }
 
-        $this->refundedVariants = $this->model->variants()
-            ->withPivot('quantity', 'price')
-            ->with('attributes')
-            ->with('product.brand')
-            ->find($ids);
-
+        $this->getAllVariants($ids);
         $order = $this->generateData();
         $order['variants'] = $this->prepareVariants();
         $order['sum'] = $this->prepareSum();
@@ -99,5 +79,18 @@ class RefundInvoiceManager extends InvoiceManager
         $pdfInvoice->invoice_number = $invoice['invoice_number'];
 
         $pdfInvoice->save();
+    }
+
+    /**
+     * @param $ids
+     */
+    private function getAllVariants($ids): void
+    {
+        $this->refundedVariants = $this->model->variants()
+            ->withPivot('quantity', 'price')
+            ->with('attributes')
+            ->with('product.brand')
+            ->with('product.tax')
+            ->find($ids);
     }
 }

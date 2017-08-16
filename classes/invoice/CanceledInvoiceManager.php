@@ -11,14 +11,6 @@ use Pixiucz\Invoices\InvoiceGenerator;
 
 class CanceledInvoiceManager extends InvoiceManager
 {
-    protected function prepareSum(): array
-    {
-        $order['sum'] = $this->currencyHandler->getValueForInput($this->model->sum);
-        $order['sum_without_tax'] = $this->currencyHandler->getValueForInput($this->model->sum_without_tax);
-        $order['sum_tax_only'] = $this->currencyHandler->getValueForInput($this->model->sum_tax_only);
-        return $order;
-    }
-
     public function generateInvoice()
     {
         $order = $this->generateData();

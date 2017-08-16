@@ -3,12 +3,12 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
-
     name:
         label: pixiu.commerce::lang.fields.name
+        searchable: true
+        sortable: true
 
     rate:
         label: pixiu.commerce::lang.fields.rate
+        searchable: true
+        sortable: true
