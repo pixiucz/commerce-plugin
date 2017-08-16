@@ -108,7 +108,7 @@ class Order extends Model
             return $options;
         }
 
-        if (strtolower($this->payment_method->name) == "cash on delivery") {
+        if ($this->payment_status === PaymentStatus::CASH_ON_DELIVERY) {
             return PaymentStatus::getCashOnDelivery();
         }
 
@@ -140,7 +140,7 @@ class Order extends Model
         $this->variants()->withPivot('quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
             $sum += $item->pivot->price * $item->pivot->quantity;
         });
-        return $sum + $this->delivery_option->price;
+        return $sum;
     }
 
     public function getSumWithoutTaxAttribute()
@@ -153,29 +153,19 @@ class Order extends Model
         return $this->taxHandler->getTax($this->sum);
     }
 
-    public function getRefundedSumAttribute()
-    {
-        $sum = 0;
-        $this->variants()->withPivot('refunded_quantity', 'price')->get()->each(function ($item, $key) use (&$sum) {
-            $sum += $item->pivot->price * $item->pivot->refunded_quantity;
-        });
-        return $sum;
-    }
-
-    public function getRefundedSumWithoutTaxAttribute()
-    {
-        return $this->taxHandler->getWithoutTax($this->refunded_sum);
-    }
-
-    public function getRefundedSumTaxOnlyAttribute()
-    {
-        return $this->taxHandler->getTax($this->refunded_sum);
-    }
-
     public function removeReservedStock()
     {
         $this->variants->each(function($item, $key) {
             $item->removeReservedStock();
+            $item->save();
+        });
+    }
+
+    public function variantsLeftWarehouse()
+    {
+        $this->variants()->withPivot('quantity')->get()->each(function ($item, $key) {
+            $item->changeStock(-$item->pivot->quantity);
+            $item->changeReservedStock(-$item->pivot->quantity);
             $item->save();
         });
     }

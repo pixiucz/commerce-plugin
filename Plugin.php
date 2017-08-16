@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
 use Pixiu\Commerce\Classes\TaxHandler;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
@@ -49,11 +50,11 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(InvoicesServiceProvider::class);
-
-        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
-        $migration->down();
-        $migration->up();
-        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
+//
+//        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
+//        $migration->down();
+//        $migration->up();
+//        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
     }
 
     /**
@@ -63,6 +64,8 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        // $this->logQueries();
+
         Event::listen('backend.menu.extendItems', function($manager) {
             $manager->removeMainMenuItem('RainLab.User', 'user');
         });
@@ -72,7 +75,6 @@ class Plugin extends PluginBase
         });
 
         $this->app->register(ServiceProvider::class);
-
 
         AliasLoader::getInstance()->alias('PDF', 'Barryvdh\DomPDF\Facade');
     }
@@ -119,7 +121,7 @@ class Plugin extends PluginBase
             'commerce' => [
                 'label'       => 'Commerce',
                 'url'         => Backend::url('pixiu/commerce/Orders'),
-                'icon'        => 'icon-leaf',
+                'icon'        => 'icon-balance-scale',
                 'permissions' => ['pixiu.commerce.*'],
                 'order' => 500,
                 'sideMenu' => [
@@ -147,24 +149,6 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-//                    'delivery_options' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.delivery_options'),
-//                        'url'         => Backend::url('pixiu/commerce/DeliveryOptions'),
-//                        'icon'        => 'icon-truck',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
-//                    'payment_methods' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.payment_methods'),
-//                        'url'         => Backend::url('pixiu/commerce/PaymentMethods'),
-//                        'icon'        => 'icon-credit-card',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
-//                    'order_statuses' => [
-//                        'label' => Lang::get('pixiu.commerce::lang.menu.order_statuses'),
-//                        'url'         => Backend::url('pixiu/commerce/OrderStatuses'),
-//                        'icon'        => 'icon-sliders',
-//                        'permissions' => ['pixiu.commerce.*']
-//                    ],
                     'address' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
                         'url'         => Backend::url('pixiu/commerce/Addresses'),
@@ -176,7 +160,13 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('rainlab/user/Users'),
                         'icon'        => 'icon-male',
                         'permissions' => ['pixiu.commerce.*']
-                    ]
+                    ],
+                    'taxes' => [
+                        'label' => Lang::get('pixiu.commerce::lang.menu.taxes'),
+                        'url'         => Backend::url('pixiu/commerce/Taxes'),
+                        'icon'        => 'icon-money',
+                        'permissions' => ['pixiu.commerce.*']
+                    ],
                 ]
             ]
         ];
@@ -196,6 +186,17 @@ class Plugin extends PluginBase
                 'permissions' => ['pixiu.turistickeznamky.*']
             ]
         ];
+    }
+
+    private function logQueries()
+    {
+        \DB::listen(function($query) {
+            \Log::info(
+                $query->sql,
+                $query->bindings,
+                $query->time
+            );
+        });
     }
 
 }

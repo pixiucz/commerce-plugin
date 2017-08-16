@@ -24,6 +24,11 @@ columns:
         type: partial
         path: column_price
 
+    tax_rate:
+        label: pixiu.commerce::lang.fields.tax_rate
+        relation: tax
+        select: concat(name, ' (',rate, '%)')
+
     visible:
         label: pixiu.commerce::lang.fields.visible
         type: switch

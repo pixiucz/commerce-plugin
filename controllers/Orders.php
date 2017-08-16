@@ -3,13 +3,16 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Illuminate\Support\Facades\Redirect;
+use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
+use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
+use Pixiu\Commerce\Classes\Invoice\RefundInvoiceManager;
 use Pixiu\Commerce\Classes\InvoiceHandler;
+use Pixiu\Commerce\Classes\PaymentStatus;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;
 use Pixiu\Commerce\Classes\OrderStatusFSM as FSM;
 use Illuminate\Support\Facades\Lang;
-use Pixiu\Commerce\Models\ProductVariant;
 
 /**
  * Orders Back-end Controller
@@ -32,14 +35,23 @@ class Orders extends Controller
     {
         parent::__construct();
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'orders');
+
+        $this->vars['variantsOptions'] = [];
+
     }
 
     public function update($id = null)
     {
-        $this->relationConfig = "config_relation_finished.yaml";
-
         parent::update($id);
-        $this->fsm = new FSM(Order::find($id));
+        $order = Order::find($id);
+
+        if (($order->status !== OrderStatus::NEW) OR ($order->payment_status === PaymentStatus::PAID)){
+            $this->vars['variantsOptions'] = ['readOnly' => true];
+        } else {
+            $this->vars['variantsOptions'] = ['readOnly' => false];
+        }
+
+        $this->fsm = new FSM($order);
         $this->vars['buttons'] = $this->fsm->getAvailableActions();
 
     }
@@ -47,9 +59,13 @@ class Orders extends Controller
     public function preview($id = null)
     {
         parent::preview($id);
-        $this->fsm = new FSM(Order::find($id));
+        $order = Order::find($id);
+        $this->fsm = new FSM($order);
+
+        // Setting up buttons for state change
         $this->vars['buttons'] = $this->fsm->getAvailableActions();
-        $this->vars['logs'] = Order::find($id)->logs()->orderBy('created_at', 'desc')->get()->toArray();
+        $this->vars['logs'] = $order->logs()->orderBy('created_at', 'desc')->get()->toArray();
+        $this->vars['variantsOptions'] = ['readOnly' => true];
     }
 
     public function changeState($id, $action)
@@ -60,7 +76,7 @@ class Orders extends Controller
             return Redirect::back();
         };
 
-        \Flash::error('Oooops');
+        \Flash::error('Změna stavu selhala');
         return Redirect::back();
     }
 
@@ -69,7 +85,7 @@ class Orders extends Controller
         $model->variants()->withPivot('lowered_stock', 'quantity')->get()->each(function ($item, $key) {
             if ($item->pivot->lowered_stock === 0) {
                 // $item->changeStock($item->pivot->quantity);
-                $item->changeReserved($item->pivot->quantity);
+                $item->changeReservedStock($item->pivot->quantity);
                 $item->pivot->lowered_stock = true;
                 $item->pivot->save();
                 $item->save();
@@ -82,19 +98,13 @@ class Orders extends Controller
         if ($model->status === OrderStatus::NEW) {
             $this->manageStocks($model);
         }
-
-        $this->createInvoice($model->id);
+        $this->createInvoice($model);
     }
 
-    public function createInvoice($id)
-    {
-        $type = Lang::get('pixiu.commerce::lang.other.normal_invoice');
-
-        $order = Order::find($id);
-        $order->status === "canceled" ? $type = Lang::get('pixiu.commerce::lang.other.cancel_invoice') : null;
-
-
-        (new InvoiceHandler('cs', Order::find($id)))->generateInvoice($type);
+    public function createInvoice($model) {
+        if ($model->status === OrderStatus::NEW){
+            (new NormalInvoiceManager($model))->generateInvoice();
+        }
     }
 
     public function onRefundsPartial($id = null)
@@ -108,34 +118,70 @@ class Orders extends Controller
     {
         $orderId = post('orderId');
         $postVariants = post('variants');
-        $variants = [];
         $order = Order::findOrFail($orderId);
 
-        foreach ($postVariants as $postVariant){
+
+        $variants = $this->handleStocksOnRefund($postVariants, $order);
+
+        // TODO: Fix invoices
+        // (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
+        (new RefundInvoiceManager($order))->generateInvoice($variants);
+
+        \Flash::success('Vratky zapocitany');
+        return \redirect()->refresh();
+
+    }
+
+    /**
+     * @param $postVariants
+     * @param $order
+     * @return mixed
+     */
+    private function handleStocksOnRefund($postVariants, $order)
+    {
+        $variants = [];
+
+        foreach ($postVariants as $postVariant) {
             $orderVariant = $order->variants()->withPivot('refunded_quantity', 'quantity')->find($postVariant['id']);
             if (array_key_exists('checked', $postVariant)) {
                 if ($postVariant['quantity'] === "") {
-                    $orderVariant->changeStock($orderVariant->pivot->quantity);
-                    $orderVariant->pivot->refunded_quantity += $orderVariant->pivot->quantity;
-                    $invoiceRefundedQuantity = $orderVariant->pivot->quantity;
-                    $orderVariant->pivot->quantity = 0;
-                    $orderVariant->pivot->save();
+                    $invoiceRefundedQuantity = $this->refundFullOrderAmount($orderVariant);
                 } else {
-                    $orderVariant->changeStock($postVariant['quantity']);
-                    $orderVariant->pivot->quantity -= $postVariant['quantity'];
-                    $orderVariant->pivot->refunded_quantity += $postVariant['quantity'];
-                    $invoiceRefundedQuantity = $postVariant['quantity'];
-                    $orderVariant->pivot->save();
+                    $invoiceRefundedQuantity = $this->refundOnlyProvidedAmount($orderVariant, $postVariant);
                 }
                 array_push($variants, ['variant' => $orderVariant, 'refunded_quantity' => $invoiceRefundedQuantity]);
             }
         }
 
-        // TODO: Fix invoices
-        (new InvoiceHandler('cs', $order))->generateRefundInvoice($variants);
+        return $variants;
+    }
 
-        \Flash::success('Vratky zapocitany');
-        return \redirect()->refresh();
+    /**
+     * @param $orderVariant
+     * @return mixed
+     */
+    private function refundFullOrderAmount($orderVariant)
+    {
+        $orderVariant->changeStock($orderVariant->pivot->quantity);
+        $orderVariant->pivot->refunded_quantity += $orderVariant->pivot->quantity;
+        $invoiceRefundedQuantity = $orderVariant->pivot->quantity;
+        $orderVariant->pivot->quantity = 0;
+        $orderVariant->pivot->save();
+        return $invoiceRefundedQuantity;
+    }
 
+    /**
+     * @param $orderVariant
+     * @param $postVariant
+     * @return mixed
+     */
+    private function refundOnlyProvidedAmount($orderVariant, $postVariant)
+    {
+        $orderVariant->changeStock($postVariant['quantity']);
+        $orderVariant->pivot->quantity -= $postVariant['quantity'];
+        $orderVariant->pivot->refunded_quantity += $postVariant['quantity'];
+        $invoiceRefundedQuantity = $postVariant['quantity'];
+        $orderVariant->pivot->save();
+        return $invoiceRefundedQuantity;
     }
 }

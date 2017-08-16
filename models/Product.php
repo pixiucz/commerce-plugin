@@ -22,42 +22,6 @@ class Product extends Model
         ];
     }
 
-    public function getTaxIdOptions()
-    {
-        return Tax::all()->pluck('name', 'id')->toArray();
-    }
-
-    public function getDecompositeOnOptions()
-    {
-        $this->load(['productvariants.attributes.attributegroup' => function ($q) use (&$attributeGroups) {
-            $attributeGroups = $q->select('name', 'id')->get()->toArray();
-        }]);
-
-        $options = [];
-
-        if (is_array($attributeGroups)){
-            foreach ($attributeGroups as $attributeGroup){
-                $options[$attributeGroup['id']] = $attributeGroup['name'];
-            }
-        }
-        return $options;
-    }
-
-    public function filterFields($fields, $context = null)
-    {
-        if ($context === 'update') {
-            if ($this->has_variants) {
-                $fields->{'_in_stock@update'}->hidden = true;
-                $fields->{'_change_stock@update'}->hidden = true;
-                $fields->{'_ean@update'}->hidden = true;
-            } else {
-                $fields->{'_form_widget@update'}->hidden = true;
-                $fields->{'_in_stock@update'}->value = $this->productvariants->first()->in_stock;
-                $fields->{'_ean@update'}->value = $this->productvariants->first()->ean;
-            }
-        }
-    }
-
     /**
      * @var string The database table used by the model.
      */
@@ -84,7 +48,8 @@ class Product extends Model
     ];
     public $belongsTo = [
         'brand' => ['Pixiu\Commerce\Models\Brand'],
-        'category' => ['Pixiu\Commerce\Models\Category']
+        'category' => ['Pixiu\Commerce\Models\Category'],
+        'tax' => ['Pixiu\Commerce\Models\Tax']
     ];
     public $belongsToMany = [
         'decomposite_on' => [
@@ -107,5 +72,50 @@ class Product extends Model
     public $attachMany = [
         'images' => 'System\Models\File'
     ];
+
+    public function getTaxIdOptions()
+    {
+        return Tax::all()->pluck('name', 'id')->toArray();
+    }
+
+    public function getDecompositeOnOptions()
+    {
+        $this->load(['productvariants.attributes.attributegroup' => function ($q) use (&$attributeGroups) {
+            $attributeGroups = $q->select('name', 'id')->get()->toArray();
+        }]);
+
+        $options = [];
+
+        if (is_array($attributeGroups)){
+            foreach ($attributeGroups as $attributeGroup){
+                $options[$attributeGroup['id']] = $attributeGroup['name'];
+            }
+        }
+        return $options;
+    }
+
+    public function getTaxRateOptions()
+    {
+        $taxes = [];
+        Tax::get()->each(function($item, $key) use (&$taxes) {
+            $taxes[$item->rate] = $item->qualifiedName;
+        });
+        return $taxes;
+    }
+
+    public function filterFields($fields, $context = null)
+    {
+        if ($context === 'update') {
+            if ($this->has_variants) {
+                $fields->{'_in_stock@update'}->hidden = true;
+                $fields->{'_change_stock@update'}->hidden = true;
+                $fields->{'_ean@update'}->hidden = true;
+            } else {
+                $fields->{'_form_widget@update'}->hidden = true;
+                $fields->{'_in_stock@update'}->value = $this->productvariants->first()->in_stock;
+                $fields->{'_ean@update'}->value = $this->productvariants->first()->ean;
+            }
+        }
+    }
 
 }

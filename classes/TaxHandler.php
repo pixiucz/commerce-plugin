@@ -11,13 +11,19 @@ class TaxHandler
         $this->rate = CommerceSettings::get('tax');
     }
 
-    public function getWithoutTax($price)
+    public function getWithoutTax($price, $rate = null)
     {
+        if ($rate) {
+            $this->rate = $rate;
+        }
         return $price * (1 - ($this->rate/100));
     }
 
-    public function getTax($price)
+    public function getTax($price, $rate = null)
     {
+        if ($rate) {
+            $this->rate = $rate;
+        }
         return $price * ($this->rate/100);
     }
 }

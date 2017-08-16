@@ -1,7 +1,5 @@
-<?php if (!($formModel->status === "finished") AND
-    !($formModel->status === "shipped") AND
-    !($formModel->status === "ready for collection") AND
-    !($formModel->status === "canceled")): ?>
+<?php if (($formModel->status === \Pixiu\Commerce\Classes\OrderStatus::NEW)
+            AND ($formModel->payment_status !== Pixiu\Commerce\Classes\PaymentStatus::PAID)): ?>
     <?= $this->relationMakePartial('button_add') ?>
     <?= $this->relationMakePartial('button_remove') ?>
 <?php endif ?>

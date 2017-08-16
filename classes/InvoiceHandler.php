@@ -1,5 +1,8 @@
 <?php namespace Pixiu\Commerce\Classes;
 
+// TODO: Kompletne predelat na Invoice s potomky StornoInvoice, RefundInvoice, NormalInvoice, toto nedava vubec smysl
+// Majstrstyk
+
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
@@ -98,21 +101,57 @@ class InvoiceHandler {
     public function generateRefundInvoice($refunded)
     {
         $data = $this->generateData();
-        $data['variants'] = $this->prepareVariants();
+        $data['variants'] = $this->prepareRefundVariants($refunded);
+        $data['isRefund'] = true;
         $fileName = $this->generateFilename();
         $filePath = 'media/invoices/refunds/' . $fileName;
+        $invoiceGenerator = app('InvoiceGenerator');
+
+        $existingInvoice = $this->model->invoices()->first();
+        $invoice = $invoiceGenerator->generateInvoice($this->invoiceLine, $data, null, $existingInvoice->invoice_number);
+
+        $this->saveInvoice($filePath, $invoice, $data['id'], Lang::get('pixiu.commerce::lang.other.refund_invoice'));
     }
 
     private function prepareRefundVariants($refunded)
     {
-
+        $order = [];
+        foreach ($refunded as $item) {
+            $variant = $this->model->variants()
+                ->withPivot('price')
+                ->with('attributes')
+                ->with('product.brand')
+                ->find($item['variant']->id);
+            $attributes = '';
+            foreach ($variant->toArray()['attributes'] as $attribute) {
+                $attributes .= $attribute['value'] . ';';
+            }
+            array_push($order, [
+                'name' => $variant->product->brand !== null ?
+                    $variant->product->brand->name . ' ' . $variant->product->name . ' (' . $attributes . ')' :
+                    $variant->product->name,
+                'ean' => $variant->ean,
+                'tax_rate' => $this->taxHandler->rate,
+                'price' => $this->currencyHandler->getValueForInput($variant->pivot->price),
+                'price_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($variant->pivot->price)),
+                'sum_without_tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getWithoutTax($variant->pivot->price) * $item['refunded_quantity']),
+                'tax' => $this->currencyHandler->getValueForInput($this->taxHandler->getTax($variant->pivot->price) * $item['refunded_quantity']),
+                'quantity' => $item['refunded_quantity'],
+                'sum' => $this->currencyHandler->getValueForInput($variant->pivot->price * $item['refunded_quantity'])
+            ]);
+        }
+        return $order;
     }
 
     private function saveInvoice($filePath, $invoice, $orderId, string $type): void
     {
         Storage::put($filePath, $invoice['pdf']);
 
-        $pdfInvoice = PdfInvoice::where('order_id', $orderId)->where('type', $type)->first();
+        $pdfInvoice = null;
+
+        if ($type !== Lang::get('pixiu.commerce::lang.other.refund_invoice')){
+            $pdfInvoice = PdfInvoice::where('order_id', $orderId)->where('type', $type)->first();
+        }
         if (!$pdfInvoice) { $pdfInvoice = new PdfInvoice(); }
 
         $pdfInvoice->path = 'app/' . $filePath;

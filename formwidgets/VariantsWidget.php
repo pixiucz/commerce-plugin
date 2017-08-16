@@ -50,8 +50,8 @@ class VariantsWidget extends FormWidgetBase
             'format' => $this->currencyHandler->format
         ];
 
-        if (isset($this->model['attributes']['id'])){
-            if($productVariants = ProductVariant::with('attributes.attributegroup')->where('product_id', '=', $this->model['attributes']['id'])->get()->toArray()){
+        if (isset($this->model->id)){
+            if($productVariants = ProductVariant::with('attributes.attributegroup')->where('product_id', '=', $this->model->id)->get()->toArray()){
                 $data['update'] = true;
                 $this->vars['updateOptions'] = array_pluck($productVariants[0]['attributes'], 'attributegroup');
 

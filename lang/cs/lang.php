@@ -51,7 +51,7 @@ return [
         'product_price' => 'Výchozí cena produktu',
         'products' => 'Produkty',
         'quantity' => 'Množství',
-        'rate' => 'Sazba',
+        'rate' => 'Sazba (%)',
         'refunded_quantity' => 'Vrácených',
         'retail_price' => 'Základní cena',
         'shipping_time' => 'Doručovací doba',
@@ -72,6 +72,9 @@ return [
         'zip' => 'PSČ',
         'eshop_email' => 'eShop email',
         'variant' => 'Varianta',
+        'invoice_number' => 'Číslo faktury',
+        'slug' => 'slug',
+        'tax_rate' => 'Sazba daně',
 
     ],
     'buttons' => [
@@ -116,6 +119,7 @@ return [
         'payment_methods' => 'Způsoby platby',
         'products' => 'Produkty',
         'users' => 'Uživatelé',
+        'taxes' => 'Sazby daně'
     ],
     'placeholders' => [
         'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',
@@ -157,6 +161,7 @@ return [
         'pair_these' => 'Spárovat vybrané / Potvrdit',
         'pictures_added' => 'Obrázky přidány',
         'primary_picture' => 'Titulní obrázek',
+        'refund_invoice' => 'Opravná faktura',
         'reorder' => 'Změnit uspořádání',
         'return' => 'Vrátit se',
         'saved_primary_picutres' => 'Primární obrázky přiřazeny',

@@ -8,6 +8,7 @@ use Pixiu\Commerce\Classes\OrderLogger;
 use Pixiu\Commerce\Models\OrderLog;
 use Illuminate\Support\Facades\Mail;
 use Pixiu\Commerce\Models\CommerceSettings;
+use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
 
 class OrderStatusFSM
 {
@@ -46,7 +47,7 @@ class OrderStatusFSM
 
 
 
-                if ($this->order->delivery_option->name == "Personal Collection") {
+                if ($this->order->delivery_option->personal_collection === 1) {
                     array_push($buttons, $this->allButtons[OS::READY_FOR_COLLECTION]);
                     return array_reverse($buttons);
                 } else {
@@ -123,14 +124,11 @@ class OrderStatusFSM
     {
         $this->order->status = OS::NEW;
 
-        $order = $this->order;
-//        Mail::send('pixiu.areklama::mail.supplier', function($message) use ($order){
-//            $eshop = CommerceSettings::get('commerce_email');
-//            $message->from($eshop);
-//            $message->to($order->user->email);
-//            $message->bcc($eshop);
-//            $message->subject('Informace o vytvoření objednávky č.: ');
-//        });
+        if ($this->order->payment_method->cash_on_delivery === 1) {
+            $this->order->payment_status = PS::CASH_ON_DELIVERY;
+        }
+
+        $this->order->save();
     }
 
     public function changeStateToPaid()
@@ -143,6 +141,7 @@ class OrderStatusFSM
     {
         $this->order->status = OS::READY_FOR_COLLECTION;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.ready'), 'text-info');
+        $this->order->variantsLeftWarehouse();
     }
 
     public function changeStateToCanceled()
@@ -150,19 +149,19 @@ class OrderStatusFSM
         $this->order->status = OS::CANCELED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.canceled'), 'text-danger');
         $this->order->returnVariantsToStock();
+        (new CanceledInvoiceManager($this->order))->generateInvoice();
     }
 
     public function changeStateToShipped()
     {
         $this->order->status = OS::SHIPPED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.shipped'), 'text-info');
-        $this->order->removeReservedStock();
+        $this->order->variantsLeftWarehouse();
     }
 
     public function changeStateToFinished()
     {
         $this->order->status = OS::FINISHED;
         OrderLogger::addLog($this->order, Lang::get('pixiu.commerce::lang.orderlog.finished'), 'text-success');
-        $this->order->removeReservedStock();
     }
 }

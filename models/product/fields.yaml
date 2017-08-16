@@ -29,6 +29,13 @@ secondaryTabs:
             cssClass: col-sm-8
             tab: pixiu.commerce::lang.tabs.details
 
+        tax:
+            label: pixiu.commerce::lang.fields.tax_rate
+            type: relation
+            span: storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.details
+
         categories:
             label: pixiu.commerce::lang.fields.categories
             type: partial
