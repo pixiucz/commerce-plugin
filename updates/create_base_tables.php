@@ -33,9 +33,9 @@ class CreateAttributeGroupsTable extends Migration
         Schema::create('pixiu_com_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-//
-//            $table->integer('tax_id')->unsigned();
-//            $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
+
+            $table->integer('tax_id')->unsigned();
+            $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
             $table->integer('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('pixiu_com_brands');
 
