@@ -112,7 +112,8 @@ secondaryTabs:
             disabled: true
             tab: pixiu.commerce::lang.tabs.details
             span: storm
-            cssClass: col-sm-3
+            cssClass: col-sm-2
+
 
         _change_stock@update:
             label: pixiu.commerce::lang.fields.change_stock
@@ -120,14 +121,20 @@ secondaryTabs:
             type: number
             tab: pixiu.commerce::lang.tabs.details
             span: storm
-            cssClass: col-sm-5
+            cssClass: col-sm-4
 
         _ean@update:
             label: EAN
             type: number
             tab: pixiu.commerce::lang.tabs.details
             span: storm
-            cssClass: col-sm-3
+            cssClass: col-sm-2
+
+        _slug@update:
+            label: pixiu.commerce::lang.fields.slug
+            tab: pixiu.commerce::lang.tabs.details
+            span: storm
+            cssClass: col-sm-4
 
         _form_widget@update:
             label: pixiu.commerce::lang.fields.variants_and_attributes

@@ -59,7 +59,7 @@ class Products extends Controller
 
     public function formAfterSave($model) {
         /*
-         *  If no variant exist, create 'empty' variant
+         *  If no variant exists, create 'empty' variant
          */
         if (!$variants = post('variant')){
             $this->handleEmptyVariant($model);
@@ -315,6 +315,10 @@ class Products extends Controller
             $productVariant->in_stock += $stockChange;
         }
 
+        if ($slugChange = post('Product._slug')){
+            $productVariant->slug = $slugChange;
+        }
+
         $productVariant->save();
 
         $model->images()->get()->each(function($item, $key) use ($productVariant) {
@@ -334,7 +338,7 @@ class Products extends Controller
         if (count($model->brand)) {
             $slug = $model->brand->name . ' ';
         }
-        $slug .= $model->name;
+        $slug .= $model->name . ' ' . $model->id;
         return $slug;
     }
 }
