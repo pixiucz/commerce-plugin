@@ -180,6 +180,7 @@ return [
         'new_category' => 'Nová kategorie',
         'new_order' => 'Nová objednávka',
         'new_product' => 'Nový produkt',
+        'new_tax' => 'Nová daň',
         'reorder' => 'Změnit uspořádání',
     ]
 ];
