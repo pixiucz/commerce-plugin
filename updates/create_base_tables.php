@@ -69,7 +69,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('reserved_stock')->unsigned()->default(0);
 
 
-            $table->integer('ean')->unsigned()->nullable();
+            $table->string('ean')->nullable();
             $table->bigInteger('price')->unsigned()->nullable();
             $table->longText('specifications')->nullable();
             $table->string('slug')->unique();
