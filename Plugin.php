@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Pixiu\Commerce\api\Classes\CategoryTreeAdapter;
 use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
 use Pixiu\Commerce\Classes\TaxHandler;
 use System\Classes\PluginBase;
@@ -47,6 +48,9 @@ class Plugin extends PluginBase
         });
         \App::bind('TaxHandler', function($app) {
             return new TaxHandler;
+        });
+        \App::bind('CategoryTreeAdapter', function($app) {
+            return new CategoryTreeAdapter;
         });
 
         $this->app->register(InvoicesServiceProvider::class);
