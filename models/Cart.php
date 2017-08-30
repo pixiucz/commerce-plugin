@@ -3,14 +3,14 @@
 use Model;
 
 /**
- * Tax Model
+ * Cart Model
  */
-class Tax extends Model
+class Cart extends Model
 {
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_com_taxes';
+    public $table = 'pixiu_com_carts';
 
     /**
      * @var array Guarded fields
@@ -28,15 +28,18 @@ class Tax extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'variants' => [
+            'Pixiu\Commerce\Models\ProductVariant',
+            'table' => 'pixiu_com_carts_variants',
+            'key' => 'cart_id',
+            'otherKey' => 'variant_id',
+            'pivot' => ['quantity']
+        ]
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
-    public function getQualifiedNameAttribute()
-    {
-        return $this->name . ' (' . $this->rate . '%)';
-    }
 }

@@ -9,10 +9,16 @@ fields:
         span: storm
         cssClass: col-sm-1
 
+    slug:
+        label: pixiu.commerce::lang.fields.slug
+        span: storm
+        disabled: true
+        cssClass: col-sm-4
+
     ean:
         label: EAN
         span: storm
-        cssClass: col-sm-11
+        cssClass: col-sm-5
 
     price:
         label: pixiu.commerce::lang.fields.price

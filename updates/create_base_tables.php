@@ -33,7 +33,7 @@ class CreateAttributeGroupsTable extends Migration
         Schema::create('pixiu_com_products', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-//
+
             $table->integer('tax_id')->unsigned()->default(1);
             $table->foreign('tax_id')->references('id')->on('pixiu_com_taxes');
             $table->integer('brand_id')->unsigned()->nullable();
@@ -48,6 +48,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->bigInteger('retail_price')->unsigned();
             $table->longText('specifications')->nullable();
             $table->boolean('has_variants')->default(true);
+            $table->integer('tax_rate')->nullable();
 
             $table->timestamps();
         });
@@ -68,7 +69,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('reserved_stock')->unsigned()->default(0);
 
 
-            $table->integer('ean')->unsigned()->nullable();
+            $table->string('ean')->nullable();
             $table->bigInteger('price')->unsigned()->nullable();
             $table->longText('specifications')->nullable();
             $table->string('slug')->unique();
@@ -237,7 +238,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('ic')->nullable();
             $table->string('dic')->nullable();
 
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
         });
@@ -248,7 +249,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->timestamps();
             $table->increments('id');
 
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->integer('delivery_address_id')->unsigned();
@@ -257,13 +258,13 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('billing_address_id')->unsigned()->nullable();
             $table->foreign('billing_address_id')->references('id')->on('pixiu_com_addresses');
 
-            $table->integer('payment_method_id')->unsigned()->nullable();
+            $table->integer('payment_method_id')->unsigned();
             $table->foreign('payment_method_id')->references('id')->on('pixiu_com_payment_methods');
 
             $table->integer('order_status_id')->unsigned()->nullable();
             $table->foreign('order_status_id')->references('id')->on('pixiu_com_order_statuses');
 
-            $table->integer('delivery_option_id')->unsigned()->nullable();
+            $table->integer('delivery_option_id')->unsigned();
             $table->foreign('delivery_option_id')->references('id')->on('pixiu_com_delivery_options');
 
             $table->enum('status', [

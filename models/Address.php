@@ -22,8 +22,7 @@ class Address extends Model
             'address' => 'required',
             'city' => 'required',
             'zip' => 'required',
-            'country' => 'required',
-            'user' => 'required'
+            'country' => 'required'
         ];
     }
 
@@ -40,12 +39,12 @@ class Address extends Model
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['*'];
+    protected $guarded = [];
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['first_name', 'last_name', 'address', 'zip', 'city', 'coutry', 'dic', 'ic'];
 
     /**
      * @var array Relations

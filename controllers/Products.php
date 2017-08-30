@@ -59,7 +59,7 @@ class Products extends Controller
 
     public function formAfterSave($model) {
         /*
-         *  If no variant exist, create 'empty' variant
+         *  If no variant exists, create 'empty' variant
          */
         if (!$variants = post('variant')){
             $this->handleEmptyVariant($model);
@@ -133,7 +133,7 @@ class Products extends Controller
         $productVariant->slug = "temp " . random_int(1, 10);
         $productVariant->save();
 
-        $slug = $this->getBasicSlug($model);
+        $slug = $productVariant->id . '-' . $this->getBasicSlug($model);
 
         foreach(json_decode($variant['attributes']) as $attribute){
             $newAttribute = Attribute::whereRaw('lower(value) = ?', [strtolower($attribute->value)])->where('attribute_group_id', $attributeGroups[$attribute->attributegroup->name]->id)->first();
@@ -142,7 +142,7 @@ class Products extends Controller
                 $newAttribute->attributegroup()->associate($attributeGroups[$attribute->attributegroup->name]);
             }
             $newAttribute->value = $attribute->value;
-            $slug .= ' ' . $attribute->value;
+            $slug .= ' ' . str_slug($attribute->value, '-');
             $newAttribute->save();
             $newAttribute->productvariant()->attach($productVariant,  ['group_id' => $newAttribute->attribute_group_id]);
         }
@@ -315,13 +315,20 @@ class Products extends Controller
             $productVariant->in_stock += $stockChange;
         }
 
+        if ($slugChange = post('Product._slug')){
+            $productVariant->slug = $slugChange;
+        }
+
         $productVariant->save();
+        $productVariant->slug = $productVariant->id . '-' . $productVariant->slug;
 
         $model->images()->get()->each(function($item, $key) use ($productVariant) {
             if (!$productVariant->images->contains($item)){
                 $productVariant->images()->attach($item);
             }
         });
+
+        $productVariant->save();
     }
 
     /**
