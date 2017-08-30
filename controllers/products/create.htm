@@ -1,0 +1,63 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('pixiu/commerce/products') ?>"><li><?= Lang::get('pixiu.commerce::lang.other.products') ?></a></li>
+        <li><?= Lang::get('pixiu.commerce::lang.buttons.create') ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <?= Form::open(['class' => 'layout']) ?>
+
+        <div class="layout-row">
+            <?= $this->formRender() ?>
+        </div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    id="submitButton"
+                    type="button"
+                    data-request="onSave"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="Creating product..."
+                    class="btn btn-primary">
+                    <?= Lang::get('pixiu.commerce::lang.buttons.create') ?>
+                </button>
+                <button
+                    type="button"
+                    data-request="onSave"
+                    data-request-data="close:1"
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="Creating product..."
+                    class="btn btn-default">
+                    <?= Lang::get('pixiu.commerce::lang.buttons.create_and_close') ?>
+                </button>
+                <span class="btn-text">
+                    <a href="<?= Backend::url('pixiu/commerce/products') ?>"><?= Lang::get('pixiu.commerce::lang.buttons.cancel') ?></a>
+                </span>
+            </div>
+        </div>
+
+    <?= Form::close() ?>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('pixiu/commerce/products') ?>" class="btn btn-default">Return to products list</a></p>
+
+<?php endif ?>
+
+<script>
+    /*
+        Prevents form save on enter pressed (needed so variant widget can work)
+     */
+    $(document).ready(function() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

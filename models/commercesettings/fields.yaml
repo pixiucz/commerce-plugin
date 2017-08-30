@@ -1,0 +1,90 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+secondaryTabs:
+    fields:
+        tax:
+            label: pixiu.commerce::lang.fields.tax_size
+            type: number
+            span: storm
+            cssClass: col-sm-2
+            tab: pixiu.commerce::lang.tabs.basics
+
+        currency:
+            label: pixiu.commerce::lang.fields.currencySymbol
+            span: storm
+            cssClass: col-sm-2
+            tab: pixiu.commerce::lang.tabs.basics
+
+        decimalSymbol:
+            label: pixiu.commerce::lang.fields.decimal_symbol
+            span: storm
+            cssClass: col-sm-3
+            tab: pixiu.commerce::lang.tabs.basics
+
+        company_name:
+            label: pixiu.commerce::lang.fields.company_name
+            span: Storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        commerce_email:
+            label: pixiu.commerce::lang.fields.eshop_email
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        address:
+            label: pixiu.commerce::lang.fields.address
+            span: Storm
+            cssClass: col-sm-9
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        zip:
+            label: pixiu.commerce::lang.fields.zip
+            span: Storm
+            cssClass: col-sm-3
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        ico:
+            label: pixiu.commerce::lang.fields.ico
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        dic:
+            label: pixiu.commerce::lang.fields.dic
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        ic_dph:
+            label: pixiu.commerce::lang.fields.ic_dph
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        bank:
+            label: pixiu.commerce::lang.fields.bank
+            span: Strom
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        account_number:
+            label: pixiu.commerce::lang.fields.account_number
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop
+
+        swift:
+            label: SWIFT
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop
+        iban:
+            label: IBAN
+            span: Storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.eshop

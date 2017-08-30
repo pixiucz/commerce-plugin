@@ -1,0 +1,112 @@
+<div id="pictureSelectorModal">
+    <form method="post">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="popup">×</button>
+            <h4 class="modal-title"> <?= Lang::get('pixiu.commerce::lang.other.select_pictures') ?> </h4>
+            <div class="row">
+                <?php foreach($productImages as $productImage): ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="checkbox-inline custom-checkbox">
+                        <input type="checkbox" id="images[<?= $productImage['id'] ?>]" name="images[]"
+                               value="<?= $productImage['id'] ?>" style="position: absolute; left: 0px;"/>
+                        <label for="images[<?= $productImage['id'] ?>]"></label>
+                    </div>
+                    <img class="image" width="200px;" src="<?= $productImage['url'] ?>"/>
+                </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <h4>... <?= Lang::get('pixiu.commerce::lang.other.and_variants_to_add_them_to') ?></h4>
+            <div class="list-preview list-flush">
+                <div class="control-list">
+                    <table class="table data">
+                        <tbody>
+                        <?php foreach ($productVariants as $productVariant): ?>
+                        <tr>
+                            <td>
+                                <div class="custom-checkbox checkbox-inline">
+                                    <input id="variants[<?= $productVariant['id'] ?>]" name="variants[]" type="checkbox"
+                                           value="<?= $productVariant['id']?>">
+                                    <label for="variants[<?= $productVariant['id'] ?>]"> </label>
+                                </div>
+                            </td>
+                            <td>
+                                <?php foreach($productVariant['images'] as $image): ?>
+                                    <div class="image-preview" style="display: inline-block; position: relative; width: auto; height: auto;">
+                                        <input class="image-id-value" type="hidden" name="image[][id]" value="<?= $image['id'] ?>"/>
+                                        <input class="variant-id-value" type="hidden" name="variant[][id]" value="<?= $productVariant['id'] ?>"/>
+                                        <img id="image-<?= $image['id'] ?>" style="width: auto; height: 50px;" src="<?= $image['url'] ?>">
+                                        <span style="position: absolute; top: 20%; left: 35%;">
+                                            <i class="icon-2x oc-icon-trash" style="visibility: hidden; color: white;"></i>
+                                        </span>
+                                    </div>
+                                <?php endforeach ?>
+                            </td>
+                            <td>
+                                <?php foreach ($productVariant['attributes'] as $attribute): ?>
+                                <?= $attribute['value'] ?>
+                                <?php endforeach ?>
+                            </td>
+                        </tr>
+                        <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-success"
+                    data-request="onAttachPicturesToVariants"
+                    data-request-flash
+                    data-dismiss="popup"
+            >
+                <?= Lang::get('pixiu.commerce::lang.other.pair_these') ?>
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="popup">
+                <?= Lang::get('pixiu.commerce::lang.other.cancel') ?>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        var images = $('.image-preview');
+        images.mouseenter(function(){
+            $(this).find('.oc-icon-trash').css('visibility', 'visible');
+            $(this).find('img').css('filter', 'grayscale(100%) blur(1px)')
+        });
+        images.mouseleave(function(){
+            $(this).find('.oc-icon-trash').css('visibility', 'hidden');
+            $(this).find('img').css('filter', 'grayscale(0%) blur(0px)')
+        });
+
+        images.click(function() {
+            var img = $(this);
+            $.request('onDeletePictureFromVariant', {
+                data: {
+                    'imageId': img.find('.image-id-value').val(),
+                    'variantId': img.find('.variant-id-value').val()
+                },
+                success: function() {
+                    img.remove();
+                    $.oc.flashMsg({
+                        'text': "Obrázek odebrán",
+                        'class': 'success',
+                        'interval': 3
+                    });
+                }
+            })
+
+        })
+    });
+
+</script>

@@ -6,3 +6,33 @@ columns:
     id:
         label: ID
         searchable: true
+
+    brand_id:
+        label: pixiu.commerce::lang.fields.brand
+        relation: brand
+        select: name
+        searchable: true
+        sortable: true
+
+    name:
+        label: pixiu.commerce::lang.fields.name
+        searchable: true
+        sortable: true
+
+    retail_price:
+        label: pixiu.commerce::lang.fields.retail_price
+        type: partial
+        path: column_price
+
+    tax_rate:
+        label: pixiu.commerce::lang.fields.tax_rate
+        relation: tax
+        select: concat(name, ' (',rate, '%)')
+
+    visible:
+        label: pixiu.commerce::lang.fields.visible
+        type: switch
+
+    active:
+        label: pixiu.commerce::lang.fields.active
+        type: switch

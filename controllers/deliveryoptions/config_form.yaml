@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Delivery Option
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/deliveryoption/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\DeliveryOption
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/deliveryoptions
+
+# Create page
+create:
+    title: Create Delivery Option
+    redirect: pixiu/commerce/deliveryoptions/update/:id
+    redirectClose: pixiu/commerce/deliveryoptions
+
+# Update page
+update:
+    title: Edit Delivery Option
+    redirect: pixiu/commerce/deliveryoptions
+    redirectClose: pixiu/commerce/deliveryoptions
+
+# Preview page
+preview:
+    title: Preview Delivery Option

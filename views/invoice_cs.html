@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <style>
+        body {
+            font-family: 'DejaVu Sans';
+            font-size: 10px;
+            color: #525252;
+        }
+
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        h1 {
+            line-height: 18px;
+            font-size: 15px;
+            margin-bottom: 0;
+            color: black;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 4px;
+            vertical-align: top;
+        }
+
+        .services {
+            width: 100%;
+            border: none;
+        }
+        .services td {
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        td.services-head {
+            border-bottom: 2px solid black;
+            font-weight: bold;
+            color: black;
+        }
+
+        .list {
+            border:none;
+        }
+
+        .list td {
+            border: none;
+            padding: 0;
+            width: 130px;
+        }
+
+        td.bordered-cell {
+            border: 2px solid black;
+            text-align: center;
+            font-weight: bold;
+            color: black;
+        }
+
+        span.bold {
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="padding: 5%;">
+
+<div style="width: 50%; display: inline-block;">
+    <h1>Faktura - Daňový doklad č.: </h1>
+</div>
+<div style="text-align: right; width: 49.4%; display: inline-block;">
+    <h1> {{ year }} </h1>
+</div>
+
+<table style="width: 100%; border-top: 6px solid black;">
+    <tr>
+        <td rowspan="2" style="width: 50%;">
+            Prodávající:
+            <div style="margin-left: 10px; font-size: larger;">
+                <p>
+                    <span class="bold"> {{ company.name }} </span><br>
+                    {{company.zip}} {{company.address}} <br>
+                    IČ: {{company.ico}} <br>
+                    DIČ: {{company.dic}} <br>
+                    IČ DPH: {{company.ic_dph}}
+                </p>
+            </div>
+
+        </td>
+        <td>
+            <table class="list">
+                <tr>
+                    <td>Kupující</td>
+                    <td>
+                        <span class="bold">{{ billing_address.first_name }} {{ billing_address['last_name'] }}</span><br>
+                        {{ billing_address['address'] }}<br>
+                        {{ billing_address['zip'] }} {{ billing_address['city'] }}<br>
+                        {{ billing_address['country'] }}<br>
+                        IČ: {{ billing_address['ic'] }} <br>
+                        DIČ: {{ billing_address['dic'] }}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 3px solid black;">
+            <table class="list">
+                <tr>
+                    <td>Doručovací adresa:</td>
+                    <td>
+                        <span class="bold">{{delivery_address['first_name']}} {{delivery_address['last_name']}}</span><br>
+                        {{delivery_address['address']}}<br>
+                        {{delivery_address['zip']}} {{delivery_address['city']}} <br>
+                        {{delivery_address['country']}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            <table class="list">
+                <tr><td>Banka:</td><td>{{ company.bank }}</td></tr>
+                <tr><td>Bankovní účet:</td><td class="bordered-cell">{{ company.account_number }}</td></tr>
+                <tr><td>IBAN:</td><td>{{ company.iban }}</td></tr>
+                <tr><td>SWIFT:</td><td> {{ company.swift }} </td></tr>
+                <tr><td>Var. sym.:</td><td><b> - </b></td></tr>
+                <tr><td>Konst. sym.:</td><td><b> - </b></td></tr>
+                <tr><td>Spec. sym.:</td><td> - </td></tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="list">
+                <tr><td>Daňový doklad: </td><td>Faktura</td></tr>
+                <tr><td>Datum uskut. zdaň. plnění</td><td>{{updated_at}}</td></tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="list">
+                <tr><td>Forma úhrady:</td><td>{{payment_method['name']}}</td></tr>
+                <tr><td>Způsob dopravy: </td><td>{{delivery_option['name']}}</td></tr>
+            </table>
+        </td>
+        <td>
+            <table class="list">
+                <tr><td>Vystaveno:</td><td> {{ updated_at }} </td></tr>
+                <tr><td>Datum splatnosti:</td><td class="bordered-cell"> {{updated_at}} </td></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<br>
+<table class="services">
+    <tr>
+        <td class="services-head">Kód</td>
+        <td class="services-head">Název</td>
+        <td class="services-head">Ks</td>
+        <td class="services-head">Cena ks</td>
+        <td class="services-head">Cena ks bez DPH</td>
+        <td class="services-head"> Celkem bez DPH</td>
+        <td class="services-head"> Celkem DPH</td>
+        <td class="services-head"> DPH [%] </td>
+        <td class="services-head"> Cena</td>
+    </tr>
+    {% for variant in variants %}
+    <tr>
+        <td>{{ variant.ean }}</td>
+        <td>{{ variant.name }}</td>
+        <td>{{ variant.quantity }}</td>
+        <td>{{ variant.price }}</td>
+        <td>{{ variant.price_without_tax }}</td>
+        <td>{{ variant.sum_without_tax }}</td>
+        <td>{{ variant.tax }}</td>
+        <td>{{ tax }}% </td>
+        <td style="text-align: right;"> {{ variant.sum }} </td>
+    </tr>
+    {% endfor %}
+    {% if status != 'canceled' %}
+    <tr>
+        <td> 0000 </td>
+        <td> Doprava: {{ delivery_option.name }} </td>
+        <td> 1 </td>
+        <td> {{ delivery_option.price }} </td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.price_without_tax }}</td>
+        <td> {{ delivery_option.tax }}</td>
+        <td> {{ tax }}% </td>
+        <td style="text-align: right;"> {{ delivery_option.price }}</td>
+    </tr>
+    {% endif %}
+</table>
+
+<br>
+
+
+<div style="width: 99.4%;">
+    <table style="margin-left: auto; margin-right: 0;">
+        <tr>
+            <td>Sazba DPH</td>
+            <td>{{ tax }}%</td>
+        </tr>
+        <tr>
+            <td>Základ DPH</td>
+            <td>{{ sum_without_tax }}</td>
+        </tr>
+        <tr>
+            <td>DPH</td>
+            <td>{{ sum_tax_only }}</td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Celkem k úhradě [{{currency}}]</td>
+            <td class="bordered-cell"> {{ sum }} </td>
+        </tr>
+    </table>
+</div>
+    {% if status == 'canceled' %}
+    <div style="text-align: left; width: 100%; display: inline-block; color: darkred; font-size: 45px;">
+        STORNOVÁNO
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

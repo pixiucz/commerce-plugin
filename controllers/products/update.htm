@@ -1,0 +1,68 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('pixiu/commerce/products') ?>"><li><?= Lang::get('pixiu.commerce::lang.other.products') ?></a></li>
+        <li><?= Lang::get('pixiu.commerce::lang.buttons.update') ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <?= Form::open(['class' => 'layout']) ?>
+
+        <div class="layout-row">
+            <?= $this->formRender() ?>
+        </div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    id="submitButton"
+                    type="submit"
+                    data-request="onSave"
+                    data-request-data="redirect:1"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="Saving product..."
+                    class="btn btn-primary">
+                    <?= Lang::get('pixiu.commerce::lang.buttons.save') ?>
+                </button>
+                <button
+                    type="button"
+                    data-request="onSave"
+                    data-request-data="close:1"
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="Saving product..."
+                    class="btn btn-default">
+                    <?= Lang::get('pixiu.commerce::lang.buttons.save_and_close') ?>
+                </button>
+                <button
+                    type="button"
+                    class="oc-icon-trash-o btn-icon danger pull-right"
+                    data-request="onDelete"
+                    data-load-indicator="Deleting product..."
+                    data-request-confirm="Delete this product?">
+                </button>
+                <span class="btn-text">
+                    <a href="<?= Backend::url('pixiu/commerce/products') ?>"><a href="<?= Backend::url('pixiu/commerce/productvariants') ?>"><?= Lang::get('pixiu.commerce::lang.buttons.cancel') ?></a></a>
+                </span>
+            </div>
+        </div>
+
+    <?= Form::close() ?>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('pixiu/commerce/products') ?>" class="btn btn-default">Return to products list</a></p>
+
+<?php endif ?>
+
+<script>
+    $(document).ready(function() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

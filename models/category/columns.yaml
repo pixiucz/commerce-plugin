@@ -3,6 +3,6 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    name:
+        label: pixiu.commerce::lang.fields.name
         searchable: true

@@ -1,0 +1,23 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: pixiu.commerce::lang.fields.title
+        span: storm
+        cssClass: col-sm-12
+
+    color:
+        label: pixiu.commerce::lang.fields.color
+        type: colorpicker
+        span: storm
+        cssClass: col-sm-12
+
+    is_canceled:
+        label: pixiu.commerce::lang.fields.is_canceled
+        commentAbove: pixiu.commerce::lang.comments.orderstatus.is_canceled
+        type: checkbox
+        default: false
+        span: storm
+        cssClass: col-sm-4

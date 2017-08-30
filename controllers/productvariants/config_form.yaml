@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Product Variant
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/productvariant/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\ProductVariant
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/productvariants
+
+# Create page
+create:
+    title: Create Product Variant
+    redirect: pixiu/commerce/productvariants/update/:id
+    redirectClose: pixiu/commerce/productvariants
+
+# Update page
+update:
+    title: Edit Product Variant
+    redirect: pixiu/commerce/productvariants/update/:id
+    redirectClose: pixiu/commerce/products
+
+# Preview page
+preview:
+    title: Preview Product Variant

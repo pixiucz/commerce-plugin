@@ -1,0 +1,18 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        disabled: true
+
+    name:
+        label: pixiu.commerce::lang.fields.name
+
+    shipping_time:
+        label: pixiu.commerce::lang.fields.shipping_time
+
+    price:
+        label: pixiu.commerce::lang.fields.price
+

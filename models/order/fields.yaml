@@ -1,0 +1,113 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    status_buttons@update:
+                type: partial
+secondaryTabs:
+    fields:
+        status:
+            label: pixiu.commerce::lang.fields.order_status
+            type: dropdown
+            disabled: true
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.info
+
+        user:
+            label: pixiu.commerce::lang.fields.user
+            type: relation
+            select: concat(name, ' ', surname, ' | ', email)
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.info
+
+        delivery_address_id:
+            label: pixiu.commerce::lang.fields.delivery_address
+            type: dropdown
+            dependsOn: user
+            span: storm
+            cssClass: col-sm-6
+            tab: pixiu.commerce::lang.tabs.info
+
+        billing_address_id:
+            label: pixiu.commerce::lang.fields.billing_address
+            type: dropdown
+            dependsOn: user
+            span: storm
+            cssClass: col-sm-6
+            tab: pixiu.commerce::lang.tabs.info
+
+        delivery_option@create:
+            label: pixiu.commerce::lang.fields.delivery_option
+            type: relation
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-5
+            tab: pixiu.commerce::lang.tabs.info
+
+        payment_method@create:
+            label: pixiu.commerce::lang.fields.payment_method
+            type: relation
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.info
+
+        delivery_option@update:
+            label: pixiu.commerce::lang.fields.delivery_option
+            type: relation
+            disabled: true
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-5
+            tab: pixiu.commerce::lang.tabs.info
+
+        payment_method@update:
+            label: pixiu.commerce::lang.fields.payment_method
+            type: relation
+            disabled: true
+            emptyOption: -
+            span: storm
+            cssClass: col-sm-4
+            tab: pixiu.commerce::lang.tabs.info
+
+#        status:
+#            label: pixiu.commerce::lang.fields.order_status
+#            type: dropdown
+#            span: storm
+#            dependsOn: payment_status
+#            cssClass: col-sm-3
+#            tab: pixiu.commerce::lang.tabs.info
+
+        payment_status@update:
+            label: pixiu.commerce::lang.fields.payment_status
+            type: dropdown
+            disabled: true
+            span: storm
+            cssClass: col-sm-3
+            tab: pixiu.commerce::lang.tabs.info
+
+        variants@update:
+            type: partial
+            path: variants
+            tab: pixiu.commerce::lang.tabs.products
+            span: storm
+            cssClass: col-sm-12
+
+        refunds:
+            type: partial
+            tab: pixiu.commerce::lang.tabs.products
+
+        notes@update:
+            label: pixiu.commerce::lang.fields.notes
+            type: partial
+            tab: pixiu.commerce::lang.tabs.notes
+
+        invoices@update:
+            label: pixiu.commerce::lang.fields.invoices_log
+            type: partial
+            tab: pixiu.commerce::lang.tabs.invoices
+

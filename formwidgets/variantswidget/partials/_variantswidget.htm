@@ -1,0 +1,41 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+    <div class="control-popup modal fade" id="contentBasic">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Variants Creation</h2>
+                </div>
+                <div class="modal-body">
+                    <p>I'm gonna be you guide</p>
+
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn align-right" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+    <a data-toggle="modal" href="#contentBasic" class="icon-question-circle icon-3x"></a>
+
+    <input type="hidden" id="updateData" name="updateData" value='<?= $updateData ?>'>
+    <?php if ($updateOptions !== null): ?>
+        <?php foreach($updateOptions as $updateOption): ?>
+            <input type="hidden" id="updateOptions" name="options[][name]" value='<?= $updateOption["name"] ?>'>
+        <?php endforeach ?>
+    <?php endif ?>
+    <div id="variantsWidgetApp">
+    </div>
+
+    <script src="<?= url('plugins/pixiu/commerce/formwidgets/variantswidget/assets/js/build.js') ?>"></script>
+    <!-- MOVE SCRIPT TO STANDALONE FILE -->
+
+<?php endif ?>

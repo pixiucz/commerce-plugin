@@ -1,0 +1,16 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: pixiu.commerce::lang.fields.name
+        type: text
+        span: storm
+        cssClass: col-sm-9
+
+    rate:
+        label: pixiu.commerce::lang.fields.rate
+        type: number
+        span: storm
+        cssClass: col-sm-3

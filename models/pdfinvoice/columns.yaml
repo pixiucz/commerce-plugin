@@ -1,0 +1,25 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    invoice_number:
+        label: pixiu.commerce::lang.fields.invoice_number
+        searchable: true
+        sortable: true
+
+    type:
+        label: pixiu.commerce::lang.fields.type
+        searchable: true
+
+    created_at:
+        label: pixiu.commerce::lang.fields.created_at
+
+    download:
+        label: pixiu.commerce::lang.fields.download
+        type: partial
+        path: ~/plugins/pixiu/commerce/controllers/pdfinvoices/_download.htm

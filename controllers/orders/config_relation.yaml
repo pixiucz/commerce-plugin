@@ -1,0 +1,50 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+notes:
+    label: pixiu.commerce::lang.fields.notes
+    view:
+        list: $/pixiu/commerce/models/ordernote/columns.yaml
+        toolbarButtons: create
+    manage:
+        form: $/pixiu/commerce/models/ordernote/fields.yaml
+        recordsPerPage: 10
+
+invoices:
+    label: invoices
+    readOnly: true
+    view:
+        list: $/pixiu/commerce/models/pdfinvoice/columns.yaml
+        recordsPerPage: 5
+
+variants:
+    label: pixiu.commerce::lang.fields.products
+    view:
+        list: $/pixiu/commerce/models/productvariant/pivot_columns.yaml
+        toolbarPartial: list_toolbar_variants
+    manage:
+        list: $/pixiu/commerce/models/productvariant/columns.yaml
+        showSearch: true
+    pivot:
+        form:
+            fields:
+                pivot[price]:
+                    label: pixiu.commerce::lang.fields.price
+                    type: \pixiu\commerce\formwidgets\currency
+                    defaultFrom: price
+                    span: storm
+                    cssClass: col-sm-5
+
+                pivot[quantity]:
+                    label: pixiu.commerce::lang.fields.quantity
+                    type: number
+                    span: storm
+                    cssClass: col-sm-5
+
+                in_stock:
+                    label: pixiu.commerce::lang.fields.in_stock
+                    disabled: true
+                    type: number
+                    span: storm
+                    cssClass: col-sm-2

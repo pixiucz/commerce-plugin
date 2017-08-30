@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Brand
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/brand/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\Brand
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/brands
+
+# Create page
+create:
+    title: Create Brand
+    redirect: pixiu/commerce/brands/update/:id
+    redirectClose: pixiu/commerce/brands
+
+# Update page
+update:
+    title: Edit Brand
+    redirect: pixiu/commerce/brands
+    redirectClose: pixiu/commerce/brands
+
+# Preview page
+preview:
+    title: Preview Brand

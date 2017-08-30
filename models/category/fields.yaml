@@ -3,6 +3,14 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: pixiu.commerce::lang.fields.name
+
+    slug:
+        label: pixiu.commerce::lang.fields.slug
+        preset: name
+
+    parent:
+        label: pixiu.commerce::lang.fields.parent
+        type: relation
+        emptyOption: - 

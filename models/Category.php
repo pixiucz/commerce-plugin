@@ -12,7 +12,7 @@ class Category extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'pixiu_commerce_categories';
+    public $table = 'pixiu_com_categories';
 
     /**
      * @var array Guarded fields
@@ -30,7 +30,14 @@ class Category extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'products' => [
+            'Pixiu\Commerce\Models\Product',
+            'table' => 'pixiu_com_category_products',
+            'key' => 'category_id',
+            'otherKey' => 'product_id'
+        ]
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];

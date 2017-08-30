@@ -1,0 +1,30 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    address:
+        label: pixiu.commerce::lang.fields.address
+        searchable: true
+
+    city:
+        label: pixiu.commerce::lang.fields.city
+        searchable: true
+
+    zip:
+        label: pixiu.commerce::lang.fields.zip
+        searchable: true
+
+    country:
+        label: pixiu.commerce::lang.fields.country
+        searchable: true
+
+    user:
+        label: pixiu.commerce::lang.fields.user
+        relation: user
+        select: email
+        searchable: true

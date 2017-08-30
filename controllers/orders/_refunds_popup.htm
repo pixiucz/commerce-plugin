@@ -1,0 +1,128 @@
+<div id="pictureSelectorModal">
+    <form method="post">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="popup">×</button>
+        </div>
+        <div class="modal-body">
+            <h4>Vratky</h4>
+            <div class="list-preview list-flush">
+                <div class="control-list">
+                    <table class="table data">
+                        <thead>
+                            <tr>
+                                <th class="list-checkbox">
+                                    <div class="checkbox custom-checkbox nolabel">
+                                        <input type="checkbox" id="checkboxAll" checked="checked" />
+                                        <label for="checkboxAll"></label>
+                                    </div>
+                                </th>
+                                <th><span>Produkt</span></th>
+                                <th><span>Atributy</span></th>
+                                <th><span>Cena</span></th>
+                                <th><span>Mnozstvi</span></th>
+                                <th><span>Vracene mnozstvi</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($variants as $variant): ?>
+                                <tr class="variant-row">
+                                    <td class="list-checkbox nolink">
+                                        <div class="checkbox custom-checkbox nolabel">
+                                            <input
+                                                    name="variants[<?= $variant->id ?>][checked]"
+                                                    class="variant-checkbox"
+                                                    id="checkbox_ <?= $variant->id ?>"
+                                                    type="checkbox"
+                                                    checked="checked"
+                                            />
+                                            <label for="checkbox_ <?= $variant->id ?>"></label>
+                                        </div>
+                                    </td>
+                                    <td> <?= $variant->product->name ?></td>
+                                    <td>
+                                        <?php $variant->attributes()->get()->each(function($item, $key) { echo $item->value; }); ?>
+                                    </td>
+                                    <td> <?= $variant->pivot->price ?>   </td>
+                                    <td class="variant-quantity"> <?= $variant->pivot->quantity ?> </td>
+                                    <td>
+                                        <input
+                                                name="variants[<?= $variant->id ?>][quantity]"
+                                                class="form-control variant-quantity-input"
+                                                type="number" placeholder="Vsechny"
+                                        >
+                                        <input
+                                                type="hidden"
+                                                name="variants[<?= $variant->id ?>][id]"
+                                                value="<?= $variant->id ?>"
+                                        />
+                                        <input
+                                                type="hidden"
+                                                name="orderId"
+                                                value="<?= $orderId ?>"
+                                        />
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-success"
+                    data-request="onRefundVariants"
+                    data-request-flash
+                    data-dismiss="popup"
+            >
+                <?= Lang::get('pixiu.commerce::lang.buttons.done') ?>
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-default"
+                    data-dismiss="popup">
+                <?= Lang::get('pixiu.commerce::lang.buttons.cancel') ?>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.variant-quantity-input').each(function(i, obj) {
+            if (parseInt($(obj).val()) === 0) {
+                $(obj).removeAttr('value');
+            }
+        });
+
+        var checkboxAll = $('#checkboxAll');
+
+        checkboxAll.click(function(){
+            if (checkboxAll.is(':checked')) {
+                $('.variant-checkbox').prop('checked', true)
+            } else {
+                $('.variant-checkbox').prop('checked', false);
+            }
+        })
+
+        var quantityInput = $('.variant-row');
+
+        quantityInput.on('change', function(){
+            if ($(this).find('.variant-quantity-input').val() < 0) {
+                $(this).find('.variant-quantity-input').val(0);
+            }
+
+            if ($(this).find('.variant-quantity-input').val() > parseInt($(this).find('.variant-quantity').html())){
+                $(this).find ('.variant-quantity-input').val(parseInt($(this).find('.variant-quantity').html()));
+            }
+        })
+
+
+
+
+    });
+
+</script>
+

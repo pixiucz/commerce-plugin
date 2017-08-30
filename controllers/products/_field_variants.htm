@@ -1,0 +1,69 @@
+<?php if ($formModel->has_variants): ?>
+<a
+    href="javascript:;"
+    class="btn btn-secondary icon-object-group"
+    data-request="onSave"
+    data-request-data="redirect:0"
+    data-request-success="triggerPhotosToVariantsSelector()"
+
+>
+    <?= Lang::get('pixiu.commerce::lang.other.add_pictures_to_variants') ?>
+</a>
+<?php endif ?>
+
+
+<a
+        href="javascript:;"
+        class="btn btn-secondary icon-file-image-o"
+        data-request="onSave"
+        data-request-data="redirect:0"
+        data-request-success="triggerPrimaryPictureSelector()"
+
+>
+    <?= Lang::get('pixiu.commerce::lang.other.select_primary_pictures') ?>
+</a>
+
+<a
+        id="addPhotosToVariants"
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-control="popup"
+        data-request-data="<?= $this->id ?>"
+        data-handler="onPicturesToVariantsPartial"
+        data-size="large"
+        style="visibility: hidden;"
+></a>
+
+<a
+        id="addPrimaryPicture"
+        href="javascript:;"
+        class="btn btn-secondary oc-icon-plus"
+        data-control="popup"
+        data-request-data="<?= $this->id ?>"
+        data-handler="onPrimaryPictureForVariantsPartial"
+        data-size="large"
+        style="visibility: hidden;"
+></a>
+
+
+<script>
+
+    function triggerPhotosToVariantsSelector(){
+        $('#addPhotosToVariants').trigger('click');
+    }
+
+    function triggerPrimaryPictureSelector(){
+        $('#addPrimaryPicture').trigger('click');
+    }
+
+    $(document).ready(function() {
+        $("#addPhotosToVariants").click(function() {
+//            $.request('onSave', {
+//                success: function() {
+//                    console.log('saved');
+//                }
+//            });
+        });
+    });
+
+</script>

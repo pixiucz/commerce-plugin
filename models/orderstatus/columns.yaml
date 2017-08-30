@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    title:
+        label: pixiu.commerce::lang.fields.title
+
+    is_canceled:
+        label: pixiu.commerce::lang.fields.is_canceled
+        type: switch

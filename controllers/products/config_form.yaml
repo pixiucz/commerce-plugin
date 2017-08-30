@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Product
+
+# Model Form Field configuration
+form: $/pixiu/commerce/models/product/fields.yaml
+
+# Model Class name
+modelClass: Pixiu\Commerce\Models\Product
+
+# Default redirect location
+defaultRedirect: pixiu/commerce/products
+
+# Create page
+create:
+    title: Create Product
+    redirect: pixiu/commerce/products/update/:id
+    redirectClose: pixiu/commerce/products
+
+# Update page
+update:
+    title: Edit Product
+    redirect: pixiu/commerce/products/update/:id
+    redirectClose: pixiu/commerce/products
+
+# Preview page
+preview:
+    title: Preview Product

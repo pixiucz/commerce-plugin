@@ -1,0 +1,27 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        span: storm
+        cssClass: col-sm-12
+
+    shipping_time:
+        label: Shipping time (in days)
+        type: number
+        span: storm
+        cssClass: col-sm-4
+
+    price:
+        label: Price
+        type: number
+        span: storm
+        cssClass: col-sm-4
+
+    personal_collection:
+        label: pixiu.commerce::lang.fields.personal_collection
+        type: checkbox
+        span: storm
+        cssClass: col-sm-12

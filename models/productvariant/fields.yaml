@@ -1,0 +1,55 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+        span: storm
+        cssClass: col-sm-1
+
+    slug:
+        label: pixiu.commerce::lang.fields.slug
+        span: storm
+        disabled: true
+        cssClass: col-sm-4
+
+    ean:
+        label: EAN
+        span: storm
+        cssClass: col-sm-5
+
+    price:
+        label: pixiu.commerce::lang.fields.price
+        placeholder: pixiu.commerce::lang.placeholders.use_products_price
+        type: \pixiu\commerce\formwidgets\currency
+        span: storm
+        cssClass: col-sm-12
+
+    in_stock:
+        disabled: true
+        label: pixiu.commerce::lang.fields.in_stock
+        span: storm
+        cssClass: col-sm-1
+
+    change_stock:
+        label: pixiu.commerce::lang.fields.change_stock
+        placeholder: pixiu.commerce::lang.placeholders.change_stock
+        type: number
+        span: storm
+        cssClass: col-sm-4
+
+    specifications:
+        label: pixiu.commerce::lang.fields.variant_specifications
+        type: repeater
+        form:
+            fields:
+                name:
+                    label: pixiu.commerce::lang.fields.name
+                    span: storm
+                    cssClass: col-sm-4
+                value:
+                    label: pixiu.commerce::lang.fields.value
+                    span: storm
+                    cssClass: col-sm-8
