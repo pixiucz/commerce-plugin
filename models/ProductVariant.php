@@ -75,7 +75,11 @@ class ProductVariant extends Model
     {
         $product = $this->product()->with('brand')->first();
 
-        $product->brand !== null ? $productName = $product->brand->name . ' ' . $product->name : $productName = $product->name;
+        if (isset($product->brand)){
+            $productName = $product->brand->name . ' ' . $product->name;
+        } else {
+            $productName = $product->name;
+        }
 
 
         $this->attributes()->get()->each(function($item, $key) use (&$productName){

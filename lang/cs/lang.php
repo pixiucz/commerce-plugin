@@ -164,7 +164,7 @@ return [
         'refund_invoice' => 'Opravná faktura',
         'reorder' => 'Změnit uspořádání',
         'return' => 'Vrátit se',
-        'saved_primary_picutres' => 'Primární obrázky přiřazeny',
+        'saved_primary_pictures' => 'Primární obrázky přiřazeny',
         'select_pictures' => 'Vyberte obrázky',
         'select_primary_pictures' => 'Vybrat titulní obrázek',
         'addresses' => 'Adresy',
@@ -182,5 +182,12 @@ return [
         'new_product' => 'Nový produkt',
         'new_tax' => 'Nová daň',
         'reorder' => 'Změnit uspořádání',
+    ],
+
+    'validation' => [
+        'required' => 'Je nutné vyplnit :attribute',
+        'email' => 'E-mail není v korektním formátě',
+        'min' => ':attribute musí mít délku alespoň :min znaků',
+        'max' => ':attribute musí mít méně něž :max znaků',
     ]
 ];

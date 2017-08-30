@@ -2,3 +2,6 @@
   - Initialization of Pixiu Commerce plugin.
   - create_base_tables.php
   - seed_tables_with_test_data.php
+1.0.2:
+  - Add Cart model/table + pivot for variants
+  - create_carts_table.php

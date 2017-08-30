@@ -11,19 +11,29 @@ columns:
         label: pixiu.commerce::lang.fields.product
         relation: product
         select: name
+        searchable: true
+        sortable: true
 
     attributes:
         label: pixiu.commerce::lang.fields.attributes
         relation: attributes
         select: value
+        searchable: true
+        sortable: true
 
     pivot[price]:
         label: pixiu.commerce::lang.fields.price
         type: partial
         path: ~/plugins/pixiu/commerce/controllers/productvariants/_column_pivot_price.htm
+        searchable: true
+        sortable: true
 
     pivot[quantity]:
         label: pixiu.commerce::lang.fields.quantity
+        searchable: true
+        sortable: true
 
     pivot[refunded_quantity]:
         label: pixiu.commerce::lang.fields.refunded_quantity
+        searchable: true
+        sortable: true

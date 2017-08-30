@@ -115,7 +115,7 @@ class Product extends Model
                 $fields->{'_form_widget@update'}->hidden = true;
                 $fields->{'_in_stock@update'}->value = $this->productvariants->first()->in_stock;
                 $fields->{'_ean@update'}->value = $this->productvariants->first()->ean;
-                $fields->{'_slug@update'}->value = $this->productvariants->first()->slug;
+                $fields->{'_slug@update'}->hidden = true;
             }
         }
     }
