@@ -23,6 +23,7 @@ class CartController
 
         // Parse data for checkout
         $checkoutData = $this->getCheckoutData($orderItems, $user);
+        return response(['VARDUMP' => $checkoutData], 201);
 
         // Send data to checkout and get token
         $token = $this->getCheckoutToken($checkoutData);
@@ -31,7 +32,6 @@ class CartController
         $redirect = $this->getRedirect($token);
 
 
-        return response(['msg' => 'Fsechno fici',], 201);
     }
 
     /**
@@ -44,8 +44,8 @@ class CartController
 
         $variants = ProductVariant::
         with('primary_picture')
-        ->with('tax')
-        ->select('id', 'price', 'primary_picture_id', 'product_id', 'slug', 'tax_id')
+        ->with('product.tax')
+        ->select('id', 'price', 'primary_picture_id', 'product_id', 'slug')
         ->find(array_column($items, 'variant_id'));
 
         $pivots = [];
@@ -56,8 +56,8 @@ class CartController
                 'name' => $variant->full_name,
                 'quantity' => $item['quantity'],
                 'price' => $variant->price,
-                'tax_name' => $variant->tax->name,
-                'tax_rate' => $variant->tax->rate,
+                'tax_name' => $variant->product->tax->name,
+                'tax_rate' => $variant->product->tax->rate,
                 'slug' => $variant->slug,
                 'picture' => $variant->primary_picture->path ?? null
             ];
@@ -78,9 +78,9 @@ class CartController
         ];
     }
 
-    private function getCommerceToken($checkoutData){return '123456';}
+    private function getCommerceToken(){return '123456';}
 
-    private function getCheckoutToken():string{}
+    private function getCheckoutToken($checkoutData):string{}
 
     private function getRedirect(string $token):string{}
 

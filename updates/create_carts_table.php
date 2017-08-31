@@ -33,6 +33,9 @@ class CreateCartsTable extends Migration
             $table->string('slug');
             $table->string('name');
             $table->string('picture')->nullable();
+
+            $table->integer('tax_rate')->unsigned();
+            $table->string('tax_name');
         });
     }
 
