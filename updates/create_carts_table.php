@@ -34,6 +34,11 @@ class CreateCartsTable extends Migration
             $table->string('name');
             $table->string('picture')->nullable();
 
+            $table->enum('status', [
+                'requested token', 'redirect sent', 'paid', 'cash on delivery', 'abandoned'
+            ]);
+
+
             $table->integer('tax_rate')->unsigned();
             $table->string('tax_name');
         });

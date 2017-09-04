@@ -1,37 +1,67 @@
 <?php namespace Pixiu\Commerce\api\Controllers;
 
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Pixiu\Commerce\Models\Address;
 use Pixiu\Commerce\Models\Cart;
 use Pixiu\Commerce\Models\ProductVariant;
 use RainLab\User\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Pixiu\Commerce\api\Enums\CartStatusEnum;
+use GuzzleHttp\Client;
+use Pixiu\Commerce\api\Classes\CheckoutApi;
 
 class CartController
 {
+    const SLUG = "turisticke-znamky";
+
     public function store(Request $request)
     {
-        $cart = new Cart();
-        if ($user = Auth::getUser()) {
-            $cart->user_id = $user->id;
-        }
+        // TODO: validate request?
+
+        $user = Auth::getUser();
 
         $orderItems = $this->parseRequestItems($request);
 
-        $cart->save();
-        $cart->variants()->sync($orderItems);
+        $cart = $this->createCart($orderItems, $user);
 
         // Parse data for checkout
         $checkoutData = $this->getCheckoutData($orderItems, $user);
-        return response(['VARDUMP' => $checkoutData], 201);
 
         // Send data to checkout and get token
-        $token = $this->getCheckoutToken($checkoutData);
+        try {
+            $token = $this->getCheckoutToken($checkoutData);
+        } catch (\Exception $e){
+            trace_log($e->getMessage());
+            return response([
+                'msg' => 'Tvorba tokenu selhala, udalost zalogovana.'
+            ], 500);
+        }
+
+        // Save token to cart
+        tap($cart, function($cart) use ($token) {
+            $cart->token = $token;
+            $cart->save();
+        });
 
         // Create redirect based on token
         $redirect = $this->getRedirect($token);
 
+        return response([
+            'msg' => 'Success',
+            'redirect' => $redirect
+        ], 200);
+    }
 
+    private function createCart($orderItems, $user)
+    {
+        $cart = Cart::create([
+            'status' => CartStatusEnum::REQUESTED_TOKEN,
+            'user_id' => $user->id ?? null
+        ]);
+        $cart->variants()->sync($orderItems);
+        return $cart;
     }
 
     /**
@@ -78,11 +108,21 @@ class CartController
         ];
     }
 
-    private function getCommerceToken(){return '123456';}
+    private function getCommerceToken(){
+        return 'CljNPzDIWMOn4B8zN9IABlAj4ele0HYO';
+    }
 
-    private function getCheckoutToken($checkoutData):string{}
+    private function getCheckoutToken($checkoutData):string{
+        $checkoutData['slug'] = self::SLUG;
+        $checkoutData['key'] = $this->getCommerceToken();
 
-    private function getRedirect(string $token):string{}
+        $response = app('CheckoutApi')->createCheckout($checkoutData);
+        return $response['token'];
+    }
+
+    private function getRedirect(string $token):string{
+        return "http://checkout.dev/checkout?token=" . $token;
+    }
 
 
 }
