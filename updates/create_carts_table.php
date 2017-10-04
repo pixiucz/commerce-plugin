@@ -35,7 +35,7 @@ class CreateCartsTable extends Migration
             $table->string('picture')->nullable();
 
             $table->enum('status', [
-                'requested token', 'redirect sent', 'paid', 'cash on delivery', 'abandoned'
+                'requested token', 'redirect sent', 'done', 'abandoned'
             ]);
 
 

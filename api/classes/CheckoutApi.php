@@ -21,8 +21,9 @@ class CheckoutApi
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    public function checkStatusFor($token)
+    public function getStatusesFor($tokens)
     {
-        return "fuck you";
+        $response = $this->client->post(self::URL . 'statuses', ['json' => ['tokens' => json_encode($tokens)]]);
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

@@ -42,6 +42,7 @@ class CartController
         // Save token to cart
         tap($cart, function($cart) use ($token) {
             $cart->token = $token;
+            $cart->status = CartStatusEnum::REDIRECT_SENT;
             $cart->save();
         });
 
@@ -109,6 +110,7 @@ class CartController
     }
 
     private function getCommerceToken(){
+        // TODO: Get real token
         return 'CljNPzDIWMOn4B8zN9IABlAj4ele0HYO';
     }
 

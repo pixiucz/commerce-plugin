@@ -143,7 +143,7 @@ secondaryTabs:
 
         short_description:
             label: pixiu.commerce::lang.fields.short_description
-            type: textarea
+            type: richeditor
             size: small
             tab: pixiu.commerce::lang.tabs.descriptions
 
