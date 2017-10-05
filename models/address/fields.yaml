@@ -3,13 +3,13 @@
 # ===================================
 
 fields:
-    user:
-        label: pixiu.commerce::lang.fields.user
-        type: relation
-        select: concat(name, ' ', surname, ' | ', email)
-        emptyOption: -
-        span: Strom
-        cssClass: col-sm-12
+#    user:
+#        label: pixiu.commerce::lang.fields.user
+#        type: relation
+#        select: concat(name, ' ', surname, ' | ', email)
+#        emptyOption: -
+#        span: Strom
+#        cssClass: col-sm-12
 
     first_name:
         label: pixiu.commerce::lang.fields.first_name

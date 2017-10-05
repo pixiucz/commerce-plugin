@@ -156,15 +156,9 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-                    'address' => [
-                        'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
-                        'url'         => Backend::url('pixiu/commerce/Addresses'),
-                        'icon'        => 'icon-compass',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
                     'users' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.users'),
-                        'url'         => Backend::url('rainlab/user/Users'),
+                        'url'         => Backend::url('pixiu/commerce/Users'),
                         'icon'        => 'icon-male',
                         'permissions' => ['pixiu.commerce.*']
                     ],

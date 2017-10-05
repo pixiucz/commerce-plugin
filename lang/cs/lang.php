@@ -88,6 +88,7 @@ return [
         'done' => 'Hotovo'
     ],
     'tabs' => [
+        'addresses' => 'Adresy',
         'descriptions' => 'Popis',
         'details' => 'Detaily',
         'images' => 'Obrázky',
