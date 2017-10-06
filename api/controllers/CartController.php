@@ -110,7 +110,7 @@ class CartController
     }
 
     private function getCommerceToken(){
-        // TODO: Get real token
+        // TODO: Get token from settings in prod.
         return 'CljNPzDIWMOn4B8zN9IABlAj4ele0HYO';
     }
 

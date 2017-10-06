@@ -63,7 +63,7 @@ return [
         'title' => 'Titulek',
         'type' => 'Typ',
         'updated_at' => 'Upraveno',
-        'user' => 'Uživatel',
+        'user' => 'Zákazník',
         'value' => 'Hodnota',
         'variant_specifications' => 'Specifikace pro tuto variantu',
         'variants_and_attributes' => 'Varianty a jejich vlastnosti',
@@ -75,6 +75,7 @@ return [
         'invoice_number' => 'Číslo faktury',
         'slug' => 'slug',
         'tax_rate' => 'Sazba daně',
+        'number_of_orders' => 'Množsví objednávek'
 
     ],
     'buttons' => [
@@ -119,7 +120,7 @@ return [
         'orders' => 'Objednávky',
         'payment_methods' => 'Způsoby platby',
         'products' => 'Produkty',
-        'users' => 'Uživatelé',
+        'users' => 'Zákazníci',
         'taxes' => 'Sazby daně'
     ],
     'placeholders' => [

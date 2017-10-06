@@ -25,6 +25,13 @@ columns:
         label: rainlab.user::lang.user.email
         searchable: true
 
+    number_of_orders:
+        label: pixiu.commerce::lang.fields.number_of_orders
+        type: partial
+        path: column_number_of_orders
+        searchable: false
+        sortable: false
+
     created_at:
         label: rainlab.user::lang.user.created_at
         type: timetense
