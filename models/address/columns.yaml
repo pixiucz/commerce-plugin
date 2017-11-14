@@ -28,3 +28,8 @@ columns:
         relation: user
         select: email
         searchable: true
+
+    is_billing:
+        label: pixiu.commerce::lang.fields.is_billing
+        type: partial
+        path: $/pixiu/commerce/controllers/addresses/_list_is_billing.htm

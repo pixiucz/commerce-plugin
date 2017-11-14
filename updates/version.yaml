@@ -5,3 +5,6 @@
 1.0.2:
   - Add Cart model/table + pivot for variants
   - create_carts_table.php
+1.0.3:
+  - Add 'is_billing' flag to addresses
+  - alter_addresses.php

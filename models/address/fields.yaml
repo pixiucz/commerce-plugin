@@ -43,13 +43,27 @@ fields:
         span: Strom
         cssClass: col-sm-4
 
+    is_billing:
+        label: pixiu.commerce::lang.fields.is_billing
+        type: checkbox
+        span: storm
+        cssClass: col-sm-12
+
     ic:
         label: pixiu.commerce::lang.fields.ic
         type: number
         span: storm
         cssClass: col-sm-6
+        trigger:
+            action: show
+            field: is_billing
+            condition: checked
 
     dic:
         label: pixiu.commerce::lang.fields.dic
         span: storm
         cssClass: col-sm-6
+        trigger:
+            action: show
+            field: is_billing
+            condition: checked
