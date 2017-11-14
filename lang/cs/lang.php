@@ -34,6 +34,7 @@ return [
         'in_stock' => 'Skladem',
         'invoices' => 'Faktury',
         'invoices_log' => 'Historie vygenerovaných faktur',
+        'is_billing' => 'Je fakturační',
         'is_canceled' => 'Znamená stornování objednávky',
         'last_name' => 'Příjmení',
         'log' => 'Log',
@@ -80,6 +81,7 @@ return [
     ],
     'buttons' => [
         'refund' => 'Vrátit zboží',
+        'back' => 'Vrátit se',
         'create_and_close' => 'Vytvořit a zavřít',
         'create' => 'Vytvořit',
         'cancel' => 'Zrušit',
