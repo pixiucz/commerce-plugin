@@ -46,6 +46,7 @@ class CreateCartsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('pixiu_commerce_carts');
+        Schema::dropIfExists('pixiu_com_carts_variants');
+        Schema::dropIfExists('pixiu_com_carts');
     }
 }

@@ -61,6 +61,7 @@ return [
         'status' => 'Status',
         'tax' => 'Daň',
         'tax_size' => 'Výše daně (%)',
+        'telephone' => 'Telefonní číslo',
         'title' => 'Titulek',
         'type' => 'Typ',
         'updated_at' => 'Upraveno',
@@ -177,6 +178,9 @@ return [
         'orders' => 'Objednávky',
         'products' => 'Produkty',
         'product_variants' => 'Varianty produktů',
+        'personal_section' => 'Osobní informace',
+        'address_section' => 'Dodací informace',
+        'company_section' => 'Informace o společnosti (volitelné)'
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',
