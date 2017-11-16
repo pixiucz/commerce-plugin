@@ -3,9 +3,13 @@
 # ===================================
 
 fields:
-    personal_section:
-        label: pixiu.commerce::lang.other.personal_section
-        type: section
+    user:
+        label: pixiu.commerce::lang.fields.user
+        type: relation
+        select: concat(name, ' ', surname, ' | ', email)
+        emptyOption: -
+        span: Strom
+        cssClass: col-sm-12
 
     first_name:
         label: pixiu.commerce::lang.fields.first_name
@@ -16,15 +20,6 @@ fields:
         label: pixiu.commerce::lang.fields.last_name
         span: storm
         cssClass: col-sm-6
-
-    telephone:
-        label: pixiu.commerce::lang.fields.telephone
-        span: storm
-        cssClass: col-sm-6
-
-    address_section:
-        label: pixiu.commerce::lang.other.address_section
-        type: section
 
     address:
         label: pixiu.commerce::lang.fields.address
@@ -48,17 +43,9 @@ fields:
         span: Strom
         cssClass: col-sm-4
 
-    company_section:
-        label: pixiu.commerce::lang.other.company_section
-        type: section
-
-    company:
-        label: pixiu.commerce::lang.fields.company_name
-        span: storm
-        cssClass: col-sm-12
-
-    ico:
+    ic:
         label: pixiu.commerce::lang.fields.ic
+        type: number
         span: storm
         cssClass: col-sm-6
 
