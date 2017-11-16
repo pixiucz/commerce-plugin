@@ -98,6 +98,15 @@ class Products extends Controller
         }
     }
 
+    public function onEditProductVariant($id = null)
+    {
+        $config = $this->makeConfig('$/pixiu/commerce/models/productvariant/fields.yaml');
+        $config->model = ProductVariant::find(39);
+        $widget = $this->makeWidget('Backend\Widgets\Form', $config);
+        $this->vars['productVariantForm'] = $widget;
+        return $this->makePartial('partial_edit_product_variant');
+    }
+
     /**
      * @param array $options (array of attribute group names)
      * @returns array["attribute_group_name" => attribute_group_obj]
