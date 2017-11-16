@@ -23,6 +23,7 @@ columns:
         label: pixiu.commerce::lang.fields.country
         searchable: true
 
+
     user:
         label: pixiu.commerce::lang.fields.user
         relation: user
