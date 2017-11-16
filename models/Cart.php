@@ -20,7 +20,7 @@ class Cart extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['status', 'user_id'];
 
     /**
      * @var array Relations

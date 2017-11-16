@@ -1,9 +1,14 @@
 <?php namespace Pixiu\Commerce;
 
 use Backend;
+use Carbon\Carbon;
 use Pixiu\Commerce\api\Classes\CategoryTreeAdapter;
+use Pixiu\Commerce\api\Classes\CheckoutApi;
+use Pixiu\Commerce\api\Enums\CartStatusEnum;
+use Pixiu\Commerce\api\Tasks\CheckCarts;
 use Pixiu\Commerce\Classes\Invoice\NormalInvoiceManager;
 use Pixiu\Commerce\Classes\TaxHandler;
+use Pixiu\Commerce\Models\Cart;
 use System\Classes\PluginBase;
 use Illuminate\Support\Facades\Event;
 use RainLab\User\Models\User;
@@ -52,13 +57,11 @@ class Plugin extends PluginBase
         \App::bind('CategoryTreeAdapter', function($app) {
             return new CategoryTreeAdapter;
         });
+        \App::bind('CheckoutApi', function ($app) {
+            return new CheckoutApi;
+        });
 
         $this->app->register(InvoicesServiceProvider::class);
-//
-//        $migration = new\Pixiucz\Invoices\CreatePixiuInvoicesTable();
-//        $migration->down();
-//        $migration->up();
-//        app('InvoiceGenerator')->createPattern('commerce', 'eShop-{year}/{number}');
     }
 
     /**
@@ -153,15 +156,9 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-diamond',
                         'permissions' => ['pixiu.commerce.*']
                     ],
-                    'address' => [
-                        'label' => Lang::get('pixiu.commerce::lang.menu.addresses'),
-                        'url'         => Backend::url('pixiu/commerce/Addresses'),
-                        'icon'        => 'icon-compass',
-                        'permissions' => ['pixiu.commerce.*']
-                    ],
                     'users' => [
                         'label' => Lang::get('pixiu.commerce::lang.menu.users'),
-                        'url'         => Backend::url('rainlab/user/Users'),
+                        'url'         => Backend::url('pixiu/commerce/Users'),
                         'icon'        => 'icon-male',
                         'permissions' => ['pixiu.commerce.*']
                     ],
@@ -190,6 +187,13 @@ class Plugin extends PluginBase
                 'permissions' => ['pixiu.turistickeznamky.*']
             ]
         ];
+    }
+
+    public function registerSchedule($schedule)
+    {
+        $schedule->call(function() {
+            CheckCarts::run();
+        })->daily();
     }
 
     private function logQueries()
