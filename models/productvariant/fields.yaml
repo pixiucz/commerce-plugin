@@ -3,11 +3,6 @@
 # ===================================
 
 fields:
-    _back_button:
-        type: partial
-        path: back_button
-        span: storm
-        cssClass: col-sm-12
     id:
         label: ID
         disabled: true
@@ -19,6 +14,18 @@ fields:
         span: storm
         disabled: true
         cssClass: col-sm-4
+
+    ean:
+        label: EAN
+        span: storm
+        cssClass: col-sm-5
+
+    price:
+        label: pixiu.commerce::lang.fields.price
+        placeholder: pixiu.commerce::lang.placeholders.use_products_price
+        type: \pixiu\commerce\formwidgets\currency
+        span: storm
+        cssClass: col-sm-12
 
     in_stock:
         disabled: true

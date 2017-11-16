@@ -22,8 +22,7 @@ class Address extends Model
             'address' => 'required',
             'city' => 'required',
             'zip' => 'required',
-            'country' => 'required',
-            'telephone' => 'required'
+            'country' => 'required'
         ];
     }
 

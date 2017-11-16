@@ -34,7 +34,6 @@ return [
         'in_stock' => 'Skladem',
         'invoices' => 'Faktury',
         'invoices_log' => 'Historie vygenerovaných faktur',
-        'is_billing' => 'Je fakturační',
         'is_canceled' => 'Znamená stornování objednávky',
         'last_name' => 'Příjmení',
         'log' => 'Log',
@@ -61,11 +60,10 @@ return [
         'status' => 'Status',
         'tax' => 'Daň',
         'tax_size' => 'Výše daně (%)',
-        'telephone' => 'Telefonní číslo',
         'title' => 'Titulek',
         'type' => 'Typ',
         'updated_at' => 'Upraveno',
-        'user' => 'Zákazník',
+        'user' => 'Uživatel',
         'value' => 'Hodnota',
         'variant_specifications' => 'Specifikace pro tuto variantu',
         'variants_and_attributes' => 'Varianty a jejich vlastnosti',
@@ -77,12 +75,10 @@ return [
         'invoice_number' => 'Číslo faktury',
         'slug' => 'slug',
         'tax_rate' => 'Sazba daně',
-        'number_of_orders' => 'Množsví objednávek'
 
     ],
     'buttons' => [
         'refund' => 'Vrátit zboží',
-        'back' => 'Vrátit se',
         'create_and_close' => 'Vytvořit a zavřít',
         'create' => 'Vytvořit',
         'cancel' => 'Zrušit',
@@ -92,7 +88,6 @@ return [
         'done' => 'Hotovo'
     ],
     'tabs' => [
-        'addresses' => 'Adresy',
         'descriptions' => 'Popis',
         'details' => 'Detaily',
         'images' => 'Obrázky',
@@ -123,7 +118,7 @@ return [
         'orders' => 'Objednávky',
         'payment_methods' => 'Způsoby platby',
         'products' => 'Produkty',
-        'users' => 'Zákazníci',
+        'users' => 'Uživatelé',
         'taxes' => 'Sazby daně'
     ],
     'placeholders' => [
@@ -178,9 +173,6 @@ return [
         'orders' => 'Objednávky',
         'products' => 'Produkty',
         'product_variants' => 'Varianty produktů',
-        'personal_section' => 'Osobní informace',
-        'address_section' => 'Dodací informace',
-        'company_section' => 'Informace o společnosti (volitelné)'
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',

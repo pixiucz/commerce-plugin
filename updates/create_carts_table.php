@@ -33,20 +33,11 @@ class CreateCartsTable extends Migration
             $table->string('slug');
             $table->string('name');
             $table->string('picture')->nullable();
-
-            $table->enum('status', [
-                'requested token', 'redirect sent', 'done', 'abandoned'
-            ]);
-
-
-            $table->integer('tax_rate')->unsigned();
-            $table->string('tax_name');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('pixiu_com_carts_variants');
-        Schema::dropIfExists('pixiu_com_carts');
+        Schema::dropIfExists('pixiu_commerce_carts');
     }
 }
