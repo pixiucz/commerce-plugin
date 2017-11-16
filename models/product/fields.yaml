@@ -5,6 +5,12 @@
 fields:
 secondaryTabs:
     fields:
+        _temp:
+            label: temp
+            type: partial
+            path: temp
+            tab: pixiu.commerce::lang.tabs.details
+
         name:
             label: pixiu.commerce::lang.fields.name
             default: ASDF
@@ -143,7 +149,7 @@ secondaryTabs:
 
         short_description:
             label: pixiu.commerce::lang.fields.short_description
-            type: textarea
+            type: richeditor
             size: small
             tab: pixiu.commerce::lang.tabs.descriptions
 

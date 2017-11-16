@@ -22,7 +22,7 @@ class OrderStatusFSM
      * @param $paymentMethod
      * @param $paymentStatus
      */
-    public function __construct($order)
+    public function __construct(\Pixiu\Commerce\Models\Order $order)
     {
         $this->order = $order;
         $this->allButtons = $this->generateButtons();

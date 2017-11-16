@@ -1,0 +1,46 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    id:
+        label: rainlab.user::lang.user.id
+        invisible: true
+
+    username:
+        label: rainlab.user::lang.user.username
+        searchable: true
+        invisible: true
+
+    name:
+        label: rainlab.user::lang.user.name
+        searchable: true
+
+    surname:
+        label: rainlab.user::lang.user.surname
+        searchable: true
+
+    email:
+        label: rainlab.user::lang.user.email
+        searchable: true
+
+    number_of_orders:
+        label: pixiu.commerce::lang.fields.number_of_orders
+        type: partial
+        path: column_number_of_orders
+        searchable: false
+        sortable: false
+
+    created_at:
+        label: rainlab.user::lang.user.created_at
+        type: timetense
+
+    last_seen:
+        label: rainlab.user::lang.user.last_seen
+        type: timetense
+
+    is_guest:
+        label: rainlab.user::lang.user.is_guest
+        type: switch
+        invisible: true
