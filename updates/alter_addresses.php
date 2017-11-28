@@ -8,16 +8,12 @@ class AlterAddresses extends Migration
 {
     public function up()
     {
-        Schema::table('pixiu_com_addresses', function (Blueprint $table) {
-            $table->dropColumn('ic');
-            $table->dropColumn('dic');
-        });
-
         Schema::table('pixiu_com_addresses', function(Blueprint $table) {
+            $table->dropColumn('ic');
             $table->string('ico')->nullable();
-            $table->string('dic')->nullable();
+            $table->string('dic')->nullable()->change();
             $table->string('company')->nullable();
-            $table->string('telephone');
+            $table->string('telephone')->nullable();
         });
     }
 
