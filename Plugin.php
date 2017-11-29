@@ -196,6 +196,14 @@ class Plugin extends PluginBase
         })->daily();
     }
 
+    public function registerFormWidgets()
+    {
+        return [
+            'Pixiu\Commerce\FormWidgets\Currency' => 'currencywidget',
+            'Pixiu\Commerce\FormWidgets\VariantsWidget' => 'variantswidget'
+        ];
+    }
+
     private function logQueries()
     {
         \DB::listen(function($query) {
