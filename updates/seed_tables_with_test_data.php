@@ -6,6 +6,7 @@ use Pixiu\Commerce\Models\{
 };
 use RainLab\User\Models\User;
 use Faker;
+use Illuminate\Support\Facades\DB;
 
 class SeedUsersTable extends Seeder
 {
@@ -35,8 +36,6 @@ class SeedUsersTable extends Seeder
             'name' => 'Zakladni sazba',
             'rate' => 21
         ]);
-
-
 
 //        $address = new Address();
 //        $address->user_id = 1;
@@ -69,6 +68,39 @@ class SeedUsersTable extends Seeder
 
         PaymentMethod::create([
             'name' => 'Platba kartou'
+        ]);
+
+
+        // Defaultni settings a prepnuti do cestiny
+        DB::table('system_settings')->insert([
+            'item' => 'commerce_settings',
+            'value' => json_encode([
+                'tax' => 21,
+                'currency' => 'Kč',
+                'decimalSymbol' => ',',
+                'company_name' => 'Turisticke Znamky',
+                'commerce_email' => 'test@test.cz',
+                'address' => 'Testovaci adresa 123',
+                'zip' => '12345',
+                'ico' => '12345',
+                'dic' => '12345',
+                'ic_dph' => '???',
+                'bank' => '1234 1234 1234 1234',
+                'account_number' => '1234',
+                'swift' => '1234',
+                'iban' => '1234'
+            ])
+        ]);
+
+        DB::table('backend_user_preferences')->insert([
+            'user_id' => 1,
+            'namespace' => 'backend',
+            'group' => 'backend',
+            'item' => 'preferences',
+            'value' => json_encode([
+                'locale' => 'cs',
+                'fallback_locale' => 'en'
+            ])
         ]);
 
     }
