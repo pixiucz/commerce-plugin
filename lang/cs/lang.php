@@ -75,7 +75,7 @@ return [
         'eshop_email' => 'eShop email',
         'variant' => 'Varianta',
         'invoice_number' => 'Číslo faktury',
-        'slug' => 'slug',
+        'slug' => 'Slug',
         'tax_rate' => 'Sazba daně',
         'number_of_orders' => 'Množsví objednávek'
 
@@ -112,7 +112,8 @@ return [
         ],
         'order' => [
             'price_empty' => 'Toto pole ponechte prázdné pokud si přejet použít katalogovou cenu.',
-        ]
+        ],
+        'slug' => 'Toto pole bude použito jako parametr URL adresy (automaticky generováno)'
     ],
     'menu' => [
         'addresses' => 'Adresy',

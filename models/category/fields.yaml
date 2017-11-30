@@ -8,6 +8,7 @@ fields:
 
     slug:
         label: pixiu.commerce::lang.fields.slug
+        commentAbove: pixiu.commerce::lang.comments.slug
         preset: name
 
     parent:
