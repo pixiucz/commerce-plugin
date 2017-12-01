@@ -21,7 +21,7 @@
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Creating Tax..."
                     class="btn btn-primary">
-                    Create
+                    Vytvořit
                 </button>
                 <button
                     type="button"
@@ -30,10 +30,10 @@
                     data-hotkey="ctrl+enter, cmd+enter"
                     data-load-indicator="Creating Tax..."
                     class="btn btn-default">
-                    Create and Close
+                    Vytvořit a zavřít
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('pixiu/commerce/taxes') ?>">Cancel</a>
+                    <a href="<?= Backend::url('pixiu/commerce/taxes') ?>">Zrušit</a>
                 </span>
             </div>
         </div>
@@ -43,6 +43,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('pixiu/commerce/taxes') ?>" class="btn btn-default">Return to taxes list</a></p>
+    <p><a href="<?= Backend::url('pixiu/commerce/taxes') ?>" class="btn btn-default">Vrátit se</a></p>
 
 <?php endif ?>

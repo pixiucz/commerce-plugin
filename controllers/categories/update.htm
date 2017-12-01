@@ -1,7 +1,13 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('pixiu/commerce/categories') ?>"><li><?= Lang::get('pixiu.commerce::lang.other.categories') ?></a></li>
-        <li><?= Lang::get('pixiu.commerce::lang.buttons.update') ?></li>
+        <li>
+            <a href="<?= Backend::url('pixiu/commerce/categories') ?>">
+                <?= Lang::get('pixiu.commerce::lang.other.categories') ?>
+            </a>
+        </li>
+        <li>
+            <?= Lang::get('pixiu.commerce::lang.buttons.update') ?>
+        </li>
     </ul>
 <?php Block::endPut() ?>
 
