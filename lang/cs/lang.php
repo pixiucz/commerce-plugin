@@ -115,7 +115,7 @@ return [
         'order' => [
             'price_empty' => 'Toto pole ponechte prázdné pokud si přejet použít katalogovou cenu.',
         ],
-        'slug' => 'Toto pole bude použito jako parametr URL adresy (automaticky generováno)'
+        'slug' => 'Toto pole bude použito jako parametr URL adresy (automaticky generováno, musí být unikátní - je potřeba ručně upravit pokud se překrývá s nějákým už existujícím)'
     ],
     'menu' => [
         'addresses' => 'Adresy',

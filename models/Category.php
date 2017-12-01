@@ -1,6 +1,8 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
+use October\Rain\Database\Traits\Validation;
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * Category Model
@@ -8,6 +10,21 @@ use Model;
 class Category extends Model
 {
     use \October\Rain\Database\Traits\NestedTree;
+    use Validation;
+    use LocalizedValidation;
+
+    public $rules = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->localizeValidation();
+        $this->rules = [
+            'name' => 'required',
+            'slug' => 'required|unique:pixiu_com_categories'
+        ];
+    }
 
     /**
      * @var string The database table used by the model.

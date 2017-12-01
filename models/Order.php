@@ -6,6 +6,7 @@ use Pixiu\Commerce\Models\{Address, ProductVariant, CommerceSettings, OrderLog};
 use Pixiu\Commerce\Classes\{TaxHandler, OrderStatus, PaymentStatus, OrderStatusFSM};
 use Illuminate\Support\Facades\Lang;
 use Pixiu\Commerce\Classes\CurrencyHandler;
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * Order Model
@@ -13,9 +14,9 @@ use Pixiu\Commerce\Classes\CurrencyHandler;
 class Order extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use LocalizedValidation;
+
     public $rules = [];
-    public $customMessages = [];
-    public $attributeNames = [];
 
     private $currencyHandler;
     private $taxHandler;
@@ -26,6 +27,8 @@ class Order extends Model
 
         $this->currencyHandler = \App::make('CurrencyHandler');
         $this->taxHandler = \App::make('TaxHandler');
+
+        $this->localizeValidation();
 
         $this->rules = [
             'user' => 'required',
