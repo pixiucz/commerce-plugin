@@ -16,13 +16,13 @@ defaultRedirect: pixiu/commerce/addresses
 
 # Create page
 create:
-    title: Create Address
+    title: Vytvořit adresu
     redirect: pixiu/commerce/addresses/update/:id
     redirectClose: pixiu/commerce/addresses
 
 # Update page
 update:
-    title: Edit Address
+    title: Upravit adresu
     redirect: pixiu/commerce/addresses
     redirectClose: pixiu/commerce/addresses
 

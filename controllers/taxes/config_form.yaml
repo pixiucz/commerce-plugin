@@ -16,13 +16,13 @@ defaultRedirect: pixiu/commerce/taxes
 
 # Create page
 create:
-    title: Create Tax
+    title: Vytvořit daňovou sazbu
     redirect: pixiu/commerce/taxes/update/:id
     redirectClose: pixiu/commerce/taxes
 
 # Update page
 update:
-    title: Edit Tax
+    title: Upravit daňovou sazbu
     redirect: pixiu/commerce/taxes
     redirectClose: pixiu/commerce/taxes
 

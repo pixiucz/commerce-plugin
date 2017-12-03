@@ -16,17 +16,17 @@ defaultRedirect: pixiu/commerce/orders
 
 # Create page
 create:
-    title: Create Order
+    title: Vytvořit objednávku
     redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Update page
 update:
-    title: Edit Order
+    title: Upravit objednávku
     redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Preview page
 preview:
-    title: Preview Order
+    title: Náhled objednávky
     form: $/pixiu/commerce/models/order/preview_fields.yaml

@@ -16,13 +16,13 @@ defaultRedirect: pixiu/commerce/categories
 
 # Create page
 create:
-    title: Create Category
+    title: Vytvořit kategorii
     redirect: pixiu/commerce/categories/update/:id
     redirectClose: pixiu/commerce/categories
 
 # Update page
 update:
-    title: Edit Category
+    title: Upravit kategorii
     redirect: pixiu/commerce/categories
     redirectClose: pixiu/commerce/categories
 

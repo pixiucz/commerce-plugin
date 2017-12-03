@@ -16,13 +16,13 @@ defaultRedirect: pixiu/commerce/brands
 
 # Create page
 create:
-    title: Create Brand
+    title: Vytvořit značku
     redirect: pixiu/commerce/brands/update/:id
     redirectClose: pixiu/commerce/brands
 
 # Update page
 update:
-    title: Edit Brand
+    title: Upravit značku
     redirect: pixiu/commerce/brands
     redirectClose: pixiu/commerce/brands
 
