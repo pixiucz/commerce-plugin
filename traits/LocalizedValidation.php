@@ -8,6 +8,8 @@ trait LocalizedValidation
 
     public function localizeValidation()
     {
-        $this->attributeNames = Lang::get('pixiu.commerce::lang.fields');
+        if (is_array(Lang::get('pixiu.commerce::lang.fields'))){
+            $this->attributeNames = Lang::get('pixiu.commerce::lang.fields');
+        }
     }
 }

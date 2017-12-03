@@ -12,64 +12,65 @@ class SeedUsersTable extends Seeder
 {
     public function run()
     {
-        Category::create([
-            'name' => 'Známky',
-            'slug' => str_slug('Známky'),
-            'nest_depth' => 1
-        ]);
+        echo 'Znamky #1' . PHP_EOL;
+        DB::table('pixiu_com_categories')->insert(
+            [
+                'name' => 'Známky',
+                'slug' => str_slug('Známky'),
+                'nest_depth' => 1
+            ]
+        );
 
-        Category::create([
-            'name' => 'Výročné známky',
-            'slug' => str_slug('Výročné známky'),
-            'nest_depth' => 2,
-            'parent_id' => 1
-        ]);
+        echo 'Znamky #2' . PHP_EOL;
+        DB::table('pixiu_com_categories')->insert(
+            [
+                'name' => 'Výročné známky',
+                'slug' => 'vyrocne znamky',
+                'nest_depth' => 2,
+                'parent_id' => 1
+            ]
+        );
 
-        Category::create([
-            'name' => 'Zrušené známky',
-            'slug' => str_slug('Zrušené známky'),
-            'nest_depth' => 2,
-            'parent_id' => 1
-        ]);
-
-        Tax::create([
-            'name' => 'Zakladni sazba',
+        echo 'Tax #1' . PHP_EOL;
+        DB::table('pixiu_com_taxes')->insert([
+            'name' => 'Základní sazba',
             'rate' => 21
         ]);
 
-//        $address = new Address();
-//        $address->user_id = 1;
-//        $address->first_name = 'Karel';
-//        $address->last_name = "Obecnik";
-//        $address->address = "Svatovaclavske 432/21";
-//        $address->city = "Brno";
-//        $address->zip = "620 02";
-//        $address->country = "Czech republic";
-//        $address->save();
+        echo 'DELIVERY OPTION #1' . PHP_EOL;
+        DB::table('pixiu_com_delivery_options')->insert(
+            [
+                'name' => 'Česká pošta',
+                'shipping_time' => 12345,
+                'price' => 12345,
+                'personal_collection' => false
+            ]
+        );
 
-        DeliveryOption::create([
-            'name' => 'Česká pošta',
-            'shipping_time' => 12345,
-            'price' => 9900,
-            'personal_collection' => false
-        ]);
+        echo "DELIVERY OPTION #2" . PHP_EOL;
+        DB::table('pixiu_com_delivery_options')->insert(
+            [
+                'name' => 'Osobní vyzvednutí',
+                'shipping_time' => 12345,
+                'price' => 2500,
+                'personal_collection' => true
+            ]
+        );
 
-        DeliveryOption::create([
-            'name' => 'Osobní vyzvednutí',
-            'shipping_time' => 12345,
-            'price' => 2500,
-            'personal_collection' => true
-        ]);
+        echo 'PAYMENT METHOD #1' . PHP_EOL;
+        DB::table('pixiu_com_payment_methods')->insert(
+            [
+                'name' => 'Dobírka',
+                'cash_on_delivery' => true
+            ]
+        );
 
-        PaymentMethod::create([
-            'name' => 'Dobírka',
-            'cash_on_delivery' => true
-        ]);
-
-        PaymentMethod::create([
-            'name' => 'Platba kartou'
-        ]);
-
+        echo 'PAYMENT METHOD #2' . PHP_EOL;
+        DB::table('pixiu_com_payment_methods')->insert(
+            [
+                'name' => 'Platba kartou'
+            ]
+        );
 
         // Defaultni settings a prepnuti do cestiny
         DB::table('system_settings')->insert([
