@@ -61,4 +61,9 @@ class Category extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = str_slug($value);
+    }
+
 }
