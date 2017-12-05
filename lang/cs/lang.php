@@ -130,6 +130,9 @@ return [
         'users' => 'Zákazníci',
         'taxes' => 'Sazby daně'
     ],
+    'models' => [
+        'user' => 'Uživatel'
+    ],
     'placeholders' => [
         'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',
         'use_products_price' => 'Použít výchozí cenu produktu',

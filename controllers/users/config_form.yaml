@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: User
+name: pixiu.commerce::lang.models.user
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/user/fields.yaml
