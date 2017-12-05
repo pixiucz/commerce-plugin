@@ -31,7 +31,7 @@ variants:
             fields:
                 pivot[price]:
                     label: pixiu.commerce::lang.fields.price
-                    type: \pixiu\commerce\formwidgets\currency
+                    type: currencywidget
                     defaultFrom: price
                     span: storm
                     cssClass: col-sm-5
