@@ -74,6 +74,11 @@ tabs:
             type: partial
             path: relation_addresses
 
+        orders:
+            tab: pixiu.commerce::lang.fields.orders
+            type: partial
+            path: relation_orders
+
 secondaryTabs:
     fields:
 

@@ -45,6 +45,7 @@ return [
         'normal_invoice' => 'Běžná faktura',
         'notes' => 'Poznámky',
         'order_status' => 'Stav objednávky',
+        'orders' => 'Objednávky',
         'parent' => 'Nadřazená kategorie',
         'payment_method' => 'Způsob platby',
         'payment_status' => 'Stav platby',

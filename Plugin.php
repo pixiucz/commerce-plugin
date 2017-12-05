@@ -79,6 +79,7 @@ class Plugin extends PluginBase
 
         User::extend(function($model) {
             $model->hasMany['addresses'] = ['Pixiu\Commerce\Models\Address'];
+            $model->hasMany['orders'] = ['Pixiu\Commerce\Models\Order'];
         });
 
         $this->app->register(ServiceProvider::class);
