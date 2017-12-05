@@ -183,7 +183,8 @@ return [
         'product_variants' => 'Varianty produktů',
         'personal_section' => 'Osobní informace',
         'address_section' => 'Dodací informace',
-        'company_section' => 'Informace o společnosti (volitelné)'
+        'company_section' => 'Informace o společnosti (volitelné)',
+        'user_select' => 'Pro vybrání zákazníka klikněte %s'
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',

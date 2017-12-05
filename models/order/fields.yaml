@@ -16,13 +16,15 @@ secondaryTabs:
             tab: pixiu.commerce::lang.tabs.info
 
         user:
-            label: pixiu.commerce::lang.fields.user
-            type: relation
-            select: concat(name, ' ', surname, ' | ', email)
-            emptyOption: -
+            type: recordfinder
+            list: $/pixiu/commerce/models/user/columns.yaml
+            prompt: pixiu.commerce::lang.other.user_select
+            nameFrom: email
+            descriptionFrom: surname
             span: storm
             cssClass: col-sm-12
             tab: pixiu.commerce::lang.tabs.info
+
 
         delivery_address_id:
             label: pixiu.commerce::lang.fields.delivery_address
