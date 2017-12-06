@@ -23,6 +23,7 @@ return [
         'decreases_stock' => 'Snižuje stav zásob',
         'delivery_address' => 'Doručovací adresa',
         'delivery_option' => 'Doprava',
+        'description' => 'Popis',
         'dic' => 'DIČ',
         'download' => 'Stáhnout',
         'first_name' => 'Jméno',
@@ -38,11 +39,13 @@ return [
         'is_canceled' => 'Znamená stornování objednávky',
         'last_name' => 'Příjmení',
         'log' => 'Log',
+        'logo' => 'Logo',
         'long_description' => 'Dlouhý popis',
         'name' => 'Název',
         'normal_invoice' => 'Běžná faktura',
         'notes' => 'Poznámky',
         'order_status' => 'Stav objednávky',
+        'orders' => 'Objednávky',
         'parent' => 'Nadřazená kategorie',
         'payment_method' => 'Způsob platby',
         'payment_status' => 'Stav platby',
@@ -54,7 +57,7 @@ return [
         'quantity' => 'Množství',
         'rate' => 'Sazba (%)',
         'refunded_quantity' => 'Vrácených',
-        'retail_price' => 'Základní cena',
+        'retail_price' => 'Výchozí cena',
         'shipping_time' => 'Doručovací doba',
         'short_description' => 'Krátký popis',
         'specifications' => 'Obecné specifikace',
@@ -75,7 +78,7 @@ return [
         'eshop_email' => 'eShop email',
         'variant' => 'Varianta',
         'invoice_number' => 'Číslo faktury',
-        'slug' => 'slug',
+        'slug' => 'Slug',
         'tax_rate' => 'Sazba daně',
         'number_of_orders' => 'Množsví objednávek'
 
@@ -112,7 +115,8 @@ return [
         ],
         'order' => [
             'price_empty' => 'Toto pole ponechte prázdné pokud si přejet použít katalogovou cenu.',
-        ]
+        ],
+        'slug' => 'Toto pole bude použito jako parametr URL adresy (automaticky generováno, musí být unikátní - je potřeba ručně upravit pokud se překrývá s nějákým už existujícím)'
     ],
     'menu' => [
         'addresses' => 'Adresy',
@@ -125,6 +129,15 @@ return [
         'products' => 'Produkty',
         'users' => 'Zákazníci',
         'taxes' => 'Sazby daně'
+    ],
+    'models' => [
+        'user' => 'Uživatel',
+        'address' => 'Adresa',
+        'brand' => 'Výrobce',
+        'category' => 'Kategorie',
+        'order' => 'Objednávka',
+        'product' => 'Produkt',
+        'tax' => 'Daň'
     ],
     'placeholders' => [
         'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',
@@ -180,7 +193,12 @@ return [
         'product_variants' => 'Varianty produktů',
         'personal_section' => 'Osobní informace',
         'address_section' => 'Dodací informace',
-        'company_section' => 'Informace o společnosti (volitelné)'
+        'company_section' => 'Informace o společnosti (volitelné)',
+        'user_select' => 'Pro vybrání zákazníka klikněte %s',
+        'preview' => 'Náhled',
+        'update' => 'Úpravy',
+        'create' => 'Přidání',
+        'invoice' => 'Faktura'
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',
@@ -189,6 +207,8 @@ return [
         'new_order' => 'Nová objednávka',
         'new_product' => 'Nový produkt',
         'new_tax' => 'Nová daň',
+        'new_user' => 'Nový uživatel',
+        'delete_selected' => 'Odstranit vybrané',
         'reorder' => 'Změnit uspořádání',
     ],
 

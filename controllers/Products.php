@@ -311,7 +311,7 @@ class Products extends Controller
     {
         if (!$productVariant = $model->productvariants->first()) {
             $productVariant = new ProductVariant();
-            $productVariant->in_stock = post('Product._in_stock');
+            $productVariant->in_stock = post('Product._in_stock') === "" ? 0 : post('Product._in_stock');
             $productVariant->product()->associate($model);
         };
         $productVariant->ean = post('Product._ean');

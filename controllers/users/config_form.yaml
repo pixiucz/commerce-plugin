@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: User
+name: pixiu.commerce::lang.models.user
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/user/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/users
 
 # Create page
 create:
-    title: Create User
+    title: pixiu.commerce::lang.models.user
     redirect: pixiu/commerce/users/update/:id
     redirectClose: pixiu/commerce/users
 
 # Update page
 update:
-    title: Edit User
+    title: pixiu.commerce::lang.models.user
     redirect: pixiu/commerce/users
     redirectClose: pixiu/commerce/users
 
 # Preview page
 preview:
-    title: Preview User
+    title: pixiu.commerce::lang.models.user

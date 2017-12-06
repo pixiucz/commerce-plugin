@@ -1,7 +1,7 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('pixiu/commerce/users') ?>">Users</a></li>
-        <li><?= e($this->pageTitle) ?></li>
+        <li><a href="<?= Backend::url('pixiu/commerce/users') ?>"> <?php Lang::get('pixiu.commerce::lang.models.user') ?> </a></li>
+        <li><?= Lang::get('pixiu.commerce::lang.buttons.create') ?></li>
     </ul>
 <?php Block::endPut() ?>
 

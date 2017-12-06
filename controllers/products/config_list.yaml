@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/product/columns.yaml
 modelClass: Pixiu\Commerce\Models\Product
 
 # List Title
-title: Manage Products
+title: pixiu.commerce::lang.models.product
 
 # Link URL for each record
 recordUrl: pixiu/commerce/products/update/:id

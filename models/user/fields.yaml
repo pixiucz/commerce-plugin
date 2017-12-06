@@ -27,14 +27,6 @@ tabs:
             default: true
             context: create
 
-        block_mail:
-            label: rainlab.user::lang.user.block_mail
-            tab: rainlab.user::lang.user.account
-            type: checkbox
-            span: full
-            cssClass: field-align-above
-            context: update
-
         password@create:
             label: rainlab.user::lang.user.create_password
             comment: rainlab.user::lang.user.create_password_comment
@@ -73,6 +65,11 @@ tabs:
             tab: pixiu.commerce::lang.tabs.addresses
             type: partial
             path: relation_addresses
+
+        orders:
+            tab: pixiu.commerce::lang.fields.orders
+            type: partial
+            path: relation_orders
 
 secondaryTabs:
     fields:

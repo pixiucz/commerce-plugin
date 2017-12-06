@@ -5,12 +5,26 @@
 fields:
     name:
         label: pixiu.commerce::lang.fields.name
+        span: storm
+        cssClass: col-sm-6 col-md-4
 
-    slug:
+    slug@create:
         label: pixiu.commerce::lang.fields.slug
+        comment: pixiu.commerce::lang.comments.slug
         preset: name
+        span: storm
+        cssClass: col-sm-6 col-md-4
+
+    slug@update:
+        label: pixiu.commerce::lang.fields.slug
+        readOnly: true
+        preset: name
+        span: storm
+        cssClass: col-sm-6 col-md-4
 
     parent:
         label: pixiu.commerce::lang.fields.parent
         type: relation
-        emptyOption: - 
+        emptyOption: -
+        span: storm
+        cssClass: col-sm-6 col-md-4

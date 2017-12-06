@@ -1,6 +1,7 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * OrderLog Model
@@ -8,14 +9,15 @@ use Model;
 class OrderNote extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use LocalizedValidation;
+
     public $rules = [];
-    public $customMessages = [];
-    public $attributeNames = [];
 
     public function __construct()
     {
         parent::__construct();
 
+        $this->localizeValidation();
         $this->rules = [
             'title' => 'required'
         ];

@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Brand
+name: pixiu.commerce::lang.models.brand
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/brand/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/brands
 
 # Create page
 create:
-    title: Create Brand
+    title: pixiu.commerce::lang.models.brand
     redirect: pixiu/commerce/brands/update/:id
     redirectClose: pixiu/commerce/brands
 
 # Update page
 update:
-    title: Edit Brand
+    title: pixiu.commerce::lang.models.brand
     redirect: pixiu/commerce/brands
     redirectClose: pixiu/commerce/brands
 
 # Preview page
 preview:
-    title: Preview Brand
+    title: pixiu.commerce::lang.models.brand

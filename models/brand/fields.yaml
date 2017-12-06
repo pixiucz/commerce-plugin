@@ -8,13 +8,13 @@ fields:
         disabled: true
 
     name:
-        label: Name
+        label: pixiu.commerce::lang.fields.name
 
     logo:
-        label: Logo
+        label: pixiu.commerce::lang.fields.logo
         type: fileupload
         mode: image
 
     description:
-        label: Description
+        label: pixiu.commerce::lang.fields.description
         type: markdown

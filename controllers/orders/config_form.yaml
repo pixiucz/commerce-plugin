@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Order
+name: pixiu.commerce::lang.models.order
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/order/fields.yaml
@@ -16,17 +16,17 @@ defaultRedirect: pixiu/commerce/orders
 
 # Create page
 create:
-    title: Create Order
+    title: pixiu.commerce::lang.models.order
     redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Update page
 update:
-    title: Edit Order
+    title: pixiu.commerce::lang.models.order
     redirect: pixiu/commerce/orders/update/:id
     redirectClose: pixiu/commerce/orders
 
 # Preview page
 preview:
-    title: Preview Order
+    title: pixiu.commerce::lang.models.order
     form: $/pixiu/commerce/models/order/preview_fields.yaml

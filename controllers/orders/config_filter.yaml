@@ -1,0 +1,11 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    type:
+        label: pixiu.commerce::lang.fields.status
+        type: group
+        conditions: status in (:filtered)
+        options: getStatusOptions
+        modelClass: Pixiu\Commerce\Models\Order

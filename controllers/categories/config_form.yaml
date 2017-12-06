@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Category
+name: pixiu.commerce::lang.models.category
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/category/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/categories
 
 # Create page
 create:
-    title: Create Category
+    title: pixiu.commerce::lang.models.category
     redirect: pixiu/commerce/categories/update/:id
     redirectClose: pixiu/commerce/categories
 
 # Update page
 update:
-    title: Edit Category
+    title: pixiu.commerce::lang.models.category
     redirect: pixiu/commerce/categories
     redirectClose: pixiu/commerce/categories
 
 # Preview page
 preview:
-    title: Preview Category
+    title: pixiu.commerce::lang.models.category

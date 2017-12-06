@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/user/columns.yaml
 modelClass: Rainlab\User\Models\User
 
 # List Title
-title: Manage Users
+title: pixiu.commerce::lang.models.user
 
 # Link URL for each record
 recordUrl: pixiu/commerce/users/update/:id

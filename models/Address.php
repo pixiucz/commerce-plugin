@@ -2,6 +2,7 @@
 
 use Model;
 use Pixiu\Commerce\Classes\Utils;
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * Address Model
@@ -9,13 +10,15 @@ use Pixiu\Commerce\Classes\Utils;
 class Address extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use LocalizedValidation;
+
     public $rules = [];
-    public $customMessages = [];
-    public $attributeNames = [];
 
     public function __construct()
     {
         parent::__construct();
+
+        $this->localizeValidation();
         $this->rules = [
             'first_name' => 'required',
             'last_name' => 'required',

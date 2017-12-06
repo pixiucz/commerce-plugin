@@ -1,18 +1,14 @@
-<?php namespace Pixiu\Crm\Models\Updates;
+<?php namespace Pixiu\Commerce\Updates;
 
 use Seeder;
-use Pixiu\Commerce\Models\{
-    Category, Brand, Address, PaymentMethod, DeliveryOption, OrderStatus, Product, ProductVariant, Tax
-};
-use RainLab\User\Models\User;
-use Faker;
 use Illuminate\Support\Facades\DB;
 
-class SeedUsersTable extends Seeder
+class CommerceSeeder extends Seeder
 {
     public function run()
     {
-        echo 'Znamky #1' . PHP_EOL;
+        echo "Commerce seeder started" . PHP_EOL;
+
         DB::table('pixiu_com_categories')->insert(
             [
                 'name' => 'Známky',
@@ -21,7 +17,6 @@ class SeedUsersTable extends Seeder
             ]
         );
 
-        echo 'Znamky #2' . PHP_EOL;
         DB::table('pixiu_com_categories')->insert(
             [
                 'name' => 'Výročné známky',
@@ -31,13 +26,45 @@ class SeedUsersTable extends Seeder
             ]
         );
 
-        echo 'Tax #1' . PHP_EOL;
         DB::table('pixiu_com_taxes')->insert([
             'name' => 'Základní sazba',
             'rate' => 21
         ]);
 
-        echo 'DELIVERY OPTION #1' . PHP_EOL;
+
+        DB::table('pixiu_com_products')->insert([
+            'tax_id' => 1,
+            'name' => 'Testovaci produkt',
+            'retail_price' => 19900,
+            'has_variants' => false
+        ]);
+
+        DB::table('pixiu_com_product_variants')->insert([
+            'product_id' => 1,
+            'in_stock' => 10,
+            'reserved_stock' => 0,
+            'price' => 19900,
+            'slug' => 'slug-testovaci-varianty'
+        ]);
+
+        // ADD USER
+        DB::table('users')->insert([
+            'email' => 'test@test.cz',
+            'password' => bcrypt('test'),
+        ]);
+
+        // ADD ADDRESS TO USER
+
+        DB::table('pixiu_com_addresses')->insert([
+            'first_name' => 'Jan',
+            'last_name' => 'Testowicz',
+            'address' => 'Palachova 1337',
+            'city' => 'Brno',
+            'zip' => '613 00',
+            'country' => 'Czech republic',
+            'user_id' => 1
+        ]);
+
         DB::table('pixiu_com_delivery_options')->insert(
             [
                 'name' => 'Česká pošta',
@@ -47,7 +74,6 @@ class SeedUsersTable extends Seeder
             ]
         );
 
-        echo "DELIVERY OPTION #2" . PHP_EOL;
         DB::table('pixiu_com_delivery_options')->insert(
             [
                 'name' => 'Osobní vyzvednutí',
@@ -57,7 +83,8 @@ class SeedUsersTable extends Seeder
             ]
         );
 
-        echo 'PAYMENT METHOD #1' . PHP_EOL;
+
+
         DB::table('pixiu_com_payment_methods')->insert(
             [
                 'name' => 'Dobírka',
@@ -65,7 +92,6 @@ class SeedUsersTable extends Seeder
             ]
         );
 
-        echo 'PAYMENT METHOD #2' . PHP_EOL;
         DB::table('pixiu_com_payment_methods')->insert(
             [
                 'name' => 'Platba kartou'
@@ -93,16 +119,6 @@ class SeedUsersTable extends Seeder
             ])
         ]);
 
-        DB::table('backend_user_preferences')->insert([
-            'user_id' => 1,
-            'namespace' => 'backend',
-            'group' => 'backend',
-            'item' => 'preferences',
-            'value' => json_encode([
-                'locale' => 'cs',
-                'fallback_locale' => 'en'
-            ])
-        ]);
-
+        echo "Commerce seeder finished" . PHP_EOL;
     }
 }

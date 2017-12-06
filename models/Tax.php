@@ -1,12 +1,30 @@
 <?php namespace Pixiu\Commerce\Models;
 
 use Model;
+use October\Rain\Database\Traits\Validation;
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * Tax Model
  */
 class Tax extends Model
 {
+    use Validation;
+    use LocalizedValidation;
+
+    public $rules = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->localizeValidation();
+        $this->rules = [
+            'name' => 'required',
+            'rate' => 'required|numeric|min:0'
+        ];
+    }
+
     /**
      * @var string The database table used by the model.
      */

@@ -28,7 +28,7 @@ columns:
     number_of_orders:
         label: pixiu.commerce::lang.fields.number_of_orders
         type: partial
-        path: column_number_of_orders
+        path: $/pixiu/commerce/controllers/users/_column_number_of_orders.htm
         searchable: false
         sortable: false
 

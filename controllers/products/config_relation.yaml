@@ -3,7 +3,7 @@
 # ===================================
 
 categories:
-    label: Categories
+    label: pixiu.commerce::lang.models.category
     showTree: true
     view:
         list: $/pixiu/commerce/models/category/columns.yaml

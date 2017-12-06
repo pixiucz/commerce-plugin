@@ -22,7 +22,7 @@ create:
 
 # Update page
 update:
-    title: Edit Product Variant
+    title: Upravit variantu
     redirect: pixiu/commerce/productvariants/update/:id
     redirectClose: pixiu/commerce/products
 
