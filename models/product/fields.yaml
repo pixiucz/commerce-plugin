@@ -7,7 +7,6 @@ secondaryTabs:
     fields:
         name:
             label: pixiu.commerce::lang.fields.name
-            default: ASDF
             span: storm
             cssClass: col-sm-8
             tab: pixiu.commerce::lang.tabs.details

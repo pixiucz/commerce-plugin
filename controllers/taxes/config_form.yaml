@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Tax
+name: pixiu.commerce::lang.models.tax
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/tax/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/taxes
 
 # Create page
 create:
-    title: Vytvořit daňovou sazbu
+    title: pixiu.commerce::lang.models.tax
     redirect: pixiu/commerce/taxes/update/:id
     redirectClose: pixiu/commerce/taxes
 
 # Update page
 update:
-    title: Upravit daňovou sazbu
+    title: pixiu.commerce::lang.models.tax
     redirect: pixiu/commerce/taxes
     redirectClose: pixiu/commerce/taxes
 
 # Preview page
 preview:
-    title: Preview Tax
+    title: pixiu.commerce::lang.models.tax

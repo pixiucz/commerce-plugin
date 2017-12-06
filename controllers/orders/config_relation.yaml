@@ -12,7 +12,7 @@ notes:
         recordsPerPage: 10
 
 invoices:
-    label: invoices
+    label: pixiu.commerce::lang.fields.invoice
     readOnly: true
     view:
         list: $/pixiu/commerce/models/pdfinvoice/columns.yaml

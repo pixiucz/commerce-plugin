@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/tax/columns.yaml
 modelClass: Pixiu\Commerce\Models\Tax
 
 # List Title
-title: Daně
+title: pixiu.commerce::lang.models.tax
 
 # Link URL for each record
 recordUrl: pixiu/commerce/taxes/update/:id

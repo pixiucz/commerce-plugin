@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/brand/columns.yaml
 modelClass: Pixiu\Commerce\Models\Brand
 
 # List Title
-title: Výrobci
+title: pixiu.commerce::lang.models.brand
 
 # Link URL for each record
 recordUrl: pixiu/commerce/brands/update/:id

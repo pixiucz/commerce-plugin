@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Address
+name: pixiu.commerce::lang.models.address
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/address/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/addresses
 
 # Create page
 create:
-    title: Vytvořit adresu
+    title: pixiu.commerce::lang.models.address
     redirect: pixiu/commerce/addresses/update/:id
     redirectClose: pixiu/commerce/addresses
 
 # Update page
 update:
-    title: Upravit adresu
+    title: pixiu.commerce::lang.models.address
     redirect: pixiu/commerce/addresses
     redirectClose: pixiu/commerce/addresses
 
 # Preview page
 preview:
-    title: Preview Address
+    title: pixiu.commerce::lang.models.address

@@ -2,7 +2,7 @@
     <a
         href="<?= Backend::url('pixiu/commerce/users/create') ?>"
         class="btn btn-primary oc-icon-plus">
-        New User
+        <?= \Lang::get('pixiu.commerce::lang.toolbar.new_user') ?>
     </a>
 
     <button
@@ -16,6 +16,6 @@
         data-trigger-condition="checked"
         data-request-success="$(this).prop('disabled', 'disabled')"
         data-stripe-load-indicator>
-        Delete selected
+        <?= \Lang::get('pixiu.commerce::lang.toolbar.delete_selected') ?>
     </button>
 </div>

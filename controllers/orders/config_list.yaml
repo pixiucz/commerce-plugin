@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/order/columns.yaml
 modelClass: Pixiu\Commerce\Models\Order
 
 # List Title
-title: Objednávky
+title: pixiu.commerce::lang.models.order
 
 # Link URL for each record
 recordUrl: pixiu/commerce/orders/preview/:id

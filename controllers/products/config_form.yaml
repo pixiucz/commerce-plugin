@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Product
+name: pixiu.commerce::lang.models.product
 
 # Model Form Field configuration
 form: $/pixiu/commerce/models/product/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/products
 
 # Create page
 create:
-    title: Vytvořit produkt
+    title: pixiu.commerce::lang.models.product
     redirect: pixiu/commerce/products/update/:id
     redirectClose: pixiu/commerce/products
 
 # Update page
 update:
-    title: Upravit produkt
+    title: pixiu.commerce::lang.models.product
     redirect: pixiu/commerce/products/update/:id
     redirectClose: pixiu/commerce/products
 
 # Preview page
 preview:
-    title: Preview Product
+    title: pixiu.commerce::lang.models.product

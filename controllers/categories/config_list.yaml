@@ -9,7 +9,7 @@ list: $/pixiu/commerce/models/category/columns.yaml
 modelClass: Pixiu\Commerce\Models\Category
 
 # List Title
-title: Kategorie
+title: pixiu.commerce::lang.models.category
 
 # Link URL for each record
 recordUrl: pixiu/commerce/categories/update/:id

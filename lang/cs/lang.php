@@ -57,7 +57,7 @@ return [
         'quantity' => 'Množství',
         'rate' => 'Sazba (%)',
         'refunded_quantity' => 'Vrácených',
-        'retail_price' => 'Základní cena',
+        'retail_price' => 'Výchozí cena',
         'shipping_time' => 'Doručovací doba',
         'short_description' => 'Krátký popis',
         'specifications' => 'Obecné specifikace',
@@ -131,7 +131,13 @@ return [
         'taxes' => 'Sazby daně'
     ],
     'models' => [
-        'user' => 'Uživatel'
+        'user' => 'Uživatel',
+        'address' => 'Adresa',
+        'brand' => 'Výrobce',
+        'category' => 'Kategorie',
+        'order' => 'Objednávka',
+        'product' => 'Produkt',
+        'tax' => 'Daň'
     ],
     'placeholders' => [
         'change_stock' => 'Zde můžete změnit stav zásob o zadané číslo (+/-)',
@@ -188,7 +194,11 @@ return [
         'personal_section' => 'Osobní informace',
         'address_section' => 'Dodací informace',
         'company_section' => 'Informace o společnosti (volitelné)',
-        'user_select' => 'Pro vybrání zákazníka klikněte %s'
+        'user_select' => 'Pro vybrání zákazníka klikněte %s',
+        'preview' => 'Náhled',
+        'update' => 'Úpravy',
+        'create' => 'Přidání',
+        'invoice' => 'Faktura'
     ],
     'toolbar' => [
         'new_address' => 'Nová adresa',
@@ -197,6 +207,8 @@ return [
         'new_order' => 'Nová objednávka',
         'new_product' => 'Nový produkt',
         'new_tax' => 'Nová daň',
+        'new_user' => 'Nový uživatel',
+        'delete_selected' => 'Odstranit vybrané',
         'reorder' => 'Změnit uspořádání',
     ],
 

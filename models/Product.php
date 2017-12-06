@@ -2,6 +2,7 @@
 
 use Model;
 use Pixiu\Commerce\Models\{Tax, ProductVariant, Attribute, AttributeGroup};
+use Pixiu\Commerce\Traits\LocalizedValidation;
 
 /**
  * Product Model
@@ -9,6 +10,8 @@ use Pixiu\Commerce\Models\{Tax, ProductVariant, Attribute, AttributeGroup};
 class Product extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use LocalizedValidation;
+
     public $rules = [];
     public $customMessages = [];
     public $attributeNames = [];
@@ -16,6 +19,9 @@ class Product extends Model
     public function __construct()
     {
         parent::__construct();
+
+        $this->localizeValidation();
+
         $this->rules = [
             'name' => 'required',
             'retail_price' => 'required'

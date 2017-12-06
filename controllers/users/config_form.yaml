@@ -16,16 +16,16 @@ defaultRedirect: pixiu/commerce/users
 
 # Create page
 create:
-    title: Vytvořit uživatele
+    title: pixiu.commerce::lang.models.user
     redirect: pixiu/commerce/users/update/:id
     redirectClose: pixiu/commerce/users
 
 # Update page
 update:
-    title: Upravit uživatele
+    title: pixiu.commerce::lang.models.user
     redirect: pixiu/commerce/users
     redirectClose: pixiu/commerce/users
 
 # Preview page
 preview:
-    title: Náhled uživatele
+    title: pixiu.commerce::lang.models.user
