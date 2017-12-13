@@ -48,5 +48,8 @@
         }
       },
     },
+    async created() {
+      console.log(await this.$store.dispatch('GET_CATEGORIES'));
+    },
   };
 </script>

@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -18,7 +20,7 @@ export default new Vuex.Store({
   state: {
     sidebarRoute: SidebarRoutes[0],
   },
-  /* eslint-disable no-param-reassign */
+
   mutations: {
     SET_SIDEBAR_ROUTE(state, route) {
       if (SidebarRoutes.indexOf(route) === -1) {

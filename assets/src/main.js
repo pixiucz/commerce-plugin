@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 
 import BootstrapVue from 'bootstrap-vue';
 import ElementUI from 'element-ui';
@@ -14,6 +15,7 @@ import router from './router';
 import store from './store/store';
 import i18n from './lang/locale';
 
+Vue.use(VueResource);
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
 });
