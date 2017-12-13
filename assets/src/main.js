@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import BootstrapVue from 'bootstrap-vue';
 import ElementUI from 'element-ui';
+import 'font-awesome/scss/font-awesome.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '../lib/element-theme/index.css';
