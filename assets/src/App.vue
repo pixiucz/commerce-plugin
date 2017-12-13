@@ -13,11 +13,16 @@
 </template>
 
 <script>
+  import { SidebarRoutes } from './store/store';
+
   export default {
     name: 'app',
+    watch: {
+      $route(to) {
+        if (SidebarRoutes.includes(to.name)) {
+          this.$store.commit('SET_SIDEBAR_ROUTE', to.name);
+        }
+      },
+    },
   };
 </script>
-
-<style>
-
-</style>
