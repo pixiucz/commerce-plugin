@@ -21,3 +21,13 @@ export function getProducts(categorySlug) {
     });
   });
 }
+
+export function getProduct(productSlug) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(`${API}/product/${productSlug}/`).then((result) => {
+      resolve(result.body.product);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
