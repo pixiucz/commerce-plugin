@@ -11,8 +11,8 @@ Route::prefix('api/v1')
         Route::get('/category/{slug}/products', 'CategoryController@productVariants');
 
         // Products
-        Route::get('/product-variant', 'ProductVariantController@index');
-        Route::get('/product-variant/{id}', 'ProductVariantController@show');
+        Route::get('/product', 'ProductVariantController@index');
+        Route::get('/product/{slug}', 'ProductVariantController@show');
 
         // User
         // Route::patch('user', 'UserController@update'); TODO: implement edit (?)

@@ -58,12 +58,13 @@ class VariantsQueryBuilder
         return $variants;
     }
 
-    public function getVariantById($id)
+    public function getVariantBySlug($slug)
     {
         $array = $this->getBasicQuery()
             ->with('product.categories')
             ->select('id', 'slug', 'ean', 'product_id', 'primary_picture_id', 'in_stock', 'price', 'specifications', 'created_at')
-            ->findOrFail($id)
+            ->where('slug', $slug)
+            ->firstOrFail()
             ->toArray();
         foreach ($array['attributes'] as &$attr) {
             $attr['name'] = $attr['attributegroup']['name'];
@@ -104,6 +105,8 @@ class VariantsQueryBuilder
         $array['tax_rate'] = $array['product']['tax']['tax_rate'];
         $array['tax_name'] = $array['product']['tax']['tax_name'];
         $array['decomposite_on'] = $array['product']['decomposite_on'];
+        $array['short_description'] = array_get($array, 'product.short_description');
+        $array['long_description'] = array_get($array, 'product.long_description');
 
         unset($array['primary_picture_id'],
             $array['product']
