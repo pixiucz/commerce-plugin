@@ -4,14 +4,19 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-container>
-        <b-navbar-brand>Turistické známky</b-navbar-brand>
+        <b-navbar-brand>
+          <router-link :to="{ name: 'home' }">Turistické známky</router-link>
+        </b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
           <b-navbar-nav class="ml-auto">
             <b-nav-item>Staré VTZ</b-nav-item>
             <b-nav-item-dropdown text="Doplnky" right>
-              <b-dropdown-item href="#">Výročné známky</b-dropdown-item>
-              <b-dropdown-item href="#">Zrušené známky</b-dropdown-item>
+              <b-dropdown-item v-for="category in categories" :key="category.id" href="#">
+                <router-link :to="{ name: 'category', params: { slug: category.slug }}">
+                  {{ category.name }}
+                </router-link>
+              </b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item>
               <i class="fa fa-list-alt" />
@@ -49,7 +54,12 @@
       },
     },
     async created() {
-      console.log(await this.$store.dispatch('GET_CATEGORIES'));
+      await this.$store.dispatch('GET_CATEGORIES');
+    },
+    computed: {
+      categories() {
+        return this.$store.state.products.categories;
+      },
     },
   };
 </script>
