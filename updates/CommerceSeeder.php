@@ -11,8 +11,8 @@ class CommerceSeeder extends Seeder
 
         DB::table('pixiu_com_categories')->insert(
             [
-                'name' => 'Známky',
-                'slug' => str_slug('Známky'),
+                'name' => 'Zrušené známky',
+                'slug' => str_slug('Zrušené známky'),
                 'nest_depth' => 1
             ]
         );
@@ -20,9 +20,8 @@ class CommerceSeeder extends Seeder
         DB::table('pixiu_com_categories')->insert(
             [
                 'name' => 'Výročné známky',
-                'slug' => 'vyrocne znamky',
-                'nest_depth' => 2,
-                'parent_id' => 1
+                'slug' => 'vyrocne-znamky',
+                'nest_depth' => 1,
             ]
         );
 
