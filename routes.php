@@ -8,7 +8,7 @@ Route::prefix('api/v1')
     ->group(function() {
         // Categories
         Route::get('/category/{id?}', 'CategoryController@index');
-        Route::get('/category/{id}/product-variant', 'CategoryController@productVariants');
+        Route::get('/category/{slug}/products', 'CategoryController@productVariants');
 
         // Products
         Route::get('/product-variant', 'ProductVariantController@index');

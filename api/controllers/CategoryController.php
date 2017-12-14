@@ -8,10 +8,12 @@ use Pixiu\Commerce\api\Classes\VariantsQueryBuilder;
 
 class CategoryController
 {
-    public function index($id = null)
+    public function index($slug = null)
     {
         if (isset($id)) {
-            $category = Category::select('id', 'name', 'slug')->findOrFail($id);
+            $category = Category::select('id', 'name', 'slug')
+                ->where('slug', $slug)
+                ->first();
             return response([
                 'category' => $category
             ], 201);
@@ -22,9 +24,11 @@ class CategoryController
         return response(['categories' => $categories], 201);
     }
 
-    public function productVariants($categoryId)
+    public function productVariants($categorySlug)
     {
-        $productVariants = (new VariantsQueryBuilder())->getVariantsByCategory($categoryId);
-        return response($productVariants, 201);
+        $id = Category::where('slug', $categorySlug)->first()->id;
+
+        $productVariants = (new VariantsQueryBuilder())->getVariantsByCategory($id);
+        return response(['products' => $productVariants], 201);
     }
 }
