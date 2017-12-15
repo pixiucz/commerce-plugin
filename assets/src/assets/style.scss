@@ -5,3 +5,27 @@
 body {
   font-family: 'Raleway', sans-serif !important;
 }
+
+a {
+  color: black;
+}
+
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.hoverable-card {
+  transition: all 0.3s ease;
+  margin: 0px;
+}
+
+.hoverable-card:hover {
+  padding: 5px !important;
+  box-shadow: 0px 12px 10px 7px rgba(0,0,0,0.04);
+  background: #fff;
+}
+
+.to-upper {
+  text-transform: uppercase;
+}

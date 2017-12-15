@@ -2,7 +2,7 @@
   <div>
     <b-container>
         <b-row v-if="products">
-            <b-col cols="12" md="4" sm="2" v-for="product in products" :key="product.id">
+            <b-col cols="12" md="3" sm="4" v-for="product in products" :key="product.id">
                 <product-preview :product="product"></product-preview>
             </b-col>
         </b-row>

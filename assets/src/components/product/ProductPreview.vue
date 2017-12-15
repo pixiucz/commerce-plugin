@@ -1,13 +1,20 @@
 <template>
-    <div class="bg-color-white hover-shadow11 padding-bottom">
+    <b-card class="hoverable-card">
         <router-link :to="{ name: 'detail', params: { slug: product.slug }}">
-            <h3 class="font-size-23 caps font-weight5 margin-bottom1 margin-top2">
-                {{ product.product_name }}
-            </h3>
+                <b-img v-if="product.primary_picture" :src="product.primary_picture.path" fluid />
+                <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+            <div class="card-content">
+                <h3 class="mt-1 to-upper">
+                    {{ product.product_name }}
+                </h3>
+            
+                <p class="pb-1 mb-0 price">
+                    {{ product.price }} € <i class="light">s DPH</i> <br>
+                    {{ product.price - (product.price * (product.tax_rate/100)) }} € <i class="light">bez DPH</i>
+                </p>
+            </div>
         </router-link>
-        <p class="padding-bottom1 margin-bottom text-1"> {{ product.price }} € <i>s DPH</i></p>
-        <p class="padding-bottom1 text-2">{{ product.price - (product.price * (product.tax_rate/100)) }} € <i>bez DPH</i></p>
-    </div>
+    </b-card>
 </template>
 
 <script>
@@ -16,6 +23,31 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+    .card {
+        border: none; 
+        margin: 10px -15px 10px -15px;  
+    }
 
+    a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-content {
+        margin-top: 20px;
+    }
+
+    .price {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+    }
+
+    .light {
+        color: #e1e2e2;
+    }
 </style>
