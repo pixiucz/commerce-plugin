@@ -2,11 +2,14 @@
 
 use Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker;
 
 class CommerceSeeder extends Seeder
 {
     public function run()
     {
+        $faker = Faker\Factory::create();
+
         echo "Commerce seeder started" . PHP_EOL;
 
         DB::table('pixiu_com_categories')->insert(
@@ -30,21 +33,53 @@ class CommerceSeeder extends Seeder
             'rate' => 21
         ]);
 
+        foreach (range(1, 5) as $i) {
+            DB::table('pixiu_com_products')->insert([
+                'tax_id' => 1,
+                'name' => $faker->sentence(3),
+                'short_description' => $faker->paragraph(3),
+                'long_description' => $faker->paragraph(10),
+                'retail_price' => 199,
+                'has_variants' => false,
+            ]);
 
-        DB::table('pixiu_com_products')->insert([
-            'tax_id' => 1,
-            'name' => 'Testovaci produkt',
-            'retail_price' => 19900,
-            'has_variants' => false
-        ]);
+            DB::table('pixiu_com_product_variants')->insert([
+                'product_id' => $i,
+                'in_stock' => 10,
+                'reserved_stock' => 0,
+                'price' => 199,
+                'slug' => 'slug-testovaci-varianty' . $i
+            ]);
 
-        DB::table('pixiu_com_product_variants')->insert([
-            'product_id' => 1,
-            'in_stock' => 10,
-            'reserved_stock' => 0,
-            'price' => 19900,
-            'slug' => 'slug-testovaci-varianty'
-        ]);
+            DB::table('pixiu_com_category_products')->insert([
+                'product_id' => $i,
+                'category_id' => 1
+            ]);
+        }
+
+        foreach (range(6, 10) as $i) {
+            DB::table('pixiu_com_products')->insert([
+                'tax_id' => 1,
+                'name' => $faker->sentence(3),
+                'short_description' => $faker->paragraph(3),
+                'long_description' => $faker->paragraph(10),
+                'retail_price' => 199,
+                'has_variants' => false,
+            ]);
+
+            DB::table('pixiu_com_product_variants')->insert([
+                'product_id' => $i,
+                'in_stock' => 10,
+                'reserved_stock' => 0,
+                'price' => 199,
+                'slug' => 'slug-testovaci-varianty' . $i
+            ]);
+
+            DB::table('pixiu_com_category_products')->insert([
+                'product_id' => $i,
+                'category_id' => 2
+            ]);
+        }
 
         // ADD USER
         DB::table('users')->insert([
