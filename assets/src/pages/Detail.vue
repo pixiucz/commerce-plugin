@@ -9,7 +9,7 @@
       </p>
     </div>
     <b-row>
-        <b-col md="5">
+        <b-col md="5" class="text-center">
             <b-img v-if="product.primary_picture" fluid :src="product.primary_picture.path" />
             <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
         </b-col>
@@ -19,7 +19,8 @@
             <b-row>
                 <b-col md="12" class="text-center">
                     <el-input-number v-model="amount" :min="1" :max="50"></el-input-number>             
-                    <el-button>Přidat do košíka</el-button>
+                    <el-button class="add-button" @click="addToCart">Přidat do košíka</el-button>
+                    <p v-if="inCart > 0"> V košíku: <b>{{ inCart }} ks </b> </p>
                 </b-col>
             </b-row>              
         </b-col>
@@ -48,6 +49,30 @@
       const product = await getProduct(this.slug);
       this.product = product;
     },
+    methods: {
+      addToCart() {
+        const item = {
+          amount: this.amount,
+          product: this.product,
+        };
+        this.$store.dispatch('ADD_TO_CART', item);
+
+        this.amount = 1;
+
+        this.$message('Přidáno do košíku');
+      },
+    },
+    computed: {
+      inCart() {
+        if (this.product) {
+          const item = this.$store.getters.getItemFromCart(this.product.slug);
+          if (item) {
+            return item.amount;
+          }
+        }
+        return 0;
+      },
+    },
   };
 </script>
 
@@ -59,6 +84,15 @@
 
   .row {
     margin-bottom: 2em;
+  }
+
+  .add-button {
+    background-color: #24272C;
+    color: #ffffff;
+    border: none;
+    border-radius: 0px;
+    padding: 10 18 10 18px;
+    font-size: 15px;
   }
 
 </style>
