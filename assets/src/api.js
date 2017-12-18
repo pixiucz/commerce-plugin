@@ -3,6 +3,7 @@ import { Message } from 'element-ui';
 
 // import store from './store/store';
 import i18n from './lang/locale';
+import { transformObjectToQueryParams } from './helpers';
 
 const API = '/api/v1';
 
@@ -36,11 +37,29 @@ function handleReject(error, message = true) {
 export function getCategories() {
   return new Promise((resolve, reject) => {
     Vue.http.get(`${API}/category/`).then((result) => {
-      resolve(result);
+      resolve(result.body.categories);
     }).catch((error) => {
       reject(handleReject(error));
     });
   });
 }
 
-export function getKokot() {}
+export function getProductsForCategory({ categorySlug, paginator }) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(`${API}/category/${categorySlug}/products/?${transformObjectToQueryParams(paginator)}`).then((result) => {
+      resolve(result.body);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
+
+export function getProduct(productSlug) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(`${API}/product/${productSlug}/`).then((result) => {
+      resolve(result.body.product);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}

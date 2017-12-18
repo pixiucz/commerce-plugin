@@ -36,7 +36,7 @@ class VariantsQueryBuilder
         return $variants;
     }
 
-    public function getVariantsByCategory($categoryId)
+    public function getVariantsByCategory(int $categoryId)
     {
         // FIXME: Overwrite for performance
         $variants = $this->getBasicQuery()
@@ -46,7 +46,8 @@ class VariantsQueryBuilder
             ->select('id', 'slug', 'ean', 'product_id', 'primary_picture_id', 'in_stock', 'price', 'specifications', 'created_at')
             ->orderBy($this->orderBy, $this->orderDir)
             ->skip($this->offset)->take($this->limit)
-            ->get()->map(function($item) {
+            ->get()
+            ->map(function($item) {
                 $array = $item->toArray();
                 foreach ($array['attributes'] as &$attr) {
                     $attr['name'] = $attr['attributegroup']['name'];
@@ -55,15 +56,24 @@ class VariantsQueryBuilder
                 $this->flattenProductArray($array);
                 return $array;
             });
-        return $variants;
+
+        $count = ProductVariant::whereHas('product.categories', function ($q) use ($categoryId) {
+            $q->where('category_id', $categoryId);
+        })->get()->count();
+
+        return [
+            'products' => $variants,
+            'totalCount' => $count
+        ];
     }
 
-    public function getVariantById($id)
+    public function getVariantBySlug($slug)
     {
         $array = $this->getBasicQuery()
             ->with('product.categories')
             ->select('id', 'slug', 'ean', 'product_id', 'primary_picture_id', 'in_stock', 'price', 'specifications', 'created_at')
-            ->findOrFail($id)
+            ->where('slug', $slug)
+            ->firstOrFail()
             ->toArray();
         foreach ($array['attributes'] as &$attr) {
             $attr['name'] = $attr['attributegroup']['name'];
@@ -104,6 +114,8 @@ class VariantsQueryBuilder
         $array['tax_rate'] = $array['product']['tax']['tax_rate'];
         $array['tax_name'] = $array['product']['tax']['tax_name'];
         $array['decomposite_on'] = $array['product']['decomposite_on'];
+        $array['short_description'] = array_get($array, 'product.short_description');
+        $array['long_description'] = array_get($array, 'product.long_description');
 
         unset($array['primary_picture_id'],
             $array['product']
@@ -137,10 +149,11 @@ class VariantsQueryBuilder
 
     private function prepareConstrains()
     {
+        // FIXME: Use paginator object with these values
         $this->offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
-        $this->limit = isset($_GET['limit']) ? $_GET['limit'] : 100;
+        $this->limit = isset($_GET['limit']) ? $_GET['limit'] : 25;
         $this->orderBy = isset($_GET['orderBy']) ? $_GET['orderBy'] : 'id';
-        $this->orderDir = isset($_GET['orderDir']) ? $_GET['orderDir'] : 'asc';
+        $this->orderDir = isset($_GET['orderDir']) ? $_GET['orderDir'] : 'desc';
     }
 
 }

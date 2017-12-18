@@ -132,7 +132,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->timestamps();
 
             $table->string('name', 128);
-            $table->string('slug');
+            $table->string('slug')->unique();
 
             #Nested tree
             $table->integer('parent_id')->unsigned()->nullable();

@@ -15,14 +15,16 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/kategoria/:offset/:limit/:sortkey/:sortorder',
+      path: '/kategoria/:slug',
       name: 'category',
       component: Category,
+      props: true,
     },
     {
-      path: '/produkt/:id/:slug',
+      path: '/produkt/:slug',
       name: 'detail',
       component: Detail,
+      props: true,
     },
     // BEWARE that following routes are not source-of-thruth, but merely set flags
     {
