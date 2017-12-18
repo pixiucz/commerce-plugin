@@ -1,5 +1,6 @@
 <?php namespace Pixiu\Commerce\api\Controllers;
 
+use Pixiu\Commerce\api\Classes\Paginator;
 use Pixiu\Commerce\Classes\Utils;
 use Pixiu\Commerce\Models\Category;
 use Pixiu\Commerce\api\Classes\VariantsQueryBuilder;
@@ -26,9 +27,11 @@ class CategoryController
 
     public function productVariants($categorySlug)
     {
+//        $paginator = new Paginator($limit, $offset, $orderBy, $orderDir);
+
         $id = Category::where('slug', $categorySlug)->first()->id;
 
-        $productVariants = (new VariantsQueryBuilder())->getVariantsByCategory($id);
-        return response(['products' => $productVariants], 201);
+        $response = (new VariantsQueryBuilder())->getVariantsByCategory($id);
+        return response($response, 201);
     }
 }
