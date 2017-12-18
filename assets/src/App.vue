@@ -12,8 +12,11 @@
             <b-navbar-nav class="ml-auto">
               <b-nav-item>Staré VTZ</b-nav-item>
               <b-nav-item-dropdown text="Doplnky" right>
-                <b-dropdown-item href="#">Výročné známky</b-dropdown-item>
-                <b-dropdown-item href="#">Zrušené známky</b-dropdown-item>
+                <b-dropdown-item v-for="category in categories" :key="category.id" href="#">
+                <router-link :to="{ name: 'category', params: { slug: category.slug }}">
+                  {{ category.name }}
+                </router-link>
+              </b-dropdown-item>
               </b-nav-item-dropdown>
               <b-nav-item @click.stop="toggleSidebar('Orders')">
                 <i class="fa fa-list-alt" />
