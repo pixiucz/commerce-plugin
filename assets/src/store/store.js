@@ -10,15 +10,18 @@ import products from './products';
 Vue.use(Vuex);
 
 export const SidebarRoutes = [
-  'cart',
-  'orders',
-  'order',
-  'user',
+  'Cart',
+  'Orders',
+  'Order',
+  'User',
 ];
 
 export default new Vuex.Store({
   state: {
-    sidebarRoute: SidebarRoutes[0],
+    sidebar: {
+      route: SidebarRoutes[0],
+      show: false,
+    },
   },
 
   mutations: {
@@ -26,7 +29,10 @@ export default new Vuex.Store({
       if (SidebarRoutes.indexOf(route) === -1) {
         throw new Error('Unknown sidebar route!');
       }
-      state.sidebarRoute = route;
+      state.sidebar.route = route;
+    },
+    SET_SIDEBAR_VISIBLE(state, visibility) {
+      state.sidebar.show = visibility;
     },
   },
   modules: {
