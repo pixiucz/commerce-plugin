@@ -33,12 +33,13 @@ class CommerceSeeder extends Seeder
             'rate' => 21
         ]);
 
-        foreach (range(1, 5) as $i) {
+        foreach (range(1, 30) as $i) {
+            $name = $faker->sentence(3);
             DB::table('pixiu_com_products')->insert([
                 'tax_id' => 1,
-                'name' => $faker->sentence(3),
-                'short_description' => $faker->paragraph(3),
-                'long_description' => $faker->paragraph(10),
+                'name' => $name,
+                'short_description' => $faker->paragraph(8),
+                'long_description' => $faker->paragraph(15),
                 'retail_price' => 199,
                 'has_variants' => false,
             ]);
@@ -48,7 +49,7 @@ class CommerceSeeder extends Seeder
                 'in_stock' => 10,
                 'reserved_stock' => 0,
                 'price' => 199,
-                'slug' => 'slug-testovaci-varianty' . $i
+                'slug' => str_slug($name)
             ]);
 
             DB::table('pixiu_com_category_products')->insert([
@@ -57,12 +58,13 @@ class CommerceSeeder extends Seeder
             ]);
         }
 
-        foreach (range(6, 10) as $i) {
+        foreach (range(31, 60) as $i) {
+            $name = $faker->sentence(3);
             DB::table('pixiu_com_products')->insert([
                 'tax_id' => 1,
-                'name' => $faker->sentence(3),
-                'short_description' => $faker->paragraph(3),
-                'long_description' => $faker->paragraph(10),
+                'name' => $name,
+                'short_description' => $faker->paragraph(8),
+                'long_description' => $faker->paragraph(15),
                 'retail_price' => 199,
                 'has_variants' => false,
             ]);
@@ -72,7 +74,7 @@ class CommerceSeeder extends Seeder
                 'in_stock' => 10,
                 'reserved_stock' => 0,
                 'price' => 199,
-                'slug' => 'slug-testovaci-varianty' . $i
+                'slug' => str_slug($name)
             ]);
 
             DB::table('pixiu_com_category_products')->insert([
