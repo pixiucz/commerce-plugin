@@ -2,19 +2,21 @@
 
 import Vue from 'vue';
 
-import { getCategories, getProducts } from '../api';
+import { getCategories, getProductsForCategory } from '../api';
 
 export default {
   state: {
     categories: [],
     products: [],
+    productsCount: 0,
   },
   mutations: {
     SET_CATEGORIES(state, categories) {
       Vue.set(state, 'categories', categories);
     },
-    SET_PRODUCTS(state, products) {
+    SET_PRODUCTS(state, { products, totalCount }) {
       Vue.set(state, 'products', products);
+      state.productsCount = totalCount;
     },
   },
   actions: {
@@ -24,13 +26,14 @@ export default {
       }
       return state.categories;
     },
-    async GET_PRODUCTS_FOR_CATEGORY({ commit, state }, categorySlug) {
-      commit('SET_PRODUCTS', await getProducts(categorySlug));
+    async GET_PRODUCTS_FOR_CATEGORY({ commit, state }, request) {
+      commit('SET_PRODUCTS', await getProductsForCategory(request));
     },
   },
   getters: {
     getCategory: state => slug => state.categories.find(category => category.slug === slug),
     getProducts: state => state.products,
     getProduct: state => slug => state.products.find(product => product.slug === slug),
+    getProductsCount: state => state.productsCount,
   },
 };

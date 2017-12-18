@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { transformObjectToQueryParams } from './helpers';
 
 const API = '/api/v1';
 
@@ -12,10 +13,10 @@ export function getCategories() {
   });
 }
 
-export function getProducts(categorySlug) {
+export function getProductsForCategory({ categorySlug, paginator }) {
   return new Promise((resolve, reject) => {
-    Vue.http.get(`${API}/category/${categorySlug}/products`).then((result) => {
-      resolve(result.body.products);
+    Vue.http.get(`${API}/category/${categorySlug}/products/?${transformObjectToQueryParams(paginator)}`).then((result) => {
+      resolve(result.body);
     }).catch((error) => {
       reject(error);
     });
