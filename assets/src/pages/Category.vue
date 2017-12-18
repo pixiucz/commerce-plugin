@@ -1,7 +1,13 @@
 <template>
-  <b-container v-if="category" class="mt-3">
-    <h1 class="text-center to-upper"> {{ category.name }} </h1>
-    <product-filter></product-filter>
+  <b-container v-if="category" class="mt-3 mb-3">
+    <b-row>
+      <b-col cols="6">
+        <h1>{{ category.name }}</h1>
+      </b-col>
+      <b-col cols="6 float-right">
+        <product-filter :filters="filters"></product-filter>
+      </b-col>
+    </b-row>
     <catalogue-grid :products="products" v-loading="isLoading"></catalogue-grid>
     <div class="text-center">
       <el-pagination
@@ -35,6 +41,24 @@
           orderDir: 'desc',
         },
         isLoading: true,
+        filters: [
+          {
+            label: 'podle názvu zostupne',
+            value: 'slug-desc',
+          },
+          {
+            label: 'podle názvu vzostupne',
+            value: 'slug-asc',
+          },
+          {
+            label: 'podle ceny zostupne',
+            value: 'price-desc',
+          },
+          {
+            label: 'podle ceny vzostupne',
+            value: 'price-asc'
+          }
+        ],
       };
     },
     async mounted() {

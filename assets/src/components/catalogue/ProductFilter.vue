@@ -1,30 +1,27 @@
 <template>
-  <div class="text-center filters-toolbar">
-
-    <el-radio-group v-model="orderDir" size="small">
-      <el-radio-button label="desc">
-        <i class="el-icon-arrow-down"> </i>
-        Sestupně
-      </el-radio-button>
-      <el-radio-button label="asc">
-        <i class="el-icon-arrow-up"> </i>
-        Vzestupně
-      </el-radio-button>
-    </el-radio-group>
+  <div class="pull-right mt-3">
+    Zoradiť podľa: 
+    <el-select v-model="orderBy" placeholder="vybrat">
+      <el-option v-for="filter in filters" :value="filter.value" :label="filter.label" :key="filter.value">
+      </el-option>
+    </el-select>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['filters'],
   data() {
     return ({
-      orderDir: 'desc',
+      activeNames: [],
       orderBy: '',
     });
   },
   watch: {
-    orderDir(val) {
-      this.$router.push({ query: Object.assign({}, this.$route.query, { orderDir: val }) });
+    orderBy(val) {
+      const args = val.split('-');
+      
+      this.$router.push({ query: Object.assign({}, this.$route.query, { orderBy: args[0], orderDir: args[1] }) });
     },
   },
 };
