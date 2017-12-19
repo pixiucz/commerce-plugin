@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import Vue from 'vue';
+import { priceWithoutTax } from '@/helpers';
 
 export default {
   state: {
@@ -59,5 +60,20 @@ export default {
         item => item.product.slug === slug),
     getCartLength: state => state.items.length,
     getCartItems: state => state.items,
+    getCartSum: (state) => {
+      let sumWithTax = 0;
+      let sumWithoutTax = 0;
+
+      state.items.forEach((item) => {
+        sumWithTax += (item.amount * item.product.price);
+        sumWithoutTax += parseFloat(
+          priceWithoutTax(
+            item.product.price * item.amount, item.product.tax_rate));
+      });
+      return {
+        withoutTax: sumWithoutTax.toFixed(2),
+        withTax: sumWithTax.toFixed(2),
+      };
+    },
   },
 };
