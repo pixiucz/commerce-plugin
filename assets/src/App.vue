@@ -25,7 +25,9 @@
                 <i class="fa fa-user-circle" />
               </b-nav-item>
               <b-nav-item @click.stop="toggleSidebar('Cart')">
-                <i class="fa fa-shopping-cart" />
+                <i class="fa fa-shopping-cart">
+                  <el-badge class="cart-badge" v-if="itemsInCart > 0" :value="itemsInCart" />
+                </i>
               </b-nav-item>
               <b-nav-item>
                 <el-button round size="small">Späť na web</el-button>
@@ -74,7 +76,7 @@
 
 <script>
   import Sidebar from '@/components/sidebar/SideBar';
-  import { SidebarRoutes } from './store/store';
+  import { SidebarRoutes } from '@/store/store';
 
   export default {
     name: 'app',
@@ -102,6 +104,9 @@
       categories() {
         return this.$store.state.products.categories;
       },
+      itemsInCart() {
+        return this.$store.getters.getCartLength;
+      },
     },
   };
 </script>
@@ -115,5 +120,13 @@
     &--shifted {
       transform: translateX(-$sidebar-width);
     }
+  }
+
+  .cart-badge {
+    background-color: #353a40;
+  }
+
+  .el-badge__content {
+    background-color: #353a40;
   }
 </style>
