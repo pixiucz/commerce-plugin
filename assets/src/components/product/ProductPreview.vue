@@ -10,7 +10,7 @@
             
                 <p class="pb-1 mb-0 price">
                     {{ product.price }} € <i class="light">s DPH</i> <br>
-                    {{ product.price - (product.price * (product.tax_rate/100)) }} € <i class="light">bez DPH</i>
+                    {{ priceNoTax }} € <i class="light">bez DPH</i>
                 </p>
             </div>
         </router-link>
@@ -18,8 +18,15 @@
 </template>
 
 <script>
+import { priceWithoutTax } from '@/helpers';
+
 export default {
   props: ['product'],
+  computed: {
+    priceNoTax() {
+      return priceWithoutTax(this.product.price, this.product.tax_rate);
+    },
+  },
 };
 </script>
 
@@ -45,9 +52,5 @@ export default {
     .price {
         text-transform: uppercase;
         font-size: 1.2rem;
-    }
-
-    .light {
-        color: #e1e2e2;
     }
 </style>
