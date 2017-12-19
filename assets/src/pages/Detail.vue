@@ -18,6 +18,10 @@
             <p class="text-color margin-bottom3" v-html="product.short_description"></p>
             <b-row>
                 <b-col md="12" class="text-center">
+                    <div>
+                      <h4> {{ product.price }} € s DPH </h4>
+                      <p class="dark-grey"> {{ priceNoTax }} € bez DPH </p>
+                    </div>
                     <el-input-number v-model="amount" :min="1" :max="50"></el-input-number>             
                     <el-button class="add-button" @click="addToCart">Přidat do košíka</el-button>
                     <p v-if="inCart > 0"> V košíku: <b>{{ inCart }} ks </b> </p>
@@ -35,6 +39,7 @@
 
 <script>
   import { getProduct } from '../api';
+  import { priceWithoutTax } from '@/helpers';
 
   export default {
     name: 'detail',
@@ -59,7 +64,8 @@
 
         this.amount = 1;
 
-        this.$message('Přidáno do košíku');
+        this.$store.commit('SET_SIDEBAR_ROUTE', 'Cart');
+        this.$store.commit('SET_SIDEBAR_VISIBLE', true);
       },
     },
     computed: {
@@ -71,6 +77,9 @@
           }
         }
         return 0;
+      },
+      priceNoTax() {
+        return priceWithoutTax(this.product.price, this.product.tax_rate);
       },
     },
   };
