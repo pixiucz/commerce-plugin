@@ -9,4 +9,6 @@ export function transformObjectToQueryParams(obj) {
   return str.join('&');
 }
 
-export function temp() {}
+export function priceWithoutTax(price, taxrate) {
+  return price - (price * (taxrate / 100));
+}
