@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="sidebar-cart">
     <h1 class="text-center">Košík</h1>
     <product-list 
       v-for="item in items" 
@@ -24,3 +24,9 @@
     },
   };
 </script>
+
+<style scoped>
+  .sidebar-cart {
+    margin-top: 15px;
+  }
+</style>

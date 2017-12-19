@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { getProduct } from '../api';
+  import { getProduct } from '@/api';
   import { priceWithoutTax } from '@/helpers';
 
   export default {
