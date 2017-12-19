@@ -142,7 +142,7 @@ class Products extends Controller
         $productVariant->slug = "temp " . random_int(1, 10);
         $productVariant->save();
 
-        $slug = $productVariant->id . '-' . $this->getBasicSlug($model);
+        $slug = $this->getBasicSlug($model) . '-' . $productVariant->id;
 
         foreach(json_decode($variant['attributes']) as $attribute){
             $newAttribute = Attribute::whereRaw('lower(value) = ?', [strtolower($attribute->value)])->where('attribute_group_id', $attributeGroups[$attribute->attributegroup->name]->id)->first();
