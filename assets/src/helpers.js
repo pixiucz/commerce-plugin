@@ -10,5 +10,6 @@ export function transformObjectToQueryParams(obj) {
 }
 
 export function priceWithoutTax(price, taxrate) {
-  return price - (price * (taxrate / 100));
+  const withoutTax = price - (price * (taxrate / 100));
+  return withoutTax.toFixed(2);
 }
