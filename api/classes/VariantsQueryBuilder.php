@@ -111,11 +111,13 @@ class VariantsQueryBuilder
         $array['brand_name'] = $array['product']['brand']['brand'];
         $array['product_name'] = $array['product']['name'];
         $array['product_id'] = $array['product']['id'];
+        $array['price'] = array_get($array, 'price') / 100;
         $array['tax_rate'] = $array['product']['tax']['tax_rate'];
         $array['tax_name'] = $array['product']['tax']['tax_name'];
         $array['decomposite_on'] = $array['product']['decomposite_on'];
         $array['short_description'] = array_get($array, 'product.short_description');
         $array['long_description'] = array_get($array, 'product.long_description');
+        $array['specifications'] = array_get($array, 'product.specifications');
 
         unset($array['primary_picture_id'],
             $array['product']
