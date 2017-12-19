@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="product">
+  <b-container v-if="product" v-loading="isLoading">
     <div class="category-header">
       <p class="margin-top4 margin-bottom4 text-color">
         <router-link :to="{ name: 'category', params: { slug: product.categories[0][0].slug }}">
@@ -48,6 +48,7 @@
       return {
         product: null,
         amount: 1,
+        isLoading: false,
       };
     },
     async created() {
@@ -67,6 +68,12 @@
         this.$store.commit('SET_SIDEBAR_ROUTE', 'Cart');
         this.$store.commit('SET_SIDEBAR_VISIBLE', true);
       },
+      async reuseComponent() {
+        this.isLoading = true;
+        const product = await getProduct(this.slug);
+        this.product = product;
+        this.isLoading = false;
+      }
     },
     computed: {
       inCart() {
@@ -81,6 +88,9 @@
       priceNoTax() {
         return priceWithoutTax(this.product.price, this.product.tax_rate);
       },
+    },
+    watch: {
+      $route: 'reuseComponent',
     },
   };
 </script>
