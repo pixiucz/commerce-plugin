@@ -23,7 +23,7 @@
                       <p class="dark-grey"> {{ priceNoTax }} € bez DPH </p>
                     </div>
                     <el-input-number v-model="amount" :min="1" :max="50"></el-input-number>             
-                    <el-button class="add-button" @click="addToCart">Přidat do košíka</el-button>
+                    <el-button class="add-button" @click.stop="addToCart">Přidat do košíka</el-button>
                     <p v-if="inCart > 0"> V košíku: <b>{{ inCart }} ks </b> </p>
                 </b-col>
             </b-row>              
