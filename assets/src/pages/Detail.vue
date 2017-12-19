@@ -32,6 +32,15 @@
     <b-row>
       <b-col md="12">
         {{ product.long_description }}
+        <br>
+        <b-table small v-if="product.specifications" striped hover :items="product.specifications">
+          <template slot="HEAD_name" slot-scope="data">
+            Název
+          </template>
+          <template slot="HEAD_value" slot-scope="data">
+            Hodnota
+          </template>
+        </b-table>
       </b-col>
     </b-row>
   </b-container>
@@ -73,7 +82,7 @@
         const product = await getProduct(this.slug);
         this.product = product;
         this.isLoading = false;
-      }
+      },
     },
     computed: {
       inCart() {
