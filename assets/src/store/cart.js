@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import Vue from 'vue';
 
 export default {
@@ -20,6 +22,21 @@ export default {
 
       commit('ADD_TO_CART', item);
     },
+    CHANGE_ITEM_AMOUNT({ commit, getters, state }, { slug, newAmount }) {
+      const index = getters.getItemIndexFromCart(slug);
+      if (index !== -1) {
+        commit('UPDATE_ITEM_AMOUNT', {
+          index,
+          newAmount,
+        });
+      }
+    },
+    REMOVE_ITEM({ commit, getters }, slug) {
+      const index = getters.getItemIndexFromCart(slug);
+      if (index !== -1) {
+        commit('REMOVE_ITEM', index);
+      }
+    },
   },
   mutations: {
     ADD_TO_CART(state, item) {
@@ -28,6 +45,12 @@ export default {
     UPDATE_ITEM(state, { index, updatedItem }) {
       Vue.set(state.items, index, updatedItem);
     },
+    UPDATE_ITEM_AMOUNT(state, { index, newAmount }) {
+      state.items[index].amount = newAmount;
+    },
+    REMOVE_ITEM(state, index) {
+      state.items.splice(index, 1);
+    },
   },
   getters: {
     getItemFromCart: state => slug => state.items.find(item => item.product.slug === slug),
@@ -35,5 +58,6 @@ export default {
       slug => state.items.findIndex(
         item => item.product.slug === slug),
     getCartLength: state => state.items.length,
+    getCartItems: state => state.items,
   },
 };
