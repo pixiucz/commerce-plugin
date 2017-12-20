@@ -73,3 +73,33 @@ export function getProduct(productSlug) {
     });
   });
 }
+
+export function signIn(credentials) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(`${API}/user/login`, credentials).then((result) => {
+      resolve(result.body);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
+
+export function signOut() {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(`${API}/user/logout`).then((result) => {
+      resolve(result.body);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
+
+export function getUser() {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(`${API}/user/`).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}

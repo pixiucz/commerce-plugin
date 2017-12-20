@@ -70,6 +70,12 @@
     },
     async created() {
       await this.$store.dispatch('GET_CATEGORIES');
+
+      try {
+        await this.$store.dispatch('SET_USER');
+      } catch (e) {
+        console.log(e);
+      }
     },
     components: {
       Sidebar,
