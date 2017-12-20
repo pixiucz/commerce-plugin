@@ -33,7 +33,7 @@ export default {
 <style scoped>
     .card {
         border: none; 
-        margin: 10px -15px 10px -15px;  
+        /* margin: 10px -15px 10px -15px;   */
     }
 
     a:hover {
