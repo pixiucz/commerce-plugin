@@ -18,6 +18,7 @@ Route::prefix('api/v1')
         // Route::patch('user', 'UserController@update'); TODO: implement edit (?)
         Route::post('user/register', 'UserController@register');
         Route::post('user/login', 'UserController@login');
+        Route::post('user/logout', 'UserController@logout');
 
         Route::middleware('Pixiu\Commerce\api\Middlewares\CheckLoginMiddleware')->group(function() {
             Route::get('user', 'UserController@show');
