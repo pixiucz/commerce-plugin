@@ -18,10 +18,9 @@ class UserController
         $addresses = Address::where('user_id', $user->id)->get();
 
         return response([
-            'msg' => 'Uživatel ' . $user->email . '.',
-            'user' => $user->only('id', 'username', 'email'),
+            'user' => $user->only('id', 'username', 'email', 'name', 'surname'),
             'addresses' => $addresses
-        ], 201);
+        ], 200);
 
     }
 
