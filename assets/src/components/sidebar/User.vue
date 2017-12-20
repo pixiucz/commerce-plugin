@@ -1,5 +1,7 @@
 <template>
-  <h1>User</h1>
+  <b-container class="sidebar-cart mt-3">
+    <h1 class="text-center"> Uživatel <span @click="closeSidebar" class="pull-right pointer">></span></h1>
+  </b-container>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <b-container class="sidebar-cart">
+  <b-container class="sidebar-cart mt-3">
     <h1 class="text-center">Košík <span @click="closeSidebar" class="pull-right pointer">></span></h1>
     <product-list 
       v-for="item in items" 
@@ -43,15 +43,7 @@
 </script>
 
 <style scoped>
-  .sidebar-cart {
-    margin-top: 15px;
-  }
-
   .send-order-btn {
     width: 100%;
-  }
-
-  .pointer {
-    cursor: pointer;
   }
 </style>
