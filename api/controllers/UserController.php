@@ -95,6 +95,12 @@ class UserController
         ], 201);
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return response([], 200);
+    }
+
     private function makeRegisterValidator($request)
     {
         return Validator::make($request->all(),
