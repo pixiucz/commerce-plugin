@@ -13,7 +13,8 @@ class ProductVariantController
 
     public function index()
     {
-        return response($this->queryBuilder->getVariants(), 200);
+        $products = $this->queryBuilder->getVariants();
+        return response(['products' => $products], 200);
     }
 
     public function show($slug)
