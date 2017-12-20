@@ -34,6 +34,16 @@ function handleReject(error, message = true) {
   return error;
 }
 
+export function getProducts({ paginator = { limit: 10 } }) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(`${API}/product/?${transformObjectToQueryParams(paginator)}`).then((result) => {
+      resolve(result.body);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
+
 export function getCategories() {
   return new Promise((resolve, reject) => {
     Vue.http.get(`${API}/category/`).then((result) => {
