@@ -15,11 +15,17 @@ import router from './router';
 import store from './store/store';
 import i18n from './lang/locale';
 
+// GLOBAL MIXINS
+import ClosableSidebar from './mixins/ClosableSidebar';
+
 Vue.use(VueResource);
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
 });
 Vue.use(BootstrapVue);
+
+// GLOBAL MIXINS
+Vue.mixin(ClosableSidebar);
 
 Vue.config.productionTip = false;
 
