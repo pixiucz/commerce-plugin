@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 
-import { getCategories, getProductsForCategory } from '../api';
+import { getCategories, getProductsForCategory, getProducts } from '../api';
 
 export default {
   state: {
@@ -28,6 +28,11 @@ export default {
     },
     async GET_PRODUCTS_FOR_CATEGORY({ commit, state }, request) {
       commit('SET_PRODUCTS', await getProductsForCategory(request));
+    },
+    async GET_PRODUCTS({ commit }, paginator = { limit: 10 }) {
+      const response = await getProducts(paginator);
+      response.totalCount = 10; // FIXME
+      commit('SET_PRODUCTS', response);
     },
   },
   getters: {
