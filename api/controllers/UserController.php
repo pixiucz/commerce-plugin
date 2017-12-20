@@ -56,11 +56,11 @@ class UserController
     public function login(Request $request)
     {
         $user = Auth::authenticate([
-            'login' => post('login'),
-            'password' => post('password')
+            'login' => $request->input('login'),
+            'password' => $request->input('password'),
         ], true);
         Auth::login($user, true);
-        return response(['msg' => 'Uživatel '. $user->email . ' přihlášen.'], 201);
+        return response(['msg' => 'Uživatel '. $user->email . ' přihlášen.', 'user' => $user], 201);
     }
 
     public function history()
