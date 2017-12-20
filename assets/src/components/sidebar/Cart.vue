@@ -1,6 +1,6 @@
 <template>
   <b-container class="sidebar-cart">
-    <h1 class="text-center">Košík</h1>
+    <h1 class="text-center">Košík <span @click="closeSidebar" class="pull-right pointer">></span></h1>
     <product-list 
       v-for="item in items" 
       :key="item.product.slug"
@@ -49,5 +49,9 @@
 
   .send-order-btn {
     width: 100%;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 </style>

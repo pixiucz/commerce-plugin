@@ -57,12 +57,13 @@
       return {
         product: null,
         amount: 1,
-        isLoading: false,
+        isLoading: true,
       };
     },
     async created() {
       const product = await getProduct(this.slug);
       this.product = product;
+      this.isLoading = false;
     },
     methods: {
       addToCart() {
@@ -74,8 +75,7 @@
 
         this.amount = 1;
 
-        this.$store.commit('SET_SIDEBAR_ROUTE', 'Cart');
-        this.$store.commit('SET_SIDEBAR_VISIBLE', true);
+        this.openSidebar('Cart');
       },
       async reuseComponent() {
         this.isLoading = true;
