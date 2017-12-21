@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 
@@ -24,8 +26,11 @@ Vue.use(ElementUI, {
 });
 Vue.use(BootstrapVue);
 
-// GLOBAL MIXINS
+// GLOBAL MIXINS (FIXME: move to file?)
 Vue.mixin(ClosableSidebar);
+
+// GLOBAL FILTERS (FIXME: move to file?)
+Vue.filter('price', value => `${(value / 100).toFixed(2)} €`);
 
 Vue.config.productionTip = false;
 
