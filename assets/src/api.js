@@ -3,7 +3,6 @@ import { Message } from 'element-ui';
 
 // import store from './store/store';
 import i18n from './lang/locale';
-import { transformObjectToQueryParams } from './helpers';
 
 const API = '/api/v1';
 
@@ -36,7 +35,7 @@ function handleReject(error, message = true) {
 
 export function getProducts({ paginator = { limit: 10 } }) {
   return new Promise((resolve, reject) => {
-    Vue.http.get(`${API}/product/?${transformObjectToQueryParams(paginator)}`).then((result) => {
+    Vue.http.get(`${API}/product/`, { params: paginator }).then((result) => {
       resolve(result.body);
     }).catch((error) => {
       reject(handleReject(error));
@@ -56,7 +55,7 @@ export function getCategories() {
 
 export function getProductsForCategory({ categorySlug, paginator }) {
   return new Promise((resolve, reject) => {
-    Vue.http.get(`${API}/category/${categorySlug}/products/?${transformObjectToQueryParams(paginator)}`).then((result) => {
+    Vue.http.get(`${API}/category/${categorySlug}/products/`, { params: paginator }).then((result) => {
       resolve(result.body);
     }).catch((error) => {
       reject(handleReject(error));
