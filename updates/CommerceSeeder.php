@@ -87,6 +87,9 @@ class CommerceSeeder extends Seeder
         DB::table('users')->insert([
             'email' => 'test@test.cz',
             'password' => bcrypt('test'),
+            'name' => 'Josef',
+            'surname' => 'Novak',
+            'is_activated' => 1,
         ]);
 
         // ADD ADDRESS TO USER
@@ -133,6 +136,8 @@ class CommerceSeeder extends Seeder
                 'name' => 'Platba kartou'
             ]
         );
+
+        // TODO: seed of test orders
 
         // Defaultni settings a prepnuti do cestiny
         DB::table('system_settings')->insert([
