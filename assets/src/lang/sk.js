@@ -29,8 +29,27 @@ export default {
       }
     },
   },
+  pages: {
+    detail: {
+      buttons: {
+        addToCart: 'Pridať do košíka',
+      },
+      misc: {
+        inBasket: 'V košíku',
+        name: 'Názov',
+        value: 'Hodnota'
+      }
+    },
+    main: {
+      misc: {
+        bestSellers: 'Najpredávanejšie produkty',
+        newsetProducts: 'Najnovšie produkty',
+      }
+    }
+  },
   other: {
     withDPH: 's DPH',
     withoutDPH: 'bez DPH',
+    piece: 'ks',
   },
 };

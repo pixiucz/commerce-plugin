@@ -8,8 +8,8 @@
         <i class="el-icon-close" @click="removeItem"></i>
       </button>
       <h5 @click="showProduct" style="cursor: pointer;"> {{ item.product.product_name }} </h5>
-      <h6> {{ (item.product.price * item.amount).toFixed(2) | price }} <i class="light"> s DPH </i> </h6>
-      <h6 class="dark-grey"> {{ (priceNoTax * item.amount).toFixed(2) | price }} bez DPH </h6>
+      <h6> {{ (item.product.price * item.amount).toFixed(2) | price }} <i class="light"> {{ $t('other.withDPH') }} </i> </h6>
+      <h6 class="dark-grey"> {{ (priceNoTax * item.amount).toFixed(2) | price }} {{ $t('other.withoutDPH') }} </h6>
       <el-input-number :min="1" v-model="item.amount" @change="handleAmountChange"></el-input-number>
     </b-col>
   </b-row>

@@ -19,12 +19,12 @@
             <b-row>
                 <b-col md="12" class="text-center">
                     <div>
-                      <h4> {{ product.price | price }} s DPH </h4>
-                      <p class="dark-grey"> {{ priceNoTax | price }} bez DPH</p>
+                      <h4> {{ product.price | price }} {{ $t('other.withDPH')}} </h4>
+                      <p class="dark-grey"> {{ priceNoTax | price }} {{ $t('other.withoutDPH') }}</p>
                     </div>
                     <el-input-number v-model="amount" :min="1" :max="50"></el-input-number>             
-                    <el-button class="add-button" @click.stop="addToCart">Přidat do košíka</el-button>
-                    <p v-if="inCart > 0"> V košíku: <b>{{ inCart }} ks </b> </p>
+                    <el-button class="add-button" @click.stop="addToCart"> {{ $t('pages.detail.buttons.addToCart') }} </el-button>
+                    <p v-if="inCart > 0"> {{ $t('pages.detail.misc.inBasket') }}: <b>{{ inCart }} {{ $t('other.piece') }} </b> </p>
                 </b-col>
             </b-row>              
         </b-col>
@@ -35,10 +35,10 @@
         <br>
         <b-table small v-if="product.specifications" striped hover :items="product.specifications">
           <template slot="HEAD_name" slot-scope="data">
-            Název
+           {{ $t('pages.detail.misc.name') }}
           </template>
           <template slot="HEAD_value" slot-scope="data">
-            Hodnota
+            {{ $t('pages.detail.misc.value') }}
           </template>
         </b-table>
       </b-col>
