@@ -8,6 +8,7 @@ export default {
     isLoggedIn: false,
     user: {},
     addresses: [],
+    orders: [],
   },
   mutations: {
     SIGN_IN(state, user) {
@@ -26,6 +27,9 @@ export default {
     SET_ADDRESSES(state, addresses) {
       Vue.set(state, 'addresses', addresses);
     },
+    SET_ORDERS(state, orders) {
+      Vue.set(state, 'orders', orders);
+    },
   },
   actions: {
     async SIGN_IN({ commit }, credentials) {
@@ -43,6 +47,7 @@ export default {
       if ('user' in response.body) {
         commit('SET_USER', response.body.user);
         commit('SET_ADDRESSES', response.body.addresses);
+        commit('SET_ORDERS', response.body.orders);
       }
       return true;
     },
@@ -50,5 +55,6 @@ export default {
   getters: {
     isLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user,
+    getOrders: state => state.orders,
   },
 };
