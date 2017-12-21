@@ -76,7 +76,7 @@ export function getProduct(productSlug) {
 export function signIn(credentials) {
   return new Promise((resolve, reject) => {
     Vue.http.post(`${API}/user/login`, credentials).then((result) => {
-      resolve(result.body);
+      resolve(result);
     }).catch((error) => {
       reject(handleReject(error));
     });
