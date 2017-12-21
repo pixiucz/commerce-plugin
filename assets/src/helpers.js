@@ -3,4 +3,4 @@ export function priceWithoutTax(price, taxrate) {
   return withoutTax.toFixed(2);
 }
 
-export function temp(){}
+export const asdf = '123';
