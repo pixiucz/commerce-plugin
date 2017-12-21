@@ -19,6 +19,7 @@ export default {
       state.isLoggedIn = false;
       Vue.set(state, 'user', {});
       Vue.set(state, 'addresses', []);
+      Vue.set(state, 'orders', []);
     },
     SET_USER(state, user) {
       state.isLoggedIn = true;
@@ -34,7 +35,9 @@ export default {
   actions: {
     async SIGN_IN({ commit }, credentials) {
       const response = await signIn(credentials);
-      commit('SIGN_IN', response.user);
+      commit('SET_USER', response.body.user);
+      commit('SET_ADDRESSES', response.body.addresses);
+      commit('SET_ORDERS', response.body.orders);
       return true;
     },
     async SIGN_OUT({ commit }) {

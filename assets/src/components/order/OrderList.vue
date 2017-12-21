@@ -1,12 +1,12 @@
 <template>
   <b-row class="mt-3">
-    <b-col cols="7">
-      <span class="order-date"> {{ date }} </span> <span class="order-status"> {{ order.status }} </span> <br>
-      <span class="order-price">24.50 € s DPH</span>
-    </b-col>
     <b-col cols="5">
-      <el-button class="pull-right" size="mini">Default</el-button>
-      <el-button class="pull-right" size="mini">Default</el-button>
+      <span class="order-date"> {{ date }} </span> <span class="order-status"> {{ order.status }} </span> <br>
+      <span class="order-price">{{ sum | price }} {{ $t('other.withDPH') }}</span>
+    </b-col>
+    <b-col cols="7">
+      <el-button @click="showDetail" class="pull-right" type="primary" size="mini"><i class="el-icon-view"></i> {{ $t('sidebar.orders.buttons.showMore ') }}</el-button>
+      <el-button @click="cancelOrder" class="pull-right" type="primary" size="mini"><i class="el-icon-delete"></i> {{ $t('sidebar.orders.buttons.cancel') }}</el-button>
     </b-col>
   </b-row>
 </template>
@@ -20,6 +20,25 @@ export default {
   computed: {
     date() {
       return moment(this.order.created_at).locale('sk').format('L');
+    },
+    sum() {
+      let sum = 0;
+      this.order.variants.forEach((product) => {
+        sum += product.pivot.price * product.pivot.quantity;
+      });
+      return sum;
+    },
+  },
+  methods: {
+    cancelOrder() {
+      this.$confirm(this.$t('sidebar.orders.dialog.cancel'))
+          .then(() => {
+            this.$message('Neni implementovano 😱');
+          })
+          .catch(() => {});
+    },
+    showDetail() {
+      this.$emit('showOrderDetail', this.order.id);
     },
   },
 };

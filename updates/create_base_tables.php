@@ -326,7 +326,7 @@ class CreateAttributeGroupsTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('pixiu_com_orders');
 
-            $table->integer('quantity')->default(0);
+            $table->integer('quantity')->default(1);
             $table->integer('refunded_quantity')->default(0);
             $table->integer('price')->default(0);
             $table->boolean('lowered_stock')->default(false);

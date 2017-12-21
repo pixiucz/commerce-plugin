@@ -5,6 +5,7 @@
       v-for="item in items" 
       :key="item.product.slug"
       :item="item"
+      :readOnly="false"
     ></product-list>
     <hr>
    

@@ -5,7 +5,15 @@ export default {
   sidebar: {
     orders: {
       title: 'História objednávok',
+      titleDetail: 'Detail objednávky',
       noLogin: 'Pre históriu je potrebné sa prihlásiť',
+      buttons: {
+        cancel: 'Zrušiť',
+        showMore: 'Zobraziť viac',
+      },
+      dialog: {
+        cancel: 'Vážne chcete stornovat túto objednávku?',
+      },
     },
     user: {
       title: 'Užívateľ',
@@ -16,17 +24,17 @@ export default {
       },
       form: {
         name: 'Meno',
-        surname: 'Priezvisko'
+        surname: 'Priezvisko',
       },
     },
     cart: {
       title: 'Košík',
       misc: {
-        together: 'Spolu'
+        together: 'Spolu',
       },
       buttons: {
-        order: 'Objednať'
-      }
+        order: 'Objednať',
+      },
     },
   },
   pages: {
@@ -37,15 +45,15 @@ export default {
       misc: {
         inBasket: 'V košíku',
         name: 'Názov',
-        value: 'Hodnota'
-      }
+        value: 'Hodnota',
+      },
     },
     main: {
       misc: {
         bestSellers: 'Najpredávanejšie produkty',
         newsetProducts: 'Najnovšie produkty',
-      }
-    }
+      },
+    },
   },
   other: {
     withDPH: 's DPH',

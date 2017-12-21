@@ -139,6 +139,28 @@ class CommerceSeeder extends Seeder
 
         // TODO: seed of test orders
 
+        foreach (range(1, 5) as $i) {
+            DB::table('pixiu_com_orders')->insert([
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                'user_id' => 1,
+                'delivery_address_id' => 1,
+                'billing_address_id' => 1,
+                'payment_method_id' => 1,
+                'delivery_option_id' => 1,
+                'status' => 'new',
+            ]);
+
+            foreach (range(1, 2) as $y) {
+                DB::table('pixiu_com_orders_variants')->insert([
+                    'variant_id' => $y,
+                    'order_id' => $i,
+                    'quantity' => 2,
+                    'refunded_quantity' => 0,
+                    'price' => 499,
+                ]);
+            }
+        }
+
         // Defaultni settings a prepnuti do cestiny
         DB::table('system_settings')->insert([
             'item' => 'commerce_settings',
