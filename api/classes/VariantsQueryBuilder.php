@@ -111,7 +111,7 @@ class VariantsQueryBuilder
         $array['brand_name'] = $array['product']['brand']['brand'];
         $array['product_name'] = $array['product']['name'];
         $array['product_id'] = $array['product']['id'];
-        $array['price'] = array_get($array, 'price') / 100;
+        $array['price'] = array_get($array, 'price');
         $array['tax_rate'] = $array['product']['tax']['tax_rate'];
         $array['tax_name'] = $array['product']['tax']['tax_name'];
         $array['decomposite_on'] = $array['product']['decomposite_on'];
