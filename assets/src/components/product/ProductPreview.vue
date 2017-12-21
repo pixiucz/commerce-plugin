@@ -9,8 +9,8 @@
                 </h3>
             
                 <p class="pb-1 mb-0 price">
-                    {{ product.price }} € <i class="light">s DPH</i> <br>
-                    {{ priceNoTax }} € <i class="light">bez DPH</i>
+                    {{ product.price | price }} <i class="light">s DPH</i> <br>
+                    {{ priceNoTax | price }} <i class="light">bez DPH</i>
                 </p>
             </div>
         </router-link>

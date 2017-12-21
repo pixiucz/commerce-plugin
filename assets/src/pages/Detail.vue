@@ -19,8 +19,8 @@
             <b-row>
                 <b-col md="12" class="text-center">
                     <div>
-                      <h4> {{ product.price }} € s DPH </h4>
-                      <p class="dark-grey"> {{ priceNoTax }} € bez DPH </p>
+                      <h4> {{ product.price | price }} s DPH </h4>
+                      <p class="dark-grey"> {{ priceNoTax | price }} bez DPH</p>
                     </div>
                     <el-input-number v-model="amount" :min="1" :max="50"></el-input-number>             
                     <el-button class="add-button" @click.stop="addToCart">Přidat do košíka</el-button>
