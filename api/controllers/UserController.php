@@ -15,11 +15,22 @@ class UserController
     {
         $user = Auth::getUser();
 
-        $addresses = Address::where('user_id', $user->id)->get();
+        $user = User::with([
+            'addresses',
+            'orders.payment_method',
+            'orders.delivery_option',
+            'orders.delivery_address',
+            'orders.billing_address',
+            'orders.variants',
+            'orders.variants.product',
+            'orders.variants.product.tax',
+            'orders.variants.attributes',
+            ])->find($user->id);
 
         return response([
             'user' => $user->only('id', 'username', 'email', 'name', 'surname'),
-            'addresses' => $addresses
+            'addresses' => $user->addresses ?? [],
+            'orders' => $user->orders ?? [],
         ], 200);
 
     }
@@ -59,8 +70,10 @@ class UserController
             'login' => $request->input('login'),
             'password' => $request->input('password'),
         ], true);
+
         Auth::login($user, true);
-        return response(['msg' => 'Uživatel '. $user->email . ' přihlášen.', 'user' => $user], 201);
+
+        return $this->show();
     }
 
     public function history()
