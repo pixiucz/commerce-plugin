@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import Vue from 'vue';
-import { signIn, getUser, signOut } from '@/api';
+import { signIn, getUser, signOut, register } from '@/api';
 
 export default {
   state: {
@@ -54,6 +54,13 @@ export default {
       }
       return true;
     },
+    async REGISTER({ dispatch }, credentials) {
+      const response = await register(credentials);
+      
+      if (response.status === 201) {
+        dispatch('SIGN_IN', credentials);
+      }
+    }
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,
