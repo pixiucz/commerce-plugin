@@ -102,3 +102,13 @@ export function getUser() {
     });
   });
 }
+
+export function register(credentials) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(`${API}/user/register`, credentials).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  })
+}

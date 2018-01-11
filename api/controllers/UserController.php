@@ -52,8 +52,7 @@ class UserController
 
         try {
             Auth::register([
-                'username' => $request->input('username'),
-                'email' => $request->input('email'),
+                'email' => $request->input('login'),
                 'password' => $request->input('password'),
                 'password_confirmation' => $request->input('password'),
             ], true);
@@ -61,7 +60,7 @@ class UserController
             return response(['msg' => 'Registrace selhala', 'errors' => $e->getMessage()], 401);
         }
 
-        return response(['msg' => 'Uživatel byl registrován.']);
+        return response(['msg' => 'Uživatel byl registrován.'], 201);
     }
 
     public function login(Request $request)
@@ -116,10 +115,11 @@ class UserController
 
     private function makeRegisterValidator($request)
     {
+        trace_log($request->all());
+
         return Validator::make($request->all(),
             [
-            'username' => 'required|min:5|max:255',
-            'email' => 'required|email',
+            'login' => 'required|email',
             'password' => 'required|min:5|max:255'
         ], [
             'required' => 'Je nutné vyplnit :attribute',

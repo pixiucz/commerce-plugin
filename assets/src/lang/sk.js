@@ -21,10 +21,14 @@ export default {
         login: 'Prihlásiť',
         logout: 'Odhlásiť',
         saveChanges: 'Uložiť zmeny',
+        registration: 'Registrovať',
       },
       form: {
         name: 'Meno',
         surname: 'Priezvisko',
+      },
+      misc: {
+        or: 'alebo',
       },
     },
     cart: {

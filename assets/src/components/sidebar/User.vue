@@ -3,9 +3,17 @@
     <h1 class="text-center"> {{ $t('sidebar.user.title')}} <span @click="closeSidebar" class="pull-right pointer">></span></h1>
     <div class="mt-3" v-loading="isLoading">
       <div v-if="!isLoggedIn">
-        <el-input name="email" placeholder="Email" v-model="email"></el-input>
-        <el-input name="password" type="password" placeholder="Heslo" v-model="password"></el-input>
-        <el-button @click="signIn" class="sign-in-btn" type="primary">{{ $t('sidebar.user.buttons.login') }}</el-button>
+        <el-form :model="userForm" :rules="rules" ref="userForm">
+          <el-form-item prop="email">
+            <el-input placeholder="Email" v-model="userForm.email"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input type="password" placeholder="Heslo" v-model="userForm.password"></el-input>
+          </el-form-item>
+          <el-button @click="signIn" class="full-width-btn" type="primary">{{ $t('sidebar.user.buttons.login') }}</el-button>
+          <p class="text-center or-btn"> - {{ $t('sidebar.user.misc.or') }} - </p>
+          <el-button @click="register" class="full-width-btn" type="primary"> {{ $t('sidebar.user.buttons.registration') }} </el-button>
+        </el-form>
       </div>
       <div v-else>
         <b-row>
@@ -24,11 +32,11 @@
             <el-input @blur="userDetailTouched = true" name="surname" v-model="user.surname"></el-input>
           </b-col>
         </b-row>
-        <el-button v-if="userDetailTouched" @click="updateUserDetail" class="sign-in-btn mt-2" type="primary">
+        <el-button v-if="userDetailTouched" @click="updateUserDetail" class="full-width-btn mt-2" type="primary">
           {{ $t('sidebar.user.buttons.saveChanges') }}
         </el-button>
         <hr>
-        <el-button @click="signOut" class="sign-in-btn" type="primary">{{ $t('sidebar.user.buttons.logout') }}</el-button>
+        <el-button @click="signOut" class="full-width-btn" type="primary">{{ $t('sidebar.user.buttons.logout') }}</el-button>
       </div>
     </div>
   </b-container>
@@ -39,16 +47,22 @@
     name: 'user',
     data() {
       return ({
-        email: 'test@test.cz',
-        password: 'test',
+        userForm: {
+          email: '',
+          password: '',
+        },
         isLoading: false,
         userDetailTouched: false,
       });
     },
     methods: {
       async signIn() {
+        if (!this.isFormValid()) {
+          return;
+        }
+        
         this.isLoading = true;
-        await this.$store.dispatch('SIGN_IN', { login: this.email, password: this.password });
+        await this.$store.dispatch('SIGN_IN', { login: this.userForm.email, password: this.userForm.password });
         this.isLoading = false;
       },
       async signOut() {
@@ -64,6 +78,22 @@
         }, 1000);
         this.$message('😱 😱 😱 😱 Ještě není implementováno 😱 😱 😱 😱 😱');
       },
+      async register() {
+        if (!this.isFormValid()) {
+          return;
+        }
+
+        this.isLoading = true;
+        await this.$store.dispatch('REGISTER', { login: this.userForm.email, password: this.userForm.password });
+        this.isLoading = false;
+      },
+      isFormValid() {
+        let result = false;
+        this.$refs['userForm'].validate((value) => {
+          result = value;
+        });
+        return result;
+      }
     },
     computed: {
       isLoggedIn() {
@@ -72,12 +102,36 @@
       user() {
         return this.$store.getters.getUser;
       },
+      rules() {
+        return {
+          email: [
+            {
+              required: true, message: 'Pole e-mail je povinné', trigger: 'blur',
+            },
+            {
+              type: 'email', message: 'Je potřeba vložit validní email', trigger: 'blur',
+            },
+          ],
+          password: [
+            {
+              required: true, message: 'Pole heslo je povinné', trigger: 'blur',
+            },
+            {
+              min: 5, message: 'Heslo musí mít alespoň 5 znaků', trigger: 'blur',
+            },
+          ]
+        }
+      },
     },
   };
 </script>
 
 <style scoped>
-  .sign-in-btn {
+  .full-width-btn {
     width: 100%;
+  }
+
+  .or-btn {
+    margin-top: 15px;
   }
 </style>
