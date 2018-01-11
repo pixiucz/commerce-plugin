@@ -26,6 +26,10 @@ export default {
       form: {
         name: 'Meno',
         surname: 'Priezvisko',
+        emailRequired: 'Pole e-mail je povinné',
+        emailTypeEmail: 'Je potrebné vložiť validný email',
+        passwordRequired: 'Pole heslo je povinné',
+        passwordMin: 'Heslo musí mať aspoň 4 znaky',
       },
       misc: {
         or: 'alebo',
@@ -64,4 +68,8 @@ export default {
     withoutDPH: 'bez DPH',
     piece: 'ks',
   },
+  messages: {
+    userSignedIn: 'Uživateľ prihlásený',
+
+  }
 };

@@ -48,8 +48,8 @@
     data() {
       return ({
         userForm: {
-          email: '',
-          password: '',
+          email: 'test@test.cz',
+          password: 'test',
         },
         isLoading: false,
         userDetailTouched: false,
@@ -64,6 +64,8 @@
         this.isLoading = true;
         await this.$store.dispatch('SIGN_IN', { login: this.userForm.email, password: this.userForm.password });
         this.isLoading = false;
+
+        this.$message(this.$t('messages.userSignedIn'));
       },
       async signOut() {
         this.isLoading = true;
@@ -86,6 +88,8 @@
         this.isLoading = true;
         await this.$store.dispatch('REGISTER', { login: this.userForm.email, password: this.userForm.password });
         this.isLoading = false;
+
+        this.$message(this.$t('messages.userSignedIn'));
       },
       isFormValid() {
         let result = false;
@@ -106,18 +110,18 @@
         return {
           email: [
             {
-              required: true, message: 'Pole e-mail je povinné', trigger: 'blur',
+              required: true, message: this.$t('sidebar.user.form.emailRequired'), trigger: 'blur',
             },
             {
-              type: 'email', message: 'Je potřeba vložit validní email', trigger: 'blur',
+              type: 'email', message: this.$t('sidebar.user.form.emailTypeEmail'), trigger: 'blur',
             },
           ],
           password: [
             {
-              required: true, message: 'Pole heslo je povinné', trigger: 'blur',
+              required: true, message: this.$t('sidebar.user.form.passwordRequired'), trigger: 'blur',
             },
             {
-              min: 5, message: 'Heslo musí mít alespoň 5 znaků', trigger: 'blur',
+              min: 4, message: this.$t('sidebar.user.form.passwordMin'), trigger: 'blur',
             },
           ]
         }
