@@ -60,7 +60,6 @@
         if (!this.isFormValid()) {
           return;
         }
-        
         this.isLoading = true;
         await this.$store.dispatch('SIGN_IN', { login: this.userForm.email, password: this.userForm.password });
         this.isLoading = false;
@@ -93,11 +92,11 @@
       },
       isFormValid() {
         let result = false;
-        this.$refs['userForm'].validate((value) => {
+        this.$refs.userForm.validate((value) => {
           result = value;
         });
         return result;
-      }
+      },
     },
     computed: {
       isLoggedIn() {
@@ -123,8 +122,8 @@
             {
               min: 4, message: this.$t('sidebar.user.form.passwordMin'), trigger: 'blur',
             },
-          ]
-        }
+          ],
+        };
       },
     },
   };

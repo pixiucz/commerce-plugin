@@ -24,7 +24,7 @@ export default {
     sum() {
       let sum = 0;
       this.order.variants.forEach((product) => {
-        sum += product.pivot.price * product.pivot.quantity;
+        sum += product.price * product.quantity;
       });
       return sum;
     },

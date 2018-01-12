@@ -56,11 +56,10 @@ export default {
     },
     async REGISTER({ dispatch }, credentials) {
       const response = await register(credentials);
-      
       if (response.status === 201) {
         dispatch('SIGN_IN', credentials);
       }
-    }
+    },
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,

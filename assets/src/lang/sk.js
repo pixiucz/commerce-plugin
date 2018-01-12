@@ -70,6 +70,5 @@ export default {
   },
   messages: {
     userSignedIn: 'Uživateľ prihlásený',
-
-  }
+  },
 };

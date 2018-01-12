@@ -30,7 +30,7 @@ class UserController
         return response([
             'user' => $user->only('id', 'username', 'email', 'name', 'surname'),
             'addresses' => $user->addresses ?? [],
-            'orders' => $user->orders ?? [],
+            'orders' => $this->getUserOrders($user) ?? [],
         ], 200);
 
     }
@@ -79,27 +79,7 @@ class UserController
     {
         $user = Auth::getUser();
 
-        $orders = Order::where('user_id', $user->id)
-            ->with(['variants' => function($q) {
-                $q->select('id', 'slug', 'ean', 'product_id');
-            }, 'variants.product' => function($q) {
-                $q->select('id', 'name', 'brand_id');
-            }, 'variants.product.brand' => function ($q) {
-                $q->select('id', 'name');
-            }])
-            ->select('id', 'created_at')
-            ->get()
-            ->each(function($item) {
-                $item->variants->map(function($variant) {
-                    $variant->name = isset($variant->product->name) ? $variant->product->name : null;
-                    $variant->brand = isset($variant->product->brand->name) ? $variant->product->brand->name : null;
-                    $variant->quantity = $variant->pivot->quantity;
-                    $variant->price = $variant->pivot->price;
-                    unset($variant->pivot, $variant->product);
-                    return $variant;
-                });
-            })
-            ->toArray();
+        $orders = $this->getUserOrders($user);
 
         return response([
             'msg' => 'Historie uživatele ' . $user->email . '.',
@@ -128,4 +108,30 @@ class UserController
             'max' => ':attribute musí mít méně něž :max znaků',
         ]);
     }
+
+    // FIXME: Presunout do user modelu
+    private function getUserOrders($user) {
+        return Order::where('user_id', $user->id)
+            ->with(['variants' => function($q) {
+                $q->select('id', 'slug', 'ean', 'product_id');
+            }, 'variants.product' => function($q) {
+                $q->select('id', 'name', 'brand_id');
+            }, 'variants.product.brand' => function ($q) {
+                $q->select('id', 'name');
+            }])
+            ->select('id', 'created_at', 'status')
+            ->get()
+            ->each(function($item) {
+                $item->variants->map(function($variant) {
+                    $variant->product_name = isset($variant->product->name) ? $variant->product->name : null;
+                    $variant->brand = isset($variant->product->brand->name) ? $variant->product->brand->name : null;
+                    $variant->quantity = $variant->pivot->quantity;
+                    $variant->price = $variant->pivot->price;
+                    unset($variant->pivot, $variant->product);
+                    return $variant;
+                });
+            })
+            ->toArray();
+    }
+
 }

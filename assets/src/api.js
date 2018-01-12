@@ -110,5 +110,5 @@ export function register(credentials) {
     }).catch((error) => {
       reject(handleReject(error));
     });
-  })
+  });
 }
