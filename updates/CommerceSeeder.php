@@ -94,15 +94,18 @@ class CommerceSeeder extends Seeder
 
         // ADD ADDRESS TO USER
 
-        DB::table('pixiu_com_addresses')->insert([
-            'first_name' => 'Jan',
-            'last_name' => 'Testowicz',
-            'address' => 'Palachova 1337',
-            'city' => 'Brno',
-            'zip' => '613 00',
-            'country' => 'Czech republic',
-            'user_id' => 1
-        ]);
+        foreach (range(1,2) as $i) {
+            DB::table('pixiu_com_addresses')->insert([
+                'first_name' => 'Jan',
+                'last_name' => 'Testowicz',
+                'address' => $faker->streetAddress,
+                'city' => $faker->city,
+                'zip' => $faker->postcode,
+                'telephone' => '+420 603 777 123',
+                'country' => 'Czech republic',
+                'user_id' => 1
+            ]);
+        }
 
         DB::table('pixiu_com_delivery_options')->insert(
             [
