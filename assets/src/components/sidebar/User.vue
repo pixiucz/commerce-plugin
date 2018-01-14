@@ -16,35 +16,68 @@
         </el-form>
       </div>
       <div v-else>
-        <b-row>
-          <b-col cols="3" class="text-right mt-1">
-            {{ $t('sidebar.user.form.name') }}
-          </b-col>
-          <b-col cols="9">
-            <el-input @change="userDetailTouched = true" name="name" v-model="user.name"></el-input>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col cols="3" class="text-right mt-1">
-            {{ $t('sidebar.user.form.surname') }}
-          </b-col>
-          <b-col cols="9">
-            <el-input @blur="userDetailTouched = true" name="surname" v-model="user.surname"></el-input>
-          </b-col>
-        </b-row>
-        <el-button v-if="userDetailTouched" @click="updateUserDetail" class="full-width-btn mt-2" type="primary">
-          {{ $t('sidebar.user.buttons.saveChanges') }}
-        </el-button>
-        <hr>
         <el-button @click="signOut" class="full-width-btn" type="primary">{{ $t('sidebar.user.buttons.logout') }}</el-button>
+
+        <div class="pt-3">
+          <h4 class="text-center"> Detail </h4>
+          <div class="bordered-content">
+            <b-row>
+              <b-col cols="3" class="text-right mt-1">
+                {{ $t('sidebar.user.form.name') }}
+              </b-col>
+              <b-col cols="9">
+                <el-input @change="userDetailTouched = true" name="name" v-model="user.name"></el-input>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="3" class="text-right mt-1">
+                {{ $t('sidebar.user.form.surname') }}
+              </b-col>
+              <b-col cols="9">
+                <el-input @blur="userDetailTouched = true" name="surname" v-model="user.surname"></el-input>
+              </b-col>
+            </b-row>
+            <el-button v-if="userDetailTouched" @click="updateUserDetail" class="full-width-btn mt-2" type="primary">
+              {{ $t('sidebar.user.buttons.saveChanges') }}
+            </el-button>
+          </div>
+        </div>
+        
+        <div id="addresses" class="pt-3">
+          <h4 class="text-center"> Adresy </h4>
+          <div class="bordered-content">
+            <el-button id="add-address-btn" type="primary" class="full-width-btn" @click="isAddingAddress = !isAddingAddress">
+              <span v-if="!isAddingAddress">
+                <i class="el-icon-arrow-down"></i>
+                Přidat adresu
+              </span>
+              <span v-else>
+                <i class="el-icon-arrow-up"></i>
+                Skrýt
+              </span>
+            </el-button>
+            <div v-if="isAddingAddress">
+              <address-form></address-form>
+            </div>
+            <address-card v-for="address in addresses" :key="address.id" :address="address"></address-card>
+          </div>
+        </div>
       </div>
+
     </div>
   </b-container>
 </template>
 
 <script>
+  import AddressCard from '@/components/user/AddressCard';
+  import AddressForm from '@/components/user/AddressForm';
+
   export default {
     name: 'user',
+    components: {
+      'address-card': AddressCard,
+      'address-form': AddressForm,
+    },
     data() {
       return ({
         userForm: {
@@ -52,6 +85,7 @@
           password: 'test',
         },
         isLoading: false,
+        isAddingAddress: false,
         userDetailTouched: false,
       });
     },
@@ -125,16 +159,29 @@
           ],
         };
       },
+      addresses() {
+        return this.$store.getters.getAddresses;
+      },
     },
   };
 </script>
 
 <style scoped>
-  .full-width-btn {
-    width: 100%;
-  }
-
   .or-btn {
     margin-top: 15px;
+  }
+
+  #detail {
+    padding: 10px 10px 10px 10px;
+    border: black 1px solid;
+  } 
+
+  .bordered-content {
+    padding: 10px 10px 10px 10px;
+    border: black 1px solid;
+  }
+
+  #add-address-btn {
+    margin-bottom: 20px;
   }
 </style>

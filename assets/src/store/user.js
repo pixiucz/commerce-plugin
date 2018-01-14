@@ -65,5 +65,6 @@ export default {
     isLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user,
     getOrders: state => state.orders,
+    getAddresses: state => state.addresses,
   },
 };

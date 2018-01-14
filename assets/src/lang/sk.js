@@ -67,8 +67,13 @@ export default {
     withDPH: 's DPH',
     withoutDPH: 'bez DPH',
     piece: 'ks',
+    yes: 'Ano',
+    no: 'Nie',
+    cancel: 'Zrušiť',
+    confirm: 'Potvrdiť',
   },
   messages: {
     userSignedIn: 'Uživateľ prihlásený',
+    deleteAddressConfirm: '',
   },
 };
