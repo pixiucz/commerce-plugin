@@ -57,8 +57,9 @@
               </span>
             </el-button>
             <div v-if="isAddingAddress">
-              <address-form></address-form>
+              <address-form @added="isAddingAddress = false"></address-form>
             </div>
+            <hr>
             <address-card v-for="address in addresses" :key="address.id" :address="address"></address-card>
           </div>
         </div>

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import Vue from 'vue';
-import { signIn, getUser, signOut, register } from '@/api';
+import { signIn, getUser, signOut, register, addAddress } from '@/api';
 
 export default {
   state: {
@@ -31,6 +31,9 @@ export default {
     SET_ORDERS(state, orders) {
       Vue.set(state, 'orders', orders);
     },
+    ADD_ADDRESS(state, address) {
+      state.addresses.push(address);
+    },
   },
   actions: {
     async SIGN_IN({ commit }, credentials) {
@@ -58,6 +61,12 @@ export default {
       const response = await register(credentials);
       if (response.status === 201) {
         dispatch('SIGN_IN', credentials);
+      }
+    },
+    async ADD_ADDRESS({ commit }, address) {
+      const response = await addAddress(address);
+      if (response.status === 201) {
+        commit('ADD_ADDRESS', response.body.address);
       }
     },
   },

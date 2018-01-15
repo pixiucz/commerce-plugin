@@ -23,9 +23,9 @@ class AddressController
             ], 400);
         }
 
-        $this->addNewAddress($request->all());
+        $address = $this->addNewAddress($request->all());
 
-        return response(['msg' => 'Nová adresa pro uživatele ' . $this->user->email . ' vložena.'], 201);
+        return response(['address' => $address], 201);
     }
 
     public function edit($id, Request $request)
@@ -88,14 +88,17 @@ class AddressController
         $address->city = $values['city'];
         $address->zip = $values['zip'];
         $address->country = $values['country'];
+        $address->telephone = $values['telephone'];
 
         $address->dic = array_key_exists('dic', $values)
             ? $values['dic']
             : null;
-        $address->ic = array_key_exists('ic', $values)
-            ? $values['ic']
+        $address->ico = array_key_exists('ico', $values)
+            ? $values['ico']
             : null;
 
         $address->save();
+
+        return $address;
     }
 }

@@ -44,7 +44,7 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-button type="primary" class="full-width-btn">Uložiť</el-button>
+    <el-button :loading="isLoading" @click="addAddress" type="primary" class="full-width-btn">Uložiť</el-button>
   </el-form>
 </template>
 
@@ -87,7 +87,30 @@ export default {
           { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
         ],
       },
+      isLoading: false,
     });
+  },
+  methods: {
+    async addAddress() {
+      this.isLoading = true;
+      await this.$store.dispatch('ADD_ADDRESS', this.newAddressForm);
+      this.isLoading = false;
+      this.resetForm();
+      this.$emit('added');
+    },
+    resetForm() {
+      this.newAddressForm = {
+        address: '',
+        city: '',
+        company: '',
+        country: '',
+        dic: '',
+        first_name: '',
+        last_name: '',
+        telephone: '',
+        zip: '',
+      };
+    },
   },
 };
 </script>

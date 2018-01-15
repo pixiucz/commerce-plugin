@@ -112,3 +112,13 @@ export function register(credentials) {
     });
   });
 }
+
+export function addAddress(address) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(`${API}/address`, address).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
