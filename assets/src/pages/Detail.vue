@@ -2,8 +2,8 @@
   <b-container v-if="product" v-loading="isLoading">
     <div class="category-header">
       <p class="margin-top4 margin-bottom4 text-color">
-        <router-link :to="{ name: 'category', params: { slug: product.categories[0][0].slug }}">
-          {{ product.categories[0][0].name }}
+        <router-link v-if="categorySlug" :to="{ name: 'category', params: { slug: categorySlug }}">
+          {{ categoryName }}
         </router-link> 
         &gt; {{ name }}
       </p>
@@ -99,6 +99,22 @@
       },
       name() {
         return getFullProductName(this.product);
+      },
+      categoryName() {
+        if (this.product.categories) {
+          return this.product.categories[0][0].name;
+        } else {
+          return ' - ';
+        }
+
+        // product.categories[0][0].name
+      },
+      categorySlug() {
+        if (this.product.categories) {
+          return this.product.categories[0][0].slug;
+        } else {
+          return false;
+        }
       }
     },
     watch: {
