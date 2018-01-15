@@ -1,6 +1,5 @@
 <template>
   <b-row>
-    ... detail ...
     <product-list v-for="product in order.variants" :key="product.id" :item="{ product, amount: product.quantity }" :readOnly="true"></product-list>
   </b-row>
 </template>
