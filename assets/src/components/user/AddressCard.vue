@@ -20,7 +20,7 @@ export default {
   props: ['address'],
   methods: {
     deleteAddress() {
-      this.$confirm(this.$t('messages.deleteAddressConfirm'), 'Warning', {
+      this.$confirm(this.$t('messages.deleteAddressConfirm'), '', {
         confirmButtonText: this.$t('other.confirm'),
         cancelButtonText: this.$t('other.cancel'),
         type: 'warning',
@@ -28,12 +28,12 @@ export default {
         this.$store.dispatch('DELETE_ADDRESS', this.address.id);
         this.$message({
           type: 'success',
-          message: 'Delete completed',
+          message: this.$t('messages.deleteCompleted'),
         });
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: 'Delete canceled',
+          message: this.$t('messages.deleteCanceled'),
         });
       });
     },

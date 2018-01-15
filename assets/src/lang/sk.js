@@ -30,6 +30,10 @@ export default {
         emailTypeEmail: 'Je potrebné vložiť validný email',
         passwordRequired: 'Pole heslo je povinné',
         passwordMin: 'Heslo musí mať aspoň 4 znaky',
+        phone: 'Je potřeba vyplnit telefon',
+        countryCode: 'Je potřeba zadat předvolbu',
+        postalCode: 'Je potřeba zadat PSČ',
+        correctPostalCode: 'PSČ musí být ve správném tvaru',
       },
       misc: {
         or: 'alebo',
@@ -74,6 +78,8 @@ export default {
   },
   messages: {
     userSignedIn: 'Uživateľ prihlásený',
-    deleteAddressConfirm: '',
+    deleteAddressConfirm: 'Vážně si přejete vymazat adresu?',
+    deleteCompleted: 'Adresa byla smazána',
+    deleteCanceled: 'Smazání bylo přerušeno',
   },
 };
