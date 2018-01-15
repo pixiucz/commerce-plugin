@@ -22,7 +22,7 @@ columns:
     retail_price:
         label: pixiu.commerce::lang.fields.retail_price
         type: partial
-        path: column_price
+        path: $/pixiu/commerce/controllers/products/_column_price.htm
 
     tax_rate:
         label: pixiu.commerce::lang.fields.tax_rate

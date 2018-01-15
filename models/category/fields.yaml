@@ -28,3 +28,7 @@ fields:
         emptyOption: -
         span: storm
         cssClass: col-sm-6 col-md-4
+
+    products:
+        type: partial
+        path: relation_products

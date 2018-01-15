@@ -1,0 +1,11 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+products:
+    label: Role
+    view:
+        toolbarButtons: false
+        recordsPerPage: 10
+        recordUrl: pixiu/commerce/products/update/:id
+        list: $/pixiu/commerce/models/product/columns.yaml
