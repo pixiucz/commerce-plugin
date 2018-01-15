@@ -311,25 +311,20 @@ class Products extends Controller
     {
         if (!$productVariant = $model->productvariants->first()) {
             $productVariant = new ProductVariant();
+            $productVariant->slug = 'temp-' . microtime();
             $productVariant->in_stock = post('Product._in_stock') === "" ? 0 : post('Product._in_stock');
             $productVariant->product()->associate($model);
+            $productVariant->save();
+            $productVariant->slug = str_slug($this->getBasicSlug($model) . '-' . $productVariant->id, '-');
         };
         $productVariant->ean = post('Product._ean');
         $productVariant->price = $this->currencyHandler->getValueFromInput(post('Product.retail_price'));
-
-        $slug = $this->getBasicSlug($model);
-        $productVariant->slug = str_slug($slug, '-');
 
         if ($stockChange = post('Product._change_stock')){
             $productVariant->in_stock += $stockChange;
         }
 
-        if ($slugChange = post('Product._slug')){
-            $productVariant->slug = $slugChange;
-        }
-
         $productVariant->save();
-        $productVariant->slug = $productVariant->id . '-' . $productVariant->slug;
 
         $model->images()->get()->each(function($item, $key) use ($productVariant) {
             if (!$productVariant->images->contains($item)){
