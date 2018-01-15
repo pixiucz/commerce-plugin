@@ -3,38 +3,38 @@
     <div class="row">
       <div class="col-md-6">
       <el-form-item prop="first_name">
-        <el-input v-model="newAddressForm.first_name" placeholder="Jméno"></el-input>
+        <el-input v-model="newAddressForm.first_name" :placeholder="$t('sidebar.user.form.name')"></el-input>
       </el-form-item>
       </div>
       <div class="col-md-6">
       <el-form-item prop="last_name">
-        <el-input v-model="newAddressForm.last_name" placeholder="Příjmení"></el-input>
+        <el-input v-model="newAddressForm.last_name" :placeholder="$t('sidebar.user.form.surname')"></el-input>
       </el-form-item>
       </div>
     </div>
     <el-form-item prop="telephone">
-      <el-input v-model="newAddressForm.telephone" placeholder="Telefonní číslo"></el-input>
+      <el-input v-model="newAddressForm.telephone" :placeholder="$t('sidebar.user.form.phone')"></el-input>
     </el-form-item>
     <el-form-item prop="address">
-      <el-input v-model="newAddressForm.address" placeholder="Adresa"></el-input>
+      <el-input v-model="newAddressForm.address" :placeholder="$t('sidebar.user.form.address')"></el-input>
     </el-form-item>
     <div class="row">
       <div class="col-md-8">
         <el-form-item prop="city">
-          <el-input v-model="newAddressForm.city" placeholder="Město"></el-input>
+          <el-input v-model="newAddressForm.city" :placeholder="$t('sidebar.user.form.city')"></el-input>
         </el-form-item>
       </div>
       <div class="col-md-4">
         <el-form-item prop="zip">
-          <el-input v-model="newAddressForm.zip" placeholder="PSČ"></el-input>
+          <el-input v-model="newAddressForm.zip" :placeholder="$t('sidebar.user.form.zip')"></el-input>
         </el-form-item>
       </div>
     </div>
     <el-form-item prop="country">
-      <el-select v-model="newAddressForm.country" placeholder="Země">
+      <el-select v-model="newAddressForm.country" :placeholder="$t('sidebar.user.form.country')">
         <el-option
           value="Slovakia"
-          label="Slovenska republika"
+          label="Slovenská republika"
         >
         </el-option>
         <el-option
@@ -44,7 +44,9 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-button :loading="isLoading" @click="addAddress" type="primary" class="full-width-btn">Uložiť</el-button>
+    <el-button :loading="isLoading" @click="addAddress" type="primary" class="full-width-btn">
+      {{ $t('other.save')}}
+    </el-button>
   </el-form>
 </template>
 
@@ -66,25 +68,25 @@ export default {
       },
       rules: {
         first_name: [
-          { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
+          { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
         last_name: [
-          { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
+          { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
         telephone: [
           { validator: this.checkPhone },
         ],
         address: [
-          { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
+          { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
         city: [
-          { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
+          { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
         zip: [
           { validator: this.checkPostal },
         ],
         country: [
-          { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
+          { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
       },
       isLoading: false,
@@ -113,7 +115,7 @@ export default {
     },
     checkPhone(rule, value, callback) {
       if (!value) {
-        return callback(new Error(this.$t('sidebar.user.form.phone')));
+        return callback(new Error(this.$t('sidebar.user.form.phoneRequired')));
       }
 
       if (!value.match(/^\+[0-9]+/)) {
@@ -124,7 +126,7 @@ export default {
     },
     checkPostal(rules, value, callback) {
       if (!value) {
-        return callback(new Error(this.$t('sidebar.user.form.postalCode')));
+        return callback(new Error(this.$t('sidebar.user.form.postalCodeRequired')));
       }
 
       if (!value.match(/^[0-9]{3} [0-9]{2}$/)) {
