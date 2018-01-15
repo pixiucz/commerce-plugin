@@ -7,7 +7,7 @@ columns:
         label: ID
         searchable: true
 
-    brand_id:
+    brand:
         label: pixiu.commerce::lang.fields.brand
         relation: brand
         select: name
