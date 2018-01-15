@@ -81,7 +81,7 @@ export default {
           { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
         ],
         zip: [
-          { validator: this.checkPostal }
+          { validator: this.checkPostal },
         ],
         country: [
           { required: true, message: 'Je potřeba vyplnit', trigger: 'blur' },
@@ -113,25 +113,25 @@ export default {
     },
     checkPhone(rule, value, callback) {
       if (!value) {
-          return callback(new Error(this.$t('sidebar.user.form.phone')));
+        return callback(new Error(this.$t('sidebar.user.form.phone')));
       }
 
       if (!value.match(/^\+[0-9]+/)) {
-          return callback(new Error(this.$t('sidebar.user.form.countryCode')));
+        return callback(new Error(this.$t('sidebar.user.form.countryCode')));
       }
 
-      callback();
+      return callback();
     },
     checkPostal(rules, value, callback) {
       if (!value) {
-          return callback(new Error(this.$t('sidebar.user.form.postalCode')));
+        return callback(new Error(this.$t('sidebar.user.form.postalCode')));
       }
 
       if (!value.match(/^[0-9]{3} [0-9]{2}$/)) {
-          return callback(new Error(this.$t('sidebar.user.form.correctPostalCode')));
+        return callback(new Error(this.$t('sidebar.user.form.correctPostalCode')));
       }
 
-      callback();
+      return callback();
     },
   },
 };

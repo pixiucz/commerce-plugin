@@ -41,7 +41,7 @@ export default {
     },
     name() {
       return getFullProductName(this.item.product);
-    }
+    },
   },
 };
 </script>

@@ -28,7 +28,7 @@ export default {
     },
     name() {
       return getFullProductName(this.product);
-    }
+    },
   },
 };
 </script>

@@ -103,19 +103,15 @@
       categoryName() {
         if (this.product.categories) {
           return this.product.categories[0][0].name;
-        } else {
-          return ' - ';
         }
-
-        // product.categories[0][0].name
+        return ' - ';
       },
       categorySlug() {
         if (this.product.categories) {
           return this.product.categories[0][0].slug;
-        } else {
-          return false;
         }
-      }
+        return false;
+      },
     },
     watch: {
       $route: 'reuseComponent',

@@ -6,14 +6,13 @@ export function priceWithoutTax(price, taxrate) {
 export const asdf = '123';
 
 export function getFullProductName(product) {
-  let sufix = "";
+  let sufix = '';
 
-  product.attributes.forEach(spec => {
+  product.attributes.forEach((spec) => {
     sufix += ` ${spec.value}`;
   });
 
-  let prefix = "";
-  
+  let prefix = '';
   if (product.brand_name) {
     prefix = product.brand_name;
   }
