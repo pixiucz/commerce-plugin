@@ -59,7 +59,7 @@ class AddressController
         $address->user_id = null;
         $address->save();
 
-        return response(['msg' => 'Adresa byla odstraněna.'], 201);
+        return response(['msg' => 'Adresa byla odstraněna.'], 200);
 
     }
 

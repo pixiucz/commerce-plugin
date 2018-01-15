@@ -25,6 +25,7 @@ export default {
         cancelButtonText: this.$t('other.cancel'),
         type: 'warning',
       }).then(() => {
+        this.$store.dispatch('DELETE_ADDRESS', this.address.id);
         this.$message({
           type: 'success',
           message: 'Delete completed',

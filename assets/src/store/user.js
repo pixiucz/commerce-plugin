@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import Vue from 'vue';
-import { signIn, getUser, signOut, register, addAddress } from '@/api';
+import { signIn, getUser, signOut, register, addAddress, deleteAddress } from '@/api';
 
 export default {
   state: {
@@ -33,6 +33,9 @@ export default {
     },
     ADD_ADDRESS(state, address) {
       state.addresses.push(address);
+    },
+    DELETE_ADDRESS(state, addressIndex) {
+      state.addresses.splice(addressIndex, 1);
     },
   },
   actions: {
@@ -69,11 +72,19 @@ export default {
         commit('ADD_ADDRESS', response.body.address);
       }
     },
+    async DELETE_ADDRESS({ commit, getters }, addressId) {
+      const response = await deleteAddress(addressId);
+      if (response.status === 200) {
+        const addressIndex = getters.getAddressIndexById(addressId);
+        commit('DELETE_ADDRESS', addressIndex);
+      }
+    },
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user,
     getOrders: state => state.orders,
     getAddresses: state => state.addresses,
+    getAddressIndexById: state => id => state.addresses.findIndex(address => address.id === id),
   },
 };

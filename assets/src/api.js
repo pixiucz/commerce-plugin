@@ -122,3 +122,13 @@ export function addAddress(address) {
     });
   });
 }
+
+export function deleteAddress(addressId) {
+  return new Promise((resolve, reject) => {
+    Vue.http.delete(`${API}/address/${addressId}`).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}
