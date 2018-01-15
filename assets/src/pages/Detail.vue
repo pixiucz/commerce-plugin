@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-container v-if="product" v-loading="isLoading">
+  <div v-loading="isLoading">
+    <b-container v-if="product">
       <div class="category-header">
         <p class="margin-top4 margin-bottom4 text-color">
           <router-link v-if="categorySlug" :to="{ name: 'category', params: { slug: categorySlug }}">
@@ -45,7 +45,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <div style="height: 100%; width: 100%; padding-top: 45vh;" v-else v-loading="isLoading">
+    <div style="height: 100%; width: 100%; padding-top: 45vh;" v-else>
     </div>
   </div>
 </template>
