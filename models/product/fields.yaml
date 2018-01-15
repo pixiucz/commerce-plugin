@@ -13,6 +13,7 @@ secondaryTabs:
 
         brand:
             label: pixiu.commerce::lang.fields.brand
+            comment: Bude zobrazen před názvem produktu
             type: recordfinder
             list: $/pixiu/commerce/models/brand/columns.yaml
             prompt: Stiskni %s
