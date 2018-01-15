@@ -118,7 +118,8 @@ class UserController
                 $q->select('id', 'name', 'brand_id');
             }, 'variants.product.brand' => function ($q) {
                 $q->select('id', 'name');
-            }])
+            },
+                'variants.attributes'])
             ->select('id', 'created_at', 'status')
             ->get()
             ->each(function($item) {

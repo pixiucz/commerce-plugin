@@ -7,7 +7,7 @@
       <button v-if="!readOnly" type="button" class="close" aria-label="Close">
         <i class="el-icon-close" @click="removeItem"></i>
       </button>
-      <h5 @click="showProduct" style="cursor: pointer;"> {{ item.product.product_name }} </h5>
+      <h5 @click="showProduct" style="cursor: pointer;"> {{ name }} </h5>
       <h6> {{ (item.product.price * item.amount).toFixed(2) | price }} <i class="light"> {{ $t('other.withDPH') }} </i> </h6>
       <h6 class="dark-grey"> {{ (priceNoTax * item.amount).toFixed(2) | price }} {{ $t('other.withoutDPH') }} </h6>
       <el-input-number :disabled="readOnly" :min="1" v-model="item.amount" @change="handleAmountChange"></el-input-number>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { priceWithoutTax } from '@/helpers';
+import { priceWithoutTax, getFullProductName } from '@/helpers';
 
 export default {
   props: ['item', 'readOnly'],
@@ -39,6 +39,9 @@ export default {
     priceNoTax() {
       return priceWithoutTax(this.item.product.price, this.item.product.tax_rate);
     },
+    name() {
+      return getFullProductName(this.item.product);
+    }
   },
 };
 </script>

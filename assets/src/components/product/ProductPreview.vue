@@ -5,7 +5,7 @@
                 <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
             <div class="card-content">
                 <h3 class="mt-1 to-upper">
-                    {{ product.product_name }}
+                    {{ name }}
                 </h3>
             
                 <p class="pb-1 mb-0 price">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { priceWithoutTax } from '@/helpers';
+import { priceWithoutTax, getFullProductName } from '@/helpers';
 
 export default {
   props: ['product'],
@@ -26,6 +26,9 @@ export default {
     priceNoTax() {
       return priceWithoutTax(this.product.price, this.product.tax_rate);
     },
+    name() {
+      return getFullProductName(this.product);
+    }
   },
 };
 </script>

@@ -5,7 +5,7 @@
         <router-link :to="{ name: 'category', params: { slug: product.categories[0][0].slug }}">
           {{ product.categories[0][0].name }}
         </router-link> 
-        &gt; {{ product.product_name }}
+        &gt; {{ name }}
       </p>
     </div>
     <b-row>
@@ -14,7 +14,7 @@
             <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
         </b-col>
         <b-col md="7">
-            <h1 class="big margin-top-9">{{ product.product_name }}</h1>
+            <h1 class="big margin-top-9">{{ name }}</h1>
             <p class="text-color margin-bottom3" v-html="product.short_description"></p>
             <b-row>
                 <b-col md="12" class="text-center">
@@ -48,7 +48,7 @@
 
 <script>
   import { getProduct } from '@/api';
-  import { priceWithoutTax } from '@/helpers';
+  import { priceWithoutTax, getFullProductName } from '@/helpers';
 
   export default {
     name: 'detail',
@@ -97,6 +97,9 @@
       priceNoTax() {
         return priceWithoutTax(this.product.price, this.product.tax_rate);
       },
+      name() {
+        return getFullProductName(this.product);
+      }
     },
     watch: {
       $route: 'reuseComponent',
