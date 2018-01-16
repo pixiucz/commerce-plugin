@@ -1,32 +1,32 @@
 <template>
-  <el-form :model="newAddressForm" :rules="rules">
+  <el-form :model="newAddressForm" :rules="rules" ref="addressForm">
     <div class="row">
       <div class="col-md-6">
       <el-form-item prop="first_name">
-        <el-input v-model="newAddressForm.first_name" :placeholder="$t('sidebar.user.form.name')"></el-input>
+        <el-input name="first_name" v-model="newAddressForm.first_name" :placeholder="$t('sidebar.user.form.name')"></el-input>
       </el-form-item>
       </div>
       <div class="col-md-6">
       <el-form-item prop="last_name">
-        <el-input v-model="newAddressForm.last_name" :placeholder="$t('sidebar.user.form.surname')"></el-input>
+        <el-input name="last_name" v-model="newAddressForm.last_name" :placeholder="$t('sidebar.user.form.surname')"></el-input>
       </el-form-item>
       </div>
     </div>
     <el-form-item prop="telephone">
-      <el-input v-model="newAddressForm.telephone" :placeholder="$t('sidebar.user.form.phone')"></el-input>
+      <el-input name="telephone" v-model="newAddressForm.telephone" :placeholder="$t('sidebar.user.form.phone')"></el-input>
     </el-form-item>
     <el-form-item prop="address">
-      <el-input v-model="newAddressForm.address" :placeholder="$t('sidebar.user.form.address')"></el-input>
+      <el-input name="address" v-model="newAddressForm.address" :placeholder="$t('sidebar.user.form.address')"></el-input>
     </el-form-item>
     <div class="row">
       <div class="col-md-8">
         <el-form-item prop="city">
-          <el-input v-model="newAddressForm.city" :placeholder="$t('sidebar.user.form.city')"></el-input>
+          <el-input name="city" v-model="newAddressForm.city" :placeholder="$t('sidebar.user.form.city')"></el-input>
         </el-form-item>
       </div>
       <div class="col-md-4">
         <el-form-item prop="zip">
-          <el-input v-model="newAddressForm.zip" :placeholder="$t('sidebar.user.form.zip')"></el-input>
+          <el-input name="zip" v-model="newAddressForm.zip" :placeholder="$t('sidebar.user.form.zip')"></el-input>
         </el-form-item>
       </div>
     </div>
@@ -94,6 +94,10 @@ export default {
   },
   methods: {
     async addAddress() {
+      if (!this.isFormValid()) {
+        return;
+      }
+
       this.isLoading = true;
       await this.$store.dispatch('ADD_ADDRESS', this.newAddressForm);
       this.isLoading = false;
@@ -134,6 +138,13 @@ export default {
       }
 
       return callback();
+    },
+    isFormValid() {
+      let result = false;
+      this.$refs.addressForm.validate((value) => {
+        result = value;
+      });
+      return result;
     },
   },
 };
