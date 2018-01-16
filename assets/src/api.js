@@ -18,6 +18,9 @@ function handleReject(error, message = true) {
         ? i18n.t('error.api', { status: error.status })
         : error,
     });
+
+    // DEBUGING
+    console.log(error);
   }
 
   switch (error.status) {
