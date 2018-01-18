@@ -11,6 +11,5 @@ export function getFullProductName(product) {
   product.attributes.forEach((spec) => {
     sufix += ` ${spec.value}`;
   });
-  
   return `${product.product_name} ${sufix}`;
 }
