@@ -11,11 +11,6 @@ export function getFullProductName(product) {
   product.attributes.forEach((spec) => {
     sufix += ` ${spec.value}`;
   });
-
-  let prefix = '';
-  if (product.brand_name) {
-    prefix = product.brand_name;
-  }
-
-  return `${prefix} ${product.product_name} ${sufix}`;
+  
+  return `${product.product_name} ${sufix}`;
 }
