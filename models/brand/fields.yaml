@@ -1,20 +1,39 @@
 # ===================================
 #  Form Field Definitions
 # ===================================
+secondaryTabs:
+    fields:
+      id:
+          label: ID
+          disabled: true
+          span: storm
+          cssClass: col-sm-12
+          tab: pixiu.commerce::lang.tabs.info
 
-fields:
-    id:
-        label: ID
-        disabled: true
+      name:
+          label: pixiu.commerce::lang.fields.name
+          span: storm
+          cssClass: col-sm-12
+          tab: pixiu.commerce::lang.tabs.info
 
-    name:
-        label: pixiu.commerce::lang.fields.name
+      logo:
+          label: pixiu.commerce::lang.fields.logo
+          type: fileupload
+          mode: image
+          span: storm
+          cssClass: col-sm-12
+          tab: pixiu.commerce::lang.tabs.info
 
-    logo:
-        label: pixiu.commerce::lang.fields.logo
-        type: fileupload
-        mode: image
+      description:
+          label: pixiu.commerce::lang.fields.description
+          type: markdown
+          span: storm
+          cssClass: col-sm-12
+          tab: pixiu.commerce::lang.tabs.info
 
-    description:
-        label: pixiu.commerce::lang.fields.description
-        type: markdown
+      products@update:
+          type: partial
+          path: relation_products
+          span: storm
+          cssClass: col-sm-12
+          tab: pixiu.commerce::lang.tabs.products
