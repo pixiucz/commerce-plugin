@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Detail from './pages/Detail';
+import Checkout from './pages/Checkout';
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ export default new Router({
       name: 'detail',
       component: Detail,
       props: true,
+    },
+    {
+      path: '/objednavka',
+      name: 'checkout',
+      component: Checkout,
     },
     // BEWARE that following routes are not source-of-thruth, but merely set flags
     {
