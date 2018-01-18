@@ -1,7 +1,8 @@
 <template>
   <b-row class="product-list">
     <b-col cols="4">
-      <b-img fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+      <b-img v-if="item.product.primary_picture" :src="item.product.primary_picture.path" fluid />
+      <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
     </b-col>
     <b-col cols="8 to-upper mt-2">
       <button v-if="!readOnly" type="button" class="close" aria-label="Close">
