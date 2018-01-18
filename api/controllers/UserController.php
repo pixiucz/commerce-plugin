@@ -115,11 +115,11 @@ class UserController
             ->with(['variants' => function($q) {
                 $q->select('id', 'slug', 'ean', 'product_id');
             }, 'variants.product' => function($q) {
-                $q->select('id', 'name', 'brand_id');
+                $q->select('id', 'name', 'brand_id', 'tax_id');
             }, 'variants.product.brand' => function ($q) {
                 $q->select('id', 'name');
-            },
-                'variants.attributes'])
+            }, 'variants.product.tax',
+            'variants.attributes'])
             ->select('id', 'created_at', 'status')
             ->get()
             ->each(function($item) {
@@ -128,6 +128,7 @@ class UserController
                     $variant->brand = isset($variant->product->brand->name) ? $variant->product->brand->name : null;
                     $variant->quantity = $variant->pivot->quantity;
                     $variant->price = $variant->pivot->price;
+                    $variant->tax_rate = isset($variant->product->tax) ? $variant->product->tax->rate : null;
                     unset($variant->pivot, $variant->product);
                     return $variant;
                 });

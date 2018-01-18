@@ -1,8 +1,7 @@
 <template>
     <b-card class="hoverable-card">
         <router-link :to="{ name: 'detail', params: { slug: product.slug }}">
-                <b-img v-if="product.primary_picture" :src="product.primary_picture.path" fluid />
-                <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+            <product-image :product="product"></product-image>
             <div class="card-content">
                 <h3 class="mt-1 to-upper">
                     {{ name }}
@@ -19,9 +18,13 @@
 
 <script>
 import { priceWithoutTax, getFullProductName } from '@/helpers';
+import ProductImage from '@/components/product/ProductImage';
 
 export default {
   props: ['product'],
+  components: {
+    'product-image': ProductImage,
+  },
   computed: {
     priceNoTax() {
       return priceWithoutTax(this.product.price, this.product.tax_rate);

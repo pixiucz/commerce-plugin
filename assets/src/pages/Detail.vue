@@ -11,8 +11,7 @@
       </div>
       <b-row>
           <b-col md="5" class="text-center">
-              <b-img v-if="product.primary_picture" fluid :src="product.primary_picture.path" />
-              <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+              <product-image :product="product"></product-image>
           </b-col>
           <b-col md="7">
               <h1 class="big margin-top-9">{{ name }}</h1>
@@ -27,8 +26,7 @@
                   class="mt-1">
                     <b-row>
                       <b-col md="3">
-                        <b-img v-if="variant.primary_picture" fluid :src="variant.primary_picture.path" />
-                        <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+                        <product-image :product="variant"></product-image>
                       </b-col>
                       <b-col md="9">
                         {{ getFullVariantName(variant) }} <br>
@@ -73,10 +71,14 @@
 <script>
   import { getProduct } from '@/api';
   import { priceWithoutTax, getFullProductName } from '@/helpers';
+  import ProductImage from '@/components/product/ProductImage';
 
   export default {
     name: 'detail',
     props: ['slug'],
+    components: {
+      'product-image': ProductImage,
+    },
     data() {
       return {
         product: null,
