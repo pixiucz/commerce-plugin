@@ -17,7 +17,27 @@
           <b-col md="7">
               <h1 class="big margin-top-9">{{ name }}</h1>
               <p class="text-color margin-bottom3" v-html="product.short_description"></p>
-              <b-row>
+              <el-select v-if="product.otherVariants.length > 1" v-model="variantDropdownValue" placeholder="Varianty produktu" style="width: 100%">
+                <el-option
+                  v-for="variant in product.otherVariants"
+                  :key="variant.slug"
+                  :value="variant.slug"
+                  :label="getFullVariantName(variant)"
+                  style="height: 75px; width: 100%;"
+                  class="mt-1">
+                    <b-row>
+                      <b-col md="3">
+                        <b-img v-if="variant.primary_picture" fluid :src="variant.primary_picture.path" />
+                        <b-img v-else fluid src="http://tz.pixiu.cz/storage/app/uploads/public/595/bab/3d2/595bab3d23cec055399992.png" />
+                      </b-col>
+                      <b-col md="9">
+                        {{ getFullVariantName(variant) }} <br>
+                        {{ variant.price | price }}
+                      </b-col>
+                    </b-row> 
+                </el-option>
+              </el-select>
+              <b-row class="mt-3">
                   <b-col md="12" class="text-center">
                       <div>
                         <h4> {{ product.price | price }} {{ $t('other.withDPH')}} </h4>
@@ -62,6 +82,7 @@
         product: null,
         amount: 1,
         isLoading: true,
+        variantDropdownValue: '',
       };
     },
     async created() {
@@ -86,6 +107,9 @@
         const product = await getProduct(this.slug);
         this.product = product;
         this.isLoading = false;
+      },
+      getFullVariantName(variant) {
+        return getFullProductName(variant);
       },
     },
     computed: {
@@ -119,6 +143,9 @@
     },
     watch: {
       $route: 'reuseComponent',
+      variantDropdownValue(slug) {
+        this.$router.push({ name: 'detail', params: { slug } });
+      },
     },
   };
 </script>
