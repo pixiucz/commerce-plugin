@@ -6,9 +6,9 @@ class ProductVariantController
 {
     private $queryBuilder;
 
-    public function __construct()
+    public function __construct(VariantsQueryBuilder $queryBuilder)
     {
-        $this->queryBuilder = new VariantsQueryBuilder();
+        $this->queryBuilder = $queryBuilder;
     }
 
     public function index()
