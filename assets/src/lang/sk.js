@@ -63,6 +63,7 @@ export default {
         inBasket: 'V košíku',
         name: 'Názov',
         value: 'Hodnota',
+        productVariants: 'Varianty produktu',
       },
     },
     main: {

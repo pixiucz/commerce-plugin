@@ -16,7 +16,7 @@
           <b-col md="7">
               <h1 class="big margin-top-9">{{ name }}</h1>
               <p class="text-color margin-bottom3" v-html="product.short_description"></p>
-              <el-select v-if="product.otherVariants.length > 1" v-model="variantDropdownValue" placeholder="Varianty produktu" style="width: 100%">
+              <el-select v-if="product.otherVariants.length > 1" v-model="variantDropdownValue" :placeholder="$t('pages.detail.misc.productVariants')" style="width: 100%">
                 <el-option
                   v-for="variant in product.otherVariants"
                   :key="variant.slug"
