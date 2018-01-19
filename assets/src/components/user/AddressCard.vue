@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card :class="classProp">
-      <button type="button" class="close" aria-label="Close" @click="deleteAddress">
+      <button v-if="deletable" type="button" class="close" aria-label="Close" @click="deleteAddress">
         <i class="el-icon-close"></i>
       </button>
       <div class="text item text-center">
@@ -17,7 +17,14 @@
 <script>
 export default {
   name: 'AddressCard',
-  props: ['address', 'classProp'],
+  props: {
+    address: Object,
+    classProp: String,
+    deletable: {
+      type: Boolean,
+      default: true,
+    },
+  },
   methods: {
     deleteAddress() {
       this.$confirm(this.$t('messages.deleteAddressConfirm'), '', {
