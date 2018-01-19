@@ -2,17 +2,17 @@ import { priceWithoutTax, getFullProductName } from '@/helpers';
 
 const ProductInCartMixin = {
   methods: {
-    handleAmountChange(value) {
+    handleAmountChange(item, value) {
       this.$store.dispatch('CHANGE_ITEM_AMOUNT', {
-        slug: this.item.product.slug,
+        slug: item.product.slug,
         newAmount: value,
       });
     },
-    removeItem() {
-      this.$store.dispatch('REMOVE_ITEM', this.item.product.slug);
+    removeItem(item) {
+      this.$store.dispatch('REMOVE_ITEM', item.product.slug);
     },
-    showProduct() {
-      this.$router.push({ name: 'detail', params: { slug: this.item.product.slug } });
+    showProduct(product) {
+      this.$router.push({ name: 'detail', params: { slug: product.slug } });
       this.$store.commit('SET_SIDEBAR_VISIBLE', false);
     },
   },

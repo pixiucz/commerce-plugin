@@ -5,12 +5,12 @@
     </b-col>
     <b-col cols="8 to-upper mt-2">
       <button v-if="!readOnly" type="button" class="close" aria-label="Close">
-        <i class="el-icon-close" @click="removeItem"></i>
+        <i class="el-icon-close" @click="removeItem(item)"></i>
       </button>
-      <h5 @click="showProduct" style="cursor: pointer;"> {{ name }} </h5>
+      <h5 @click="showProduct(item.product)" style="cursor: pointer;"> {{ name }} </h5>
       <h6> {{ (item.product.price * item.amount).toFixed(2) | price }} <i class="light"> {{ $t('other.withDPH') }} </i> </h6>
       <h6 v-if="!readOnly" class="dark-grey"> {{ (priceNoTax * item.amount).toFixed(2) | price }} {{ $t('other.withoutDPH') }} </h6>
-      <el-input-number :disabled="readOnly" :min="1" v-model="item.amount" @change="handleAmountChange"></el-input-number>
+      <el-input-number :disabled="readOnly" :min="1" v-model="item.amount" @change="changeAmount"></el-input-number>
     </b-col>
   </b-row>
 </template>
@@ -23,6 +23,11 @@ export default {
   props: ['item', 'readOnly'],
   components: {
     'product-image': ProductImage,
+  },
+  methods: {
+    changeAmount(newValue) {
+      this.handleAmountChange(this.item, newValue);
+    },
   },
   mixins: [ProductInCartMixin],
 };

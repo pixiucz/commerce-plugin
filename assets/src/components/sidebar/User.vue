@@ -32,10 +32,10 @@
               </span>
             </el-button>
             <div v-if="isAddingAddress">
-              <address-form @added="isAddingAddress = false"></address-form>
+              <address-form :address.sync="addressForm"></address-form>
             </div>
             <hr>
-            <address-card v-for="address in addresses" :key="address.id" :address="address"></address-card>
+            <address-card classProp="box-card" v-for="address in addresses" :key="address.id" :address="address"></address-card>
           </div>
         </div>
       </div>
@@ -63,6 +63,17 @@
         isLoading: false,
         isAddingAddress: false,
         userDetailTouched: false,
+        addressForm: {
+          address: '',
+          city: '',
+          company: '',
+          country: '',
+          dic: '',
+          first_name: '',
+          last_name: '',
+          telephone: '',
+          zip: '',
+        },
       });
     },
     methods: {
@@ -98,6 +109,16 @@
           result = value;
         });
         return result;
+      },
+      async addressAdded(newAddress) {
+        this.isLoading = true;
+
+        await this.$store.dispatch('ADD_ADDRESS', newAddress);
+        
+        this.isAddingAddress = false;
+        this.isLoading = false;
+
+        return true;
       },
     },
     computed: {
