@@ -57,4 +57,16 @@ a:hover {
   background-color: white;
   border: none;
   color: black;
+
+  :hover {
+    background-color: #e1e2e2;
+  }
+}
+
+.no-shadow {
+  box-shadow: none;
+}
+
+.no-border {
+  border: none;
 }
