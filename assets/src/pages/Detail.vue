@@ -50,7 +50,7 @@
       </b-row>
       <b-row>
         <b-col md="12">
-          {{ product.long_description }}
+          <p class="text-color margin-bottom3" v-html="product.long_description"></p>
           <br>
           <b-table small v-if="product.specifications" striped hover :items="product.specifications">
             <template slot="HEAD_name" slot-scope="data">
