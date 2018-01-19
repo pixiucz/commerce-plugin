@@ -33,9 +33,10 @@
             </el-button>
             <div v-if="isAddingAddress">
               <address-form :address.sync="addressForm"></address-form>
+              <el-button class="full-width-btn" type="primary" @click="addAddress">Uloziť</el-button>
             </div>
             <hr>
-            <address-card classProp="box-card" v-for="address in addresses" :key="address.id" :address="address"></address-card>
+            <address-card :deletable="true" classProp="box-card" v-for="address in addresses" :key="address.id" :address="address"></address-card>
           </div>
         </div>
       </div>
@@ -110,15 +111,30 @@
         });
         return result;
       },
-      async addressAdded(newAddress) {
+      async addAddress() {
         this.isLoading = true;
 
-        await this.$store.dispatch('ADD_ADDRESS', newAddress);
+        await this.$store.dispatch('ADD_ADDRESS', this.addressForm);
         
+        this.resetAddressForm();
+
         this.isAddingAddress = false;
         this.isLoading = false;
 
         return true;
+      },
+      resetAddressForm() {
+        this.addressForm = {
+          address: '',
+          city: '',
+          company: '',
+          country: '',
+          dic: '',
+          first_name: '',
+          last_name: '',
+          telephone: '',
+          zip: '',
+        };
       },
     },
     computed: {
