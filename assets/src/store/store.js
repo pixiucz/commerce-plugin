@@ -7,6 +7,7 @@ import createPersistedState from 'vuex-persistedstate';
 import user from './user';
 import cart from './cart';
 import products from './products';
+import checkout from './checkout';
 
 Vue.use(Vuex);
 
@@ -40,10 +41,11 @@ export default new Vuex.Store({
     user,
     cart,
     products,
+    checkout,
   },
   plugins: [
     createPersistedState({
-      paths: ['cart'],
+      paths: ['cart', 'checkout'],
     }),
   ],
 });

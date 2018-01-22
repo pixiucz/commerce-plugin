@@ -115,7 +115,6 @@
         this.isLoading = true;
 
         await this.$store.dispatch('ADD_ADDRESS', this.addressForm);
-        
         this.resetAddressForm();
 
         this.isAddingAddress = false;

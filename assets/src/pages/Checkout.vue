@@ -191,6 +191,23 @@ export default {
       selectedPaymentMethod: 1,
     });
   },
+  mounted() {
+    const storedAddress = this.$store.getters.getSubmitedAddress;
+    const deliveryOption = this.$store.getters.getSubmitedDeliveryOption;
+    const paymentMethod = this.$store.getters.getSubmitedPaymentMethod;
+
+    if (storedAddress) {
+      this.addressForm = storedAddress;
+    }
+
+    if (deliveryOption) {
+      this.selectedDeliveryOption = deliveryOption;
+    }
+
+    if (paymentMethod) {
+      this.selectedPaymentMethod = paymentMethod;
+    }
+  },
   computed: {
     items() {
       return this.$store.getters.getCartItems;
@@ -198,7 +215,7 @@ export default {
     overallSum() {
       let sum = 0;
       this.items.forEach((item) => {
-        sum += (item.product.price * item.amount)
+        sum += (item.product.price * item.amount);
       });
 
       return (sum / 100).toFixed(2);
@@ -219,7 +236,7 @@ export default {
       return [
         { label: 'Dobírka', value: 1 },
       ];
-    }
+    },
   },
   methods: {
     getProductName(product) {
@@ -233,10 +250,8 @@ export default {
     addAmount(item) {
       this.handleAmountChange(item, item.amount + 1);
     },
-    getSummaries(props) {
-      console.log(props);
-      let sums = [];
-      
+    getSummaries() {
+      const sums = [];
       let dphSum = 0;
       this.items.forEach((item) => {
         dphSum += (item.product.price * ((100 - item.product.tax_rate) / 100) * item.amount);
@@ -244,23 +259,39 @@ export default {
 
       dphSum = (dphSum / 100).toFixed(2);
 
-      sums[4] = 'CELKEM: '
-      sums[5] = dphSum + ' €';
-      sums[6] = this.overallSum + ' €';
+      sums[4] = 'CELKEM: ';
+      sums[5] = `${dphSum} €`;
+      sums[6] = `${this.overallSum} €`;
       return sums;
     },
     useAddress(address) {
       this.addressForm = Object.assign({}, address);
     },
+    dispatchStepRelatedAction() {
+      switch (this.step) {
+        case 1:
+          this.$store.commit('SET_ADDRESS', this.addressForm);
+          break;
+        case 2:
+          this.$store.commit('SET_DELIVERY_OPTION', this.selectedDeliveryOption);
+          this.$store.commit('SET_PAYMENT_METHOD', this.selectedPaymentMethod);
+          break;
+        default:
+          break;
+      }
+    },
     moveStep(amount) {
       if (amount > 0) {
         if (this.step < 3 && this.canStepForward()) {
-          this.step++;
+          this.dispatchStepRelatedAction();
+          this.step += 1;
+          return;
         }
-      } else {
-        if (this.step > 0) {
-          this.step--;
-        }
+      }
+
+      if (this.step > 0) {
+        this.dispatchStepRelatedAction();
+        this.step -= 1;
       }
     },
     canStepForward() {
@@ -273,7 +304,7 @@ export default {
       }
 
       return true;
-    }
+    },
   },
 };
 </script>
