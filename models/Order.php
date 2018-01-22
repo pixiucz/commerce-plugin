@@ -7,10 +7,8 @@ use Pixiu\Commerce\Classes\{TaxHandler, OrderStatus, PaymentStatus, OrderStatusF
 use Illuminate\Support\Facades\Lang;
 use Pixiu\Commerce\Classes\CurrencyHandler;
 use Pixiu\Commerce\Traits\LocalizedValidation;
+use RainLab\User\Models\User;
 
-/**
- * Order Model
- */
 class Order extends Model
 {
     use \October\Rain\Database\Traits\Validation;

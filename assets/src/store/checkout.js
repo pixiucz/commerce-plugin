@@ -27,14 +27,14 @@ export default {
   },
   actions: {
     SUBMIT_ORDER({ getters }, { address, deliveryOption, paymentMethod }) {
-      const cartItems = extractOrderItemsMetaData(getters.getCartItems);
+      const orderItems = extractOrderItemsMetaData(getters.getCartItems);
 
       storeOrder({
-        cartItems,
+        orderItems,
         delivery_address: address,
         deliveryOption,
         paymentMethod,
       });
-    }
+    },
   },
 };
