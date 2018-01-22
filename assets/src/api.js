@@ -135,3 +135,13 @@ export function deleteAddress(addressId) {
     });
   });
 }
+
+export function storeOrder(order) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(`${API}/order`, order).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(handleReject(error));
+    });
+  });
+}

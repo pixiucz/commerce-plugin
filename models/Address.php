@@ -41,14 +41,9 @@ class Address extends Model
     public $table = 'pixiu_com_addresses';
 
     /**
-     * @var array Guarded fields
-     */
-    protected $guarded = [];
-
-    /**
      * @var array Fillable fields
      */
-    protected $fillable = ['first_name', 'last_name', 'address', 'zip', 'city', 'coutry', 'dic', 'ic'];
+    protected $fillable = ['first_name', 'last_name', 'address', 'zip', 'city', 'country', 'dic', 'ic', 'telephone'];
 
     /**
      * @var array Relations

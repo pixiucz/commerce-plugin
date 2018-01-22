@@ -13,3 +13,10 @@ export function getFullProductName(product) {
   });
   return `${product.product_name} ${sufix}`;
 }
+
+export function extractOrderItemsMetaData(order) {
+  return order.map(item => ({
+    amount: item.amount,
+    product_id: item.product.id,
+  }));
+}

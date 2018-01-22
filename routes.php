@@ -35,5 +35,5 @@ Route::prefix('api/v1')
 
 
         // Order
-        Route::post('/cart', 'CartController@store'); // TODO: implement / change database
+        Route::post('/order', 'OrderController@store');
     });

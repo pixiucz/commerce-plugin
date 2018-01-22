@@ -175,7 +175,7 @@ export default {
   },
   data() {
     return ({
-      step: 0,
+      step: 3,
       addressForm: {
         address: '',
         city: '',
@@ -239,6 +239,13 @@ export default {
     },
   },
   methods: {
+    sendItOut() {
+      this.$store.dispatch('SUBMIT_ORDER', {
+        address: this.addressForm,
+        deliveryOption: this.selectedDeliveryOption,
+        paymentMethod: this.selectedPaymentMethod,
+      });
+    },
     getProductName(product) {
       return getFullProductName(product);
     },

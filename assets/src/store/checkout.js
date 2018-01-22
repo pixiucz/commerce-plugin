@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
 
+import { extractOrderItemsMetaData } from '@/helpers';
+import { storeOrder } from '@/api';
+
 export default {
   state: {
     address: '',
@@ -21,5 +24,17 @@ export default {
     getSubmitedAddress: state => state.address,
     getSubmitedDeliveryOption: state => state.deliveryOption,
     getSubmitedPaymentMethod: state => state.paymentMethod,
+  },
+  actions: {
+    SUBMIT_ORDER({ getters }, { address, deliveryOption, paymentMethod }) {
+      const cartItems = extractOrderItemsMetaData(getters.getCartItems);
+
+      storeOrder({
+        cartItems,
+        delivery_address: address,
+        deliveryOption,
+        paymentMethod,
+      });
+    }
   },
 };
