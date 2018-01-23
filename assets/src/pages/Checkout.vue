@@ -18,7 +18,7 @@
         </router-link>
       </b-container>
     </div>
-    <div v-else>
+    <div v-else v-loading="isLoading">
       <b-container style="margin-bottom: 75px;">
         <h1 class="mt-3"> Dokončení objednávky </h1>
 
@@ -237,6 +237,7 @@ export default {
       selectedPaymentMethod: 1,
       isBillingDifferent: false,
       success: false,
+      isLoading: false,
     });
   },
   mounted() {
@@ -290,6 +291,8 @@ export default {
   },
   methods: {
     async sendItOut() {
+      this.isLoading = true; 
+
       await this.$store.dispatch('SUBMIT_ORDER', {
         address: this.addressForm,
         deliveryOption: this.selectedDeliveryOption,
@@ -299,6 +302,7 @@ export default {
 
       this.$store.commit('CLEAN_CART');
 
+      this.isLoading = false;
       this.success = true;
     },
     getProductName(product) {
