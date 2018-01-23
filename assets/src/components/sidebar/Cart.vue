@@ -18,7 +18,7 @@
         <span class="dark-grey"> {{ itemsSum.withoutTax | price }} {{ $t('other.withoutDPH') }}</span> </p>
       </b-col>
     </b-row>
-    <el-button class="send-order-btn" @click="redirectToCheckout">
+    <el-button :disabled="cartEmpty" class="send-order-btn" @click="redirectToCheckout">
       {{ $t('sidebar.cart.buttons.order') }}
     </el-button>
   </b-container>
@@ -38,6 +38,9 @@
       },
       itemsSum() {
         return this.$store.getters.getCartSum;
+      },
+      cartEmpty() {
+        return this.$store.getters.getCartLength === 0;
       },
     },
     methods: {

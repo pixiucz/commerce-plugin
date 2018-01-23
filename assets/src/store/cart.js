@@ -52,6 +52,9 @@ export default {
     REMOVE_ITEM(state, index) {
       state.items.splice(index, 1);
     },
+    CLEAN_CART(state) {
+      state.items = [];
+    },
   },
   getters: {
     getItemFromCart: state => slug => state.items.find(item => item.product.slug === slug),

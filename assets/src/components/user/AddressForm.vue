@@ -44,13 +44,39 @@
         </el-option>
       </el-select>
     </el-form-item>
+    <div v-if="isBilling">
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <el-form-item prop="company">
+            <el-input name="company" v-model="address.company" :placeholder="$t('sidebar.user.form.company')"></el-input>
+          </el-form-item>
+        </div>
+        <div class="col-md-3">
+          <el-form-item prop="ico">
+            <el-input name="ico" v-model="address.ico" :placeholder="$t('sidebar.user.form.ico')"></el-input>
+          </el-form-item>
+        </div>
+        <div class="col-md-3">
+          <el-form-item prop="dic">
+            <el-input name="dic" v-model="address.dic" :placeholder="$t('sidebar.user.form.dic')"></el-input>
+          </el-form-item>
+        </div>
+      </div>
+    </div>
   </el-form>
 </template>
 
 <script>
 export default {
   name: 'AddressForm',
-  props: ['address'],
+  props: {
+    address: Object,
+    isBilling: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return ({
       rules: {
@@ -75,6 +101,12 @@ export default {
         country: [
           { required: true, message: this.$t('other.fieldRequired'), trigger: 'blur' },
         ],
+        company: [
+          { validator: this.checkCompany },
+        ],
+        ico: [
+          { validator: this.checkIco },
+        ],
       },
       isLoading: false,
     });
@@ -98,6 +130,20 @@ export default {
 
       if (!value.match(/^[0-9]{3} [0-9]{2}$/)) {
         return callback(new Error(this.$t('sidebar.user.form.correctPostalCode')));
+      }
+
+      return callback();
+    },
+    checkCompany(rules, value, callback) {
+      if (this.isBilling && value === '') {
+        return callback(new Error('U fakturační adresy je potřeba vyplnit jméno firmy'));
+      }
+
+      return callback();
+    },
+    checkIco(rules, value, callback) {
+      if (this.isBilling && (value === undefined || value.length < 8 || !/^\d+$/.test(value))) {
+        return callback(new Error('IČO musí být složeno z 8 číslic'));
       }
 
       return callback();
