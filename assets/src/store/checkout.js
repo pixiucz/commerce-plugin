@@ -36,7 +36,7 @@ export default {
 
       const order = {
         orderItems,
-        delivery_address: address,
+        deliveryAddress: address,
         deliveryOption,
         paymentMethod,
       };
