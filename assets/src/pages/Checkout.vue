@@ -291,8 +291,7 @@ export default {
   },
   methods: {
     async sendItOut() {
-      this.isLoading = true; 
-
+      this.isLoading = true;
       await this.$store.dispatch('SUBMIT_ORDER', {
         address: this.addressForm,
         deliveryOption: this.selectedDeliveryOption,
