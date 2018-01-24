@@ -3,6 +3,8 @@
 
 use Illuminate\Http\Request;
 use Pixiu\Commerce\Models\Address;
+use RainLab\User\Facades\Auth;
+use RainLab\User\Models\User;
 
 /**
  * Class AddressRepository
@@ -86,6 +88,22 @@ class AddressRepository
         }
 
         $this->address->fill($content);
+
+        return $this;
+    }
+
+    /**
+     * @param User|null $passedUser
+     * @return $this
+     * @throws \Exception
+     */
+    public function setUser(User $passedUser = null)
+    {
+        if (!$user = $passedUser ?? Auth::getUser()) {
+            throw new \Exception('User not passed or logged in. Provide user');
+        }
+
+        $this->address->user_id = $user->id;
 
         return $this;
     }
