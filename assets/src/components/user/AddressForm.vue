@@ -142,7 +142,7 @@ export default {
       return callback();
     },
     checkIco(rules, value, callback) {
-      if (this.isBilling && (value === undefined || value.length < 8 || !/^\d+$/.test(value))) {
+      if (this.isBilling && (value === undefined || value.length !== 8 || !/^\d+$/.test(value))) {
         return callback(new Error('IČO musí být složeno z 8 číslic'));
       }
 

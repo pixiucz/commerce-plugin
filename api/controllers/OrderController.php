@@ -35,7 +35,7 @@ class OrderController
 
         $this->orderRepository->setAllFromRequest();
 
-        return response(['msg' => 'Checkout logic -_^', 'order' => $this->orderRepository->getOrder()], 201);
+        return response(['msg' => 'Checkout logic -_^', 'order' => $this->orderRepository->get()], 201);
     }
 
     private function validate()

@@ -242,6 +242,7 @@ export default {
   },
   mounted() {
     const storedAddress = this.$store.getters.getSubmitedAddress;
+    const storedBillingAddress = this.$store.getters.getSubmitedBillingAddress;
     const deliveryOption = this.$store.getters.getSubmitedDeliveryOption;
     const paymentMethod = this.$store.getters.getSubmitedPaymentMethod;
 
@@ -249,6 +250,10 @@ export default {
 
     if (storedAddress) {
       this.addressForm = storedAddress;
+    }
+
+    if (storedBillingAddress) {
+      this.billingAddressForm = storedBillingAddress;
     }
 
     if (deliveryOption) {

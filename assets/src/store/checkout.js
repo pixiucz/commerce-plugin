@@ -45,6 +45,7 @@ export default {
         order.billingAddress = billingAddress;
       }
 
+      console.log(order);
       await storeOrder(order);
 
       return true;

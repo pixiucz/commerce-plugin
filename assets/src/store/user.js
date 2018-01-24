@@ -83,7 +83,7 @@ export default {
   getters: {
     isLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user,
-    getOrders: state => state.orders,
+    getOrders: state => state.orders.reverse(),
     getAddresses: state => state.addresses,
     getAddressIndexById: state => id => state.addresses.findIndex(address => address.id === id),
   },
