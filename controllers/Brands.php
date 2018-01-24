@@ -24,4 +24,9 @@ class Brands extends Controller
 
         BackendMenu::setContext('Pixiu.Commerce', 'commerce', 'brands');
     }
+
+    public function formBeforeSave()
+    {
+        echo "asdf";
+    }
 }
