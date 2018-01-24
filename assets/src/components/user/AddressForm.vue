@@ -128,7 +128,7 @@ export default {
         return callback(new Error(this.$t('sidebar.user.form.postalCodeRequired')));
       }
 
-      if (!value.match(/^[0-9]{3} [0-9]{2}$/)) {
+      if (!value.match(/^[0-9]{3} [0-9]{2}$/) && !value.match(/^[0-9]{5}$/)) {
         return callback(new Error(this.$t('sidebar.user.form.correctPostalCode')));
       }
 
