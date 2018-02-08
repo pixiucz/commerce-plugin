@@ -8,6 +8,7 @@ use Pixiu\Commerce\Classes\Invoice\CanceledInvoiceManager;
 use Pixiu\Commerce\Classes\Invoice\RefundInvoiceManager;
 use Pixiu\Commerce\Classes\InvoiceHandler;
 use Pixiu\Commerce\Classes\PaymentStatus;
+use Pixiu\Commerce\Models\Address;
 use Pixiu\Commerce\Models\Order;
 use Illuminate\Support\Facades\Response;
 use Pixiu\Commerce\classes\OrderStatus;

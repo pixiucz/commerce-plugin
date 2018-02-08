@@ -185,6 +185,16 @@ class Order extends Model
         } else {
             $this->payment_status = "awaiting payment";
         }
+
+        $this->billing_address = tap($this->billing_address->replicate(), function($newBill) {
+            $newBill->user_id = null;
+            $newBill->save();
+        })->id;
+
+        $this->delivery_address = tap($this->delivery_address->replicate(), function($newDeli) {
+            $newDeli->user_id = null;
+            $newDeli->save();
+        })->id;
     }
 
     public function afterCreate()

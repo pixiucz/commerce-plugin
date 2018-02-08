@@ -26,7 +26,7 @@ secondaryTabs:
             tab: pixiu.commerce::lang.tabs.info
 
 
-        delivery_address_id:
+        delivery_address_id@create:
             label: pixiu.commerce::lang.fields.delivery_address
             type: dropdown
             dependsOn: user
@@ -34,7 +34,7 @@ secondaryTabs:
             cssClass: col-sm-6
             tab: pixiu.commerce::lang.tabs.info
 
-        billing_address_id:
+        billing_address_id@create:
             label: pixiu.commerce::lang.fields.billing_address
             type: dropdown
             dependsOn: user
@@ -76,6 +76,39 @@ secondaryTabs:
             cssClass: col-sm-4
             tab: pixiu.commerce::lang.tabs.info
 
+        payment_status@update:
+            label: pixiu.commerce::lang.fields.payment_status
+            type: dropdown
+            disabled: true
+            span: storm
+            cssClass: col-sm-3
+            tab: pixiu.commerce::lang.tabs.info
+
+
+        section_delivery_address:
+            type: section
+            label: pixiu.commerce::lang.fields.delivery_address
+            tab: pixiu.commerce::lang.tabs.addresses
+
+        delivery_address@update:
+            type: partial
+            path: relation_delivery_address
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.addresses
+
+        section_billing_address:
+            type: section
+            label: pixiu.commerce::lang.fields.billing_address
+            tab: pixiu.commerce::lang.tabs.addresses
+
+        billing_address@update:
+            type: partial
+            path: relation_billing_address
+            span: storm
+            cssClass: col-sm-12
+            tab: pixiu.commerce::lang.tabs.addresses
+
 #        status:
 #            label: pixiu.commerce::lang.fields.order_status
 #            type: dropdown
@@ -84,13 +117,6 @@ secondaryTabs:
 #            cssClass: col-sm-3
 #            tab: pixiu.commerce::lang.tabs.info
 
-        payment_status@update:
-            label: pixiu.commerce::lang.fields.payment_status
-            type: dropdown
-            disabled: true
-            span: storm
-            cssClass: col-sm-3
-            tab: pixiu.commerce::lang.tabs.info
 
         variants@update:
             type: partial
