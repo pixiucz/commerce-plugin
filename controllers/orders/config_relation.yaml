@@ -3,7 +3,7 @@
 # ===================================
 
 billing_address:
-    label: Adresa
+    label: adresu
     view:
         form: $/pixiu/commerce/models/address/fields.yaml
         toolbarButtons: update
@@ -12,7 +12,7 @@ billing_address:
         list: $/pixiu/commerce/models/address/columns.yaml
 
 delivery_address:
-    label: Adresa
+    label: adresu
     view:
         form: $/pixiu/commerce/models/address/fields.yaml
         toolbarButtons: update
