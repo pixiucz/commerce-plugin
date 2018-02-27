@@ -32,7 +32,9 @@
                 </i>
               </b-nav-item>
               <b-nav-item>
-                <el-button round size="small">Späť na web</el-button>
+                <a href="/">
+                  <el-button round size="small">Späť na web</el-button>
+                </a>
               </b-nav-item>
             </b-navbar-nav>
           </b-collapse>
