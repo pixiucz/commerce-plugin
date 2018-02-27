@@ -145,3 +145,16 @@ export function storeOrder(order) {
     });
   });
 }
+
+export function validateEmail(email) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(
+      `${API}/email-validation`,
+      { email }
+    ).then((result) => {
+      resolve(result)
+    }).catch((error) => {
+      reject(handleReject(error))
+    })
+  })
+}

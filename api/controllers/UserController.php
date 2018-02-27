@@ -93,6 +93,17 @@ class UserController
         return response([], 200);
     }
 
+    public function validateEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response(['msg' => 'Nevalidní email'], );
+        }
+    }
+
     private function makeRegisterValidator($request)
     {
         trace_log($request->all());
@@ -100,7 +111,7 @@ class UserController
         return Validator::make($request->all(),
             [
             'login' => 'required|email',
-            'password' => 'required|min:5|max:255'
+            'password' => 'required|min:4|max:255'
         ], [
             'required' => 'Je nutné vyplnit :attribute',
             'email' => 'E-mail není v korektním formátě',

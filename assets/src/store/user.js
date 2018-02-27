@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import Vue from 'vue';
-import { signIn, getUser, signOut, register, addAddress, deleteAddress } from '@/api';
+import { signIn, getUser, signOut, register, addAddress, deleteAddress, validateEmail } from '@/api';
 
 export default {
   state: {
@@ -79,10 +79,15 @@ export default {
         commit('DELETE_ADDRESS', addressIndex);
       }
     },
+    async VALIDATE_EMAIL_IS_NOT_USED(context, email) {
+      const response = await validateEmail(email);
+      return resonse;
+    }
   },
   getters: {
     isLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user,
+    getUsersEmail: state => state.user.email,
     getOrders: state => state.orders.reverse(),
     getAddresses: state => state.addresses,
     getAddressIndexById: state => id => state.addresses.findIndex(address => address.id === id),

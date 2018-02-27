@@ -128,16 +128,25 @@
               </b-row>
               <hr>
             </div>
+            <div v-else>
+              <h5> E-Mailová adresa: </h5>
+              <el-input v-model="emailInput" placeholder="E-mail"></el-input>
+              <span style="color: red"> {{ errorEmailInput }} </span>
+              <el-button v-loading="isValidatingEmail" @click="setEmail" type="primary">Potvrdit</el-button>
+              <hr>
+            </div>
 
-            <address-form ref="addressFormComponent" :address.sync="addressForm"></address-form>
+            <div v-if="email !== ''">
+              <address-form ref="addressFormComponent" :address.sync="addressForm"></address-form>
             
-            <el-checkbox v-model="isBillingDifferent">Fakturační se liší od doručovací</el-checkbox>
-            <address-form 
-              v-if="isBillingDifferent" 
-              ref="billingAddressFormComponent" 
-              :isBilling="true"
-              :address.sync="billingAddressForm">
-            </address-form>
+              <el-checkbox v-model="isBillingDifferent">Fakturační se liší od doručovací</el-checkbox>
+              <address-form 
+                v-if="isBillingDifferent" 
+                ref="billingAddressFormComponent" 
+                :isBilling="true"
+                :address.sync="billingAddressForm">
+              </address-form>
+            </div>
 
           </div>
 
@@ -210,7 +219,11 @@ export default {
   },
   data() {
     return ({
-      step: 0,
+      step: 1,
+      emailInput: null,
+      email: '',
+      isValidatingEmail: false,
+      errorEmailInput: '',
       addressForm: {
         address: '',
         city: '',
@@ -245,6 +258,7 @@ export default {
     const storedBillingAddress = this.$store.getters.getSubmitedBillingAddress;
     const deliveryOption = this.$store.getters.getSubmitedDeliveryOption;
     const paymentMethod = this.$store.getters.getSubmitedPaymentMethod;
+    const isLoggedIn = this.$store.getters.isLoggedIn;
 
     this.success = false;
 
@@ -262,6 +276,10 @@ export default {
 
     if (paymentMethod) {
       this.selectedPaymentMethod = paymentMethod;
+    }
+
+    if (isLoggedIn) {
+      this.email = this.$store.getters.getUsersEmail;
     }
   },
   computed: {
@@ -295,6 +313,18 @@ export default {
     },
   },
   methods: {
+    async setEmail() {
+      this.isValidatingEmail = true;
+      let response = await this.$store.dispatch('VALIDATE_EMAIL_IS_NOT_USED', this.emailInput)
+
+      if (response.status === 200) {
+        this.errorEmailInput = '';
+        this.email = this.emailInput;
+        return;
+      }
+
+      this.errorEmailInput = response.body.msg;
+    },
     async sendItOut() {
       this.isLoading = true;
       await this.$store.dispatch('SUBMIT_ORDER', {

@@ -19,6 +19,7 @@ Route::prefix('api/v1')
         Route::post('user/register', 'UserController@register');
         Route::post('user/login', 'UserController@login');
         Route::post('user/logout', 'UserController@logout');
+        Route::post('validate-email', 'UserController@validateEmail');
 
         Route::middleware('Pixiu\Commerce\api\Middlewares\CheckLoginMiddleware')->group(function() {
             Route::get('user', 'UserController@show');
