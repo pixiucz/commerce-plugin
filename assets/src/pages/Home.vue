@@ -44,7 +44,7 @@
   };
 </script>
 
-<<style scoped>
+<style scoped>
   .slider {
     margin-top: 3em;
   }
